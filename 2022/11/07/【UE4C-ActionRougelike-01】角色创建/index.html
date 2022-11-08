@@ -406,7 +406,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-11-07
+                    2022-11-08
                 </div>
                 
 
@@ -441,12 +441,12 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h2 id="【UE4C-ActionRougelike-01】角色创建"><a href="#【UE4C-ActionRougelike-01】角色创建" class="headerlink" title="【UE4C++ ActionRougelike-01】角色创建"></a>【UE4C++ ActionRougelike-01】角色创建</h2><h3 id="1、创建Character类"><a href="#1、创建Character类" class="headerlink" title="1、创建Character类"></a>1、创建Character类</h3><p>以Character类为父类创建本游戏的玩家角色类MyCharacter</p>
-<img src="E:\MyBlog\source\pic\Snipaste_2022-11-07_21-28-29.jpg" alt="Snipaste_2022-11-07_21-28-29" style="zoom: 50%;" />
+<img src="/Snipaste_2022-11-07_21-28-29.jpg" alt="Snipaste_2022-11-07_21-28-29" style="zoom:50%;" />
 
 <p>以MyCharacter类为父类创建蓝图PlayerCharacter_BP</p>
-<img src="E:\MyBlog\source\pic\Snipaste_2022-11-07_21-31-56.jpg" alt="Snipaste_2022-11-07_21-31-56" style="zoom:50%;" />
+<img src="/Snipaste_2022-11-07_21-31-56.jpg" alt="Snipaste_2022-11-07_21-31-56" style="zoom: 50%;" />
 
-<p>Character由多个组件构成：<img src="E:\MyBlog\source\pic\image-20221104202535215.png" alt="image-20221104202535215" style="zoom: 67%;" /></p>
+<p>Character由多个组件构成：<img src="/image-20221104202535215.png" alt="image-20221104202535215" style="zoom:50%;" /></p>
 <ul>
 <li>Capsule Component是用来处理碰撞、用于运动的<ul>
 <li>Arrow Component是为了显示方向</li>
@@ -472,7 +472,7 @@
 <li>处理函数中响应，当发生输入事件后，会调用绑定的处理函数</li>
 </ul>
 <p>绑定输入和输入事件名</p>
-<img src="E:\MyBlog\source\pic\image-20221107215500601.png" alt="image-20221107215500601" style="zoom: 67%;" />
+<img src="/image-20221107215500601.png" alt="image-20221107215500601" style="zoom:67%;" />
 
 <p>声明处理函数</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//MyCharacter.h</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ACTIONROGUELIKE_API</span> AMyCharacter : <span class="keyword">public</span> ACharacter</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">MoveForward</span><span class="params">(<span class="type">float</span> value)</span></span>;</span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">MoveRight</span><span class="params">(<span class="type">float</span> value)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -480,23 +480,10 @@
 <p>绑定输入事件和处理函数，定义处理函数</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//MyCharacter.cpp</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">AMyCharacter::SetupPlayerInputComponent</span><span class="params">(UInputComponent* PlayerInputComponent)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//绑定前后移动事件与处理函数</span></span><br><span class="line">	PlayerInputComponent-&gt;<span class="built_in">BindAxis</span>(<span class="built_in">TEXT</span>(<span class="string">&quot;MoveForward&quot;</span>), <span class="keyword">this</span>, &amp;AMyCharacter::MoveForward);</span><br><span class="line">	<span class="comment">//绑定左右移动事件与处理函数</span></span><br><span class="line">	PlayerInputComponent-&gt;<span class="built_in">BindAxis</span>(<span class="built_in">TEXT</span>(<span class="string">&quot;MoveRight&quot;</span>), <span class="keyword">this</span>, &amp;AMyCharacter::MoveRight);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">AMyCharacter::MoveForward</span><span class="params">(<span class="type">float</span> value)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	FRotator controlRot = <span class="built_in">GetControlRotation</span>();</span><br><span class="line">	<span class="comment">//忽略其他坐标轴的旋转</span></span><br><span class="line">	controlRot.Pitch = <span class="number">0.0f</span>;</span><br><span class="line">	controlRot.Roll = <span class="number">0.0f</span>;</span><br><span class="line">	<span class="built_in">AddMovementInput</span>(controlRot.<span class="built_in">Vector</span>(), value);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">AMyCharacter::MoveRight</span><span class="params">(<span class="type">float</span> value)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	FRotator controlRot = <span class="built_in">GetControlRotation</span>();</span><br><span class="line">	controlRot.Pitch = <span class="number">0.0f</span>;</span><br><span class="line">	controlRot.Roll = <span class="number">0.0f</span>;</span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">	*  X = Forward</span></span><br><span class="line"><span class="comment">	*  Y = Right</span></span><br><span class="line"><span class="comment">	*  Z = Up</span></span><br><span class="line"><span class="comment">	*/</span></span><br><span class="line">	<span class="comment">//返回右向量(Y代表右向量)</span></span><br><span class="line">	FVector RightVector = <span class="built_in">FRotationMatrix</span>(controlRot).<span class="built_in">GetScaledAxis</span>(EAxis::Y);</span><br><span class="line">	<span class="built_in">AddMovementInput</span>(RightVector, value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="4、添加项目资源"><a href="#4、添加项目资源" class="headerlink" title="4、添加项目资源"></a>4、添加项目资源</h3><img src="C:\Users\张东旭\AppData\Roaming\Typora\typora-user-images\image-20221107215627799.png" alt="image-20221107215627799" style="zoom:50%;" />
+<h3 id="4、添加项目资源"><a href="#4、添加项目资源" class="headerlink" title="4、添加项目资源"></a>4、添加项目资源</h3><img src="/image-20221107215627799.png" alt="image-20221107215627799" style="zoom: 67%;" />
 
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>至此，我们得到了一个能够前后左右移动的Character，效果如下：</p>
-<img src="E:\MyBlog\source\pic\移动动画.gif" alt="移动动画" style="zoom: 50%;" />
-
-
-
-
-
-
-
-
-
-
-
-
-
+<p><img src="/%E7%A7%BB%E5%8A%A8%E5%8A%A8%E7%94%BB.gif" alt="移动动画"></p>
 
                 
             </div>
