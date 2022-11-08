@@ -413,7 +413,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    687
+                    660
                 </div>
                 
 
@@ -456,11 +456,35 @@
 <li>Character Movement移动组件</li>
 </ul>
 <h3 id="2、添加摄像机组件"><a href="#2、添加摄像机组件" class="headerlink" title="2、添加摄像机组件"></a>2、添加摄像机组件</h3><p>MyCharacter.h中添加摄像机组件：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//MyCharacter.h</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ACTIONROGUELIKE_API</span> AMyCharacter : <span class="keyword">public</span> ACharacter</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">    <span class="built_in">UPROPERTY</span>(VisibleAnywhere)			<span class="comment">//宏定义，暴露给蓝图</span></span><br><span class="line">	USpringArmComponent* SpringArmComp;	<span class="comment">//声明一个弹簧臂组件</span></span><br><span class="line"></span><br><span class="line">	<span class="built_in">UPROPERTY</span>(VisibleAnywhere)</span><br><span class="line">	UCameraComponent* CameraComp;		<span class="comment">//声明一个摄像机组件</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class=" language-C++"><code class="language-C++">//MyCharacter.h
+class ACTIONROGUELIKE_API AMyCharacter : public ACharacter
+&#123;
+protected:
+    UPROPERTY(VisibleAnywhere)			//宏定义，暴露给蓝图
+    USpringArmComponent* SpringArmComp;	//声明一个弹簧臂组件
 
+    UPROPERTY(VisibleAnywhere)
+    UCameraComponent* CameraComp;		//声明一个摄像机组件
+&#125;
+</code></pre>
 <p>MyCharacter.cpp中初始化摄像机组件</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//MyCharacter.cpp</span></span><br><span class="line"><span class="comment">//构造函数中初始化摄像机组件</span></span><br><span class="line">AMyCharacter::<span class="built_in">AMyCharacter</span>()</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">//创建弹簧臂组件</span></span><br><span class="line">	SpringArmComp = <span class="built_in">CreateDefaultSubobject</span>&lt;USpringArmComponent&gt;(<span class="string">&quot;SpringArmComp&quot;</span>);</span><br><span class="line">	<span class="comment">//将弹簧臂组件附加到根组件上</span></span><br><span class="line">	SpringArmComp-&gt;<span class="built_in">SetupAttachment</span>(RootComponent);</span><br><span class="line"></span><br><span class="line">	<span class="comment">//创建摄像机组件</span></span><br><span class="line">	CameraComp = <span class="built_in">CreateDefaultSubobject</span>&lt;UCameraComponent&gt;(<span class="string">&quot;CameraComp&quot;</span>);</span><br><span class="line">	<span class="comment">//将摄像机组件附加到弹簧臂组件上</span></span><br><span class="line">	CameraComp-&gt;<span class="built_in">SetupAttachment</span>(SpringArmComp);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//CreateDefaultSubobject:为Actor创建组件，组件名 = CreateDefaultSubobject&lt;组件类型&gt;(组件在编辑器中的名称)</span></span><br><span class="line"><span class="comment">//CreateDefaultSubobject必须写在Actor的无参构造函数中，且名字不能相同</span></span><br></pre></td></tr></table></figure>
+<pre class=" language-C++"><code class="language-C++">//MyCharacter.cpp
+//构造函数中初始化摄像机组件
+AMyCharacter::AMyCharacter()
+&#123;
+    //创建弹簧臂组件
+    SpringArmComp = CreateDefaultSubobject<USpringArmComponent>("SpringArmComp");
+    //将弹簧臂组件附加到根组件上
+    SpringArmComp->SetupAttachment(RootComponent);
 
+    //创建摄像机组件
+    CameraComp = CreateDefaultSubobject<UCameraComponent>("CameraComp");
+    //将摄像机组件附加到弹簧臂组件上
+    CameraComp->SetupAttachment(SpringArmComp);
+&#125;
+//CreateDefaultSubobject:为Actor创建组件，组件名 = CreateDefaultSubobject<组件类型>(组件在编辑器中的名称)
+//CreateDefaultSubobject必须写在Actor的无参构造函数中，且名字不能相同
+</code></pre>
 <h3 id="3、绑定输入"><a href="#3、绑定输入" class="headerlink" title="3、绑定输入"></a>3、绑定输入</h3><h4 id="3-1BindAxis-和BindAction"><a href="#3-1BindAxis-和BindAction" class="headerlink" title="3.1BindAxis()和BindAction()"></a>3.1BindAxis()和BindAction()</h4><ul>
 <li>执行时机：BindAction()绑定的函数会在输入事件发生时执行一次，如按键按下或抬起时执行一次；<strong>BindAxis()是每帧都会执行</strong>；</li>
 <li>函数参数：BindAction()无参数；BindAxis()有参数即变化量；</li>
@@ -475,11 +499,48 @@
 <img src="/image-20221107215500601.png" alt="image-20221107215500601" style="zoom:67%;" />
 
 <p>声明处理函数</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//MyCharacter.h</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ACTIONROGUELIKE_API</span> AMyCharacter : <span class="keyword">public</span> ACharacter</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">MoveForward</span><span class="params">(<span class="type">float</span> value)</span></span>;</span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">MoveRight</span><span class="params">(<span class="type">float</span> value)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre class=" language-C++"><code class="language-C++">//MyCharacter.h
+class ACTIONROGUELIKE_API AMyCharacter : public ACharacter
+&#123;
+protected:
+    void MoveForward(float value);
+    void MoveRight(float value);
+&#125;
+</code></pre>
 <p>绑定输入事件和处理函数，定义处理函数</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//MyCharacter.cpp</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">AMyCharacter::SetupPlayerInputComponent</span><span class="params">(UInputComponent* PlayerInputComponent)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//绑定前后移动事件与处理函数</span></span><br><span class="line">	PlayerInputComponent-&gt;<span class="built_in">BindAxis</span>(<span class="built_in">TEXT</span>(<span class="string">&quot;MoveForward&quot;</span>), <span class="keyword">this</span>, &amp;AMyCharacter::MoveForward);</span><br><span class="line">	<span class="comment">//绑定左右移动事件与处理函数</span></span><br><span class="line">	PlayerInputComponent-&gt;<span class="built_in">BindAxis</span>(<span class="built_in">TEXT</span>(<span class="string">&quot;MoveRight&quot;</span>), <span class="keyword">this</span>, &amp;AMyCharacter::MoveRight);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">AMyCharacter::MoveForward</span><span class="params">(<span class="type">float</span> value)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	FRotator controlRot = <span class="built_in">GetControlRotation</span>();</span><br><span class="line">	<span class="comment">//忽略其他坐标轴的旋转</span></span><br><span class="line">	controlRot.Pitch = <span class="number">0.0f</span>;</span><br><span class="line">	controlRot.Roll = <span class="number">0.0f</span>;</span><br><span class="line">	<span class="built_in">AddMovementInput</span>(controlRot.<span class="built_in">Vector</span>(), value);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">AMyCharacter::MoveRight</span><span class="params">(<span class="type">float</span> value)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	FRotator controlRot = <span class="built_in">GetControlRotation</span>();</span><br><span class="line">	controlRot.Pitch = <span class="number">0.0f</span>;</span><br><span class="line">	controlRot.Roll = <span class="number">0.0f</span>;</span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">	*  X = Forward</span></span><br><span class="line"><span class="comment">	*  Y = Right</span></span><br><span class="line"><span class="comment">	*  Z = Up</span></span><br><span class="line"><span class="comment">	*/</span></span><br><span class="line">	<span class="comment">//返回右向量(Y代表右向量)</span></span><br><span class="line">	FVector RightVector = <span class="built_in">FRotationMatrix</span>(controlRot).<span class="built_in">GetScaledAxis</span>(EAxis::Y);</span><br><span class="line">	<span class="built_in">AddMovementInput</span>(RightVector, value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class=" language-c++"><code class="language-c++">//MyCharacter.cpp
+void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+&#123;
+    //绑定前后移动事件与处理函数
+    PlayerInputComponent->BindAxis(TEXT("MoveForward"), this, &AMyCharacter::MoveForward);
+    //绑定左右移动事件与处理函数
+    PlayerInputComponent->BindAxis(TEXT("MoveRight"), this, &AMyCharacter::MoveRight);
+&#125;
 
+void AMyCharacter::MoveForward(float value)
+&#123;
+    FRotator controlRot = GetControlRotation();
+    //忽略其他坐标轴的旋转
+    controlRot.Pitch = 0.0f;
+    controlRot.Roll = 0.0f;
+    AddMovementInput(controlRot.Vector(), value);
+&#125;
+
+void AMyCharacter::MoveRight(float value)
+&#123;
+    FRotator controlRot = GetControlRotation();
+    controlRot.Pitch = 0.0f;
+    controlRot.Roll = 0.0f;
+    /*
+    *  X = Forward
+    *  Y = Right
+    *  Z = Up
+    */
+    //返回右向量(Y代表右向量)
+    FVector RightVector = FRotationMatrix(controlRot).GetScaledAxis(EAxis::Y);
+    AddMovementInput(RightVector, value);
+&#125;
+</code></pre>
 <h3 id="4、添加项目资源"><a href="#4、添加项目资源" class="headerlink" title="4、添加项目资源"></a>4、添加项目资源</h3><img src="/image-20221107215627799.png" alt="image-20221107215627799" style="zoom: 67%;" />
 
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>至此，我们得到了一个能够前后左右移动的Character，效果如下：</p>
