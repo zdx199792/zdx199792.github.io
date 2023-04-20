@@ -418,7 +418,7 @@ Co">
                             <div class="post-date info-break-policy">
                                 <i class="far fa-calendar-check fa-fw"></i>
                                 更新日期:&nbsp;&nbsp;
-                                    2022-11-08
+                                    2023-04-21
                             </div>
                             
 
@@ -530,7 +530,7 @@ AMyMagicProjectile::AMyMagicProjectile()
 	EffectComp-&gt;SetupAttachment(SphereComp);
 &#125;</code></pre>
 
-<p>基于MyMagicProjectile创建MagicProjectile_BP蓝图类：<img src="/pic/%E3%80%90UE4C-ActionRougelike-02%E3%80%91%E7%9B%B8%E6%9C%BA%E6%97%8B%E8%BD%AC%E5%92%8C%E7%8E%A9%E5%AE%B6%E8%BE%93%E5%85%A5/image-20221106190657338.png" alt="image-20221106190657338" style="zoom:33%;" />并设置粒子效果。</p>
+<p>基于MyMagicProjectile创建MagicProjectile_BP蓝图类：<img src="/pic/%E3%80%90UE4C-ActionRougelike-02%E3%80%91%E7%9B%B8%E6%9C%BA%E6%97%8B%E8%BD%AC%E5%92%8C%E7%8E%A9%E5%AE%B6%E8%BE%93%E5%85%A5/%E5%88%9B%E5%BB%BAMagicProjectile_BP%E8%93%9D%E5%9B%BE%E7%B1%BB.png" alt="创建MagicProjectile_BP蓝图类" style="zoom: 50%;" />并设置粒子效果。</p>
 <h4 id="3-2-绑定攻击按键"><a href="#3-2-绑定攻击按键" class="headerlink" title="3.2 绑定攻击按键"></a>3.2 绑定攻击按键</h4><p>在<strong>项目设置-&gt;Input-&gt;Action Mapping</strong>中添加攻击的按键绑定<img src="/pic/%E3%80%90UE4C-ActionRougelike-02%E3%80%91%E7%9B%B8%E6%9C%BA%E6%97%8B%E8%BD%AC%E5%92%8C%E7%8E%A9%E5%AE%B6%E8%BE%93%E5%85%A5/%E7%BB%91%E5%AE%9A%E6%94%BB%E5%87%BB%E6%8C%89%E9%94%AE.png" alt="绑定攻击按键"></p>
 <h4 id="3-3-控制魔法攻击类生成"><a href="#3-3-控制魔法攻击类生成" class="headerlink" title="3.3 控制魔法攻击类生成"></a>3.3 控制魔法攻击类生成</h4><p>在MyCharacter.h声明攻击产生的抛体类和攻击方法</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">&#x2F;&#x2F;MyCharacter.h

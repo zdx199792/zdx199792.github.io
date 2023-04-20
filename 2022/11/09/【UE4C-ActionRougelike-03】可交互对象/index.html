@@ -414,7 +414,7 @@ clas">
                             <div class="post-date info-break-policy">
                                 <i class="far fa-calendar-check fa-fw"></i>
                                 更新日期:&nbsp;&nbsp;
-                                    2022-11-10
+                                    2023-04-21
                             </div>
                             
 
@@ -507,7 +507,7 @@ void ASExplosionBarrel::OnActorHit(UPrimitiveComponent* HitComponent, AActor* Ot
 </code></pre>
 
 <p>效果如下：</p>
-<img src="../pic/%E3%80%90UE4C-ActionRougelike-03%E3%80%91%E5%8F%AF%E4%BA%A4%E4%BA%92%E5%AF%B9%E8%B1%A1/%E6%B2%B9%E6%A1%B6%E7%88%86%E7%82%B8.gif" alt="油桶爆炸" style="zoom:67%;" />
+<img src="../pic/%E3%80%90UE4C-ActionRougelike-03%E3%80%91%E5%8F%AF%E4%BA%A4%E4%BA%92%E5%AF%B9%E8%B1%A1/%E6%B2%B9%E6%A1%B6%E7%88%86%E7%82%B8.gif" alt="油桶爆炸" style="zoom:50%;" />
 
 <h3 id="2、宝箱"><a href="#2、宝箱" class="headerlink" title="2、宝箱"></a>2、宝箱</h3><p>创建C++接口来实现与Actor进行交互，将交互功能封装成一个交互组件</p>
 <h4 id="2-1-创建玩家交互接口"><a href="#2-1-创建玩家交互接口" class="headerlink" title="2.1 创建玩家交互接口"></a>2.1 创建玩家交互接口</h4><p>创建交互接口类SInteractionInterface，声明交互函数Interact()</p>
@@ -642,7 +642,7 @@ void AMyCharacter::PickUp()
 &#125;</code></pre>
 
 <p>最终效果如下：</p>
-<img src="../pic/%E3%80%90UE4C-ActionRougelike-03%E3%80%91%E5%8F%AF%E4%BA%A4%E4%BA%92%E5%AF%B9%E8%B1%A1/%E5%AE%9D%E7%AE%B1%E4%BA%A4%E4%BA%92.gif" alt="宝箱交互" style="zoom:67%;" />
+<img src="../pic/%E3%80%90UE4C-ActionRougelike-03%E3%80%91%E5%8F%AF%E4%BA%A4%E4%BA%92%E5%AF%B9%E8%B1%A1/%E5%AE%9D%E7%AE%B1%E4%BA%A4%E4%BA%92.gif" alt="宝箱交互" style="zoom: 50%;" />
 
 <h3 id="3、攻击动画优化"><a href="#3、攻击动画优化" class="headerlink" title="3、攻击动画优化"></a>3、攻击动画优化</h3><h4 id="3-1-添加攻击动画"><a href="#3-1-添加攻击动画" class="headerlink" title="3.1 添加攻击动画"></a>3.1 添加攻击动画</h4><p>MyCharacter.h中声明攻击动画AttackAnim(UAnimMontage*)</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">&#x2F;&#x2F;AMyCharacter.h
@@ -666,7 +666,7 @@ void AMyCharacter::PrimaryAttack()
 &#125;</code></pre>
 
 <p>效果如下：</p>
-<img src="../pic/%E3%80%90UE4C-ActionRougelike-03%E3%80%91%E5%8F%AF%E4%BA%A4%E4%BA%92%E5%AF%B9%E8%B1%A1/%E6%94%BB%E5%87%BB.gif" alt="攻击" style="zoom: 67%;" />
+<img src="../pic/%E3%80%90UE4C-ActionRougelike-03%E3%80%91%E5%8F%AF%E4%BA%A4%E4%BA%92%E5%AF%B9%E8%B1%A1/%E6%94%BB%E5%87%BB.gif" alt="攻击" style="zoom:50%;" />
 
 <p>问题：魔法攻击类生成位置在初始手部的插槽，而不是完成攻击动画后手部插槽的位置</p>
 <p>如何解决？</p>
@@ -716,7 +716,7 @@ void AMyCharacter::PrimaryAttack_TimeElapsed()
 &#125;</code></pre>
 
 <p>效果如下：</p>
-<img src="../pic/%E3%80%90UE4C-ActionRougelike-03%E3%80%91%E5%8F%AF%E4%BA%A4%E4%BA%92%E5%AF%B9%E8%B1%A1/%E4%BC%98%E5%8C%96%E6%94%BB%E5%87%BB%E5%8A%A8%E7%94%BB.gif" alt="优化攻击动画" style="zoom:67%;" />
+<img src="../pic/%E3%80%90UE4C-ActionRougelike-03%E3%80%91%E5%8F%AF%E4%BA%A4%E4%BA%92%E5%AF%B9%E8%B1%A1/%E4%BC%98%E5%8C%96%E6%94%BB%E5%87%BB%E5%8A%A8%E7%94%BB.gif" alt="优化攻击动画" style="zoom:50%;" />
 
                                     
                             </div>
