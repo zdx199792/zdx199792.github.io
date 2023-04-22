@@ -412,7 +412,7 @@
                             <div class="post-date info-break-policy">
                                 <i class="far fa-calendar-check fa-fw"></i>
                                 更新日期:&nbsp;&nbsp;
-                                    2023-04-21
+                                    2023-04-22
                             </div>
                             
 
@@ -420,7 +420,7 @@
                                     <div class="info-break-policy">
                                         <i class="far fa-file-word fa-fw"></i>
                                         文章字数:&nbsp;&nbsp;
-                                            1.4k
+                                            1.7k
                                     </div>
                                     
 
@@ -428,7 +428,7 @@
                                             <div class="info-break-policy">
                                                 <i class="far fa-clock fa-fw"></i>
                                                 阅读时长:&nbsp;&nbsp;
-                                                    5
+                                                    6
                                                         分
                                             </div>
                                             
@@ -561,12 +561,34 @@ void UMyBTService_CheckAttackRange::TickNode(UBehaviorTreeComponent&amp; OwnerCo
 <h4 id="3-2-修改行为树"><a href="#3-2-修改行为树" class="headerlink" title="3.2 修改行为树"></a>3.2 修改行为树</h4><p>修改之前的行为树，Root根节点连接一个Selector节点，Selector节点是按顺序评估其子节点，并选择第一个返回成功 (Success) 或运行 (Running) 状态的子节点进行执行。如果子节点返回失败 (Failure) 状态，则继续评估下一个子节点。并同时调用上述定义的行为树节点CheckAttackRange获取WithinAttackRange的值。</p>
 <img src="/pic/%E3%80%90UE4C-ActionRougelike-10%E3%80%91AI%E5%9F%BA%E7%A1%80/%E8%A1%8C%E4%B8%BA%E6%A0%91-16820216895501.jpg" alt="行为树" style="zoom: 50%;" />
 
-<p>Observer Aborts（观察者中止）：是一种特殊的中止条件，用于控制行为树节点的执行。当观察者的条件满足时，Observer Aborts(Self) 模式下的节点将立即中止自身的执行，不再继续执行下面的子节点。</p>
-<p>当WithinAttackRange为真假时继续执行，为假时终止。</p>
+<p>Observer Aborts（观察者中止）：是一种特殊的中止条件，用于控制行为树节点的执行。当观察者的条件满足时，Observer Aborts(Self) 模式下的节点将立即中止自身的执行，不再继续执行下面的子节点。(具体内容见总结部分)</p>
+<p>当WithinAttackRange为真时继续执行，为假时终止。</p>
 <img src="/pic/%E3%80%90UE4C-ActionRougelike-10%E3%80%91AI%E5%9F%BA%E7%A1%80/%E8%AE%BE%E7%BD%AE%E8%A3%85%E9%A5%B0%E8%8A%82%E7%82%B9.jpg" alt="设置装饰节点" style="zoom:50%;" />
 
 <p>最终效果图如下：</p>
 <img src="/pic/%E3%80%90UE4C-ActionRougelike-10%E3%80%91AI%E5%9F%BA%E7%A1%80/AI%E5%AF%BB%E8%B7%AF+%E6%94%BB%E5%87%BB%E8%B7%9D%E7%A6%BB%E6%95%88%E6%9E%9C%E5%9B%BE.gif" alt="AI寻路+攻击距离效果图" style="zoom:67%;" />
+
+<h3 id="4、总结"><a href="#4、总结" class="headerlink" title="4、总结"></a>4、总结</h3><h4 id="4-1-装饰器-x2F-黑板节点"><a href="#4-1-装饰器-x2F-黑板节点" class="headerlink" title="4.1 装饰器&#x2F;黑板节点"></a>4.1 装饰器&#x2F;黑板节点</h4><img src="/pic/%E3%80%90UE4C-ActionRougelike-10%E3%80%91AI%E5%9F%BA%E7%A1%80/%E9%BB%91%E6%9D%BF%E8%8A%82%E7%82%B9.jpg" alt="黑板节点" style="zoom:80%;" />
+
+<p><strong>通知观察者（Notify Observer）</strong></p>
+<ul>
+<li><strong>结果改变时（On Result Change）</strong>：仅在条件改变时进行重新计算。</li>
+<li><strong>值改变时（On Value Change）</strong>：仅在观察到的黑板键改变时进行重新计算。</li>
+</ul>
+<p><strong>观察者中止（Observer Aborts）</strong></p>
+<ul>
+<li><strong>无（None）</strong>：不中止执行。</li>
+<li><strong>自身（Self）</strong>：中止此节点自身和在其下运行的所有子树。</li>
+<li><strong>低优先级（Lower Priority）</strong>：中止此节点自身和在其下运行的所有子树。</li>
+<li><strong>两者（Both）</strong>：中止此节点自身和在其下运行的所有子树，以及此节点右侧的所有节点。</li>
+</ul>
+<p><strong>黑板键（Blackboard Key）</strong>：装饰器将运行的黑板键。</p>
+<p><strong>键查询（Key Query）</strong></p>
+<ul>
+<li><strong>已经设置（Is Set）</strong>：数值是否已设置？不为空或不为默认值，则条件节点返回 true；否则，返回 false</li>
+<li><strong>尚未设置（Is Not Set）</strong>：数值是否尚未设置？为空或为默认值，则条件节点返回 true；否则，返回 false</li>
+</ul>
+<p><strong>节点名称（Node Name）</strong>：节点应该在行为树图表中显示的名称。</p>
 
                                     
                             </div>
