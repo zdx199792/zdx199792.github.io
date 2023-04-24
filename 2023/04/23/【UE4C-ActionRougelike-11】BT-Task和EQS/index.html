@@ -411,7 +411,7 @@
                             <div class="post-date info-break-policy">
                                 <i class="far fa-calendar-check fa-fw"></i>
                                 更新日期:&nbsp;&nbsp;
-                                    2023-04-23
+                                    2023-04-25
                             </div>
                             
 
@@ -497,7 +497,8 @@ protected:
 
 		FActorSpawnParameters Params;
 		Params.SpawnCollisionHandlingOverride &#x3D; ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-
+		Params.Instigator &#x3D; MyPawn;
+        
 		AActor* NewProj &#x3D; GetWorld()-&gt;SpawnActor&lt;AActor&gt;(ProjectileClass, MuzzleLocation, MuzzleRotation, Params);
 		
 		&#x2F;&#x2F;如果新生成的投射物实例不为空，则返回 EBTNodeResult::Succeeded 表示任务成功，否则返回 EBTNodeResult::Failed 表示任务失败
