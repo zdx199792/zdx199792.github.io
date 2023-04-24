@@ -5,10 +5,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="【UE4C++ ActionRougelike-03】可交互对象, Woilin&#39;s Blog">
-    <meta name="description" content="【UE4C++ ActionRougelike-03】可交互对象1、爆炸油桶1.1 创建油桶类新建油桶类SExplosionBarrel，声明所需组件
+    <meta name="description" content="【UE4C++ ActionRougelike-03】可交互对象一、爆炸油桶1、创建油桶类新建油桶类SExplosionBarrel，声明所需组件
 &amp;#x2F;&amp;#x2F;SExplosionBarrel.h
 UCLASS()
-clas">
+class ">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -414,7 +414,7 @@ clas">
                             <div class="post-date info-break-policy">
                                 <i class="far fa-calendar-check fa-fw"></i>
                                 更新日期:&nbsp;&nbsp;
-                                    2023-04-21
+                                    2023-04-25
                             </div>
                             
 
@@ -455,7 +455,7 @@ clas">
 
                         <div class="card-content article-card-content">
                             <div id="articleContent">
-                                <h2 id="【UE4C-ActionRougelike-03】可交互对象"><a href="#【UE4C-ActionRougelike-03】可交互对象" class="headerlink" title="【UE4C++ ActionRougelike-03】可交互对象"></a>【UE4C++ ActionRougelike-03】可交互对象</h2><h3 id="1、爆炸油桶"><a href="#1、爆炸油桶" class="headerlink" title="1、爆炸油桶"></a>1、爆炸油桶</h3><h4 id="1-1-创建油桶类"><a href="#1-1-创建油桶类" class="headerlink" title="1.1 创建油桶类"></a>1.1 创建油桶类</h4><p>新建油桶类SExplosionBarrel，声明所需组件</p>
+                                <h2 id="【UE4C-ActionRougelike-03】可交互对象"><a href="#【UE4C-ActionRougelike-03】可交互对象" class="headerlink" title="【UE4C++ ActionRougelike-03】可交互对象"></a>【UE4C++ ActionRougelike-03】可交互对象</h2><h3 id="一、爆炸油桶"><a href="#一、爆炸油桶" class="headerlink" title="一、爆炸油桶"></a>一、爆炸油桶</h3><h4 id="1、创建油桶类"><a href="#1、创建油桶类" class="headerlink" title="1、创建油桶类"></a>1、创建油桶类</h4><p>新建油桶类SExplosionBarrel，声明所需组件</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">&#x2F;&#x2F;SExplosionBarrel.h
 UCLASS()
 class ACTIONROGUELIKE_API ASExplosionBarrel : public AActor
@@ -506,11 +506,10 @@ void ASExplosionBarrel::OnActorHit(UPrimitiveComponent* HitComponent, AActor* Ot
 &#125;
 </code></pre>
 
-<p>效果如下：</p>
-<img src="../pic/%E3%80%90UE4C-ActionRougelike-03%E3%80%91%E5%8F%AF%E4%BA%A4%E4%BA%92%E5%AF%B9%E8%B1%A1/%E6%B2%B9%E6%A1%B6%E7%88%86%E7%82%B8.gif" alt="油桶爆炸" style="zoom:50%;" />
+<h4 id="2、效果演示"><a href="#2、效果演示" class="headerlink" title="2、效果演示"></a>2、效果演示</h4><img src="../pic/%E3%80%90UE4C-ActionRougelike-03%E3%80%91%E5%8F%AF%E4%BA%A4%E4%BA%92%E5%AF%B9%E8%B1%A1/%E6%B2%B9%E6%A1%B6%E7%88%86%E7%82%B8.gif" alt="油桶爆炸" style="zoom:67%;" />
 
-<h3 id="2、宝箱"><a href="#2、宝箱" class="headerlink" title="2、宝箱"></a>2、宝箱</h3><p>创建C++接口来实现与Actor进行交互，将交互功能封装成一个交互组件</p>
-<h4 id="2-1-创建玩家交互接口"><a href="#2-1-创建玩家交互接口" class="headerlink" title="2.1 创建玩家交互接口"></a>2.1 创建玩家交互接口</h4><p>创建交互接口类SInteractionInterface，声明交互函数Interact()</p>
+<h3 id="二、宝箱"><a href="#二、宝箱" class="headerlink" title="二、宝箱"></a>二、宝箱</h3><p>创建C++接口来实现与Actor进行交互，将交互功能封装成一个交互组件</p>
+<h4 id="1、创建玩家交互接口"><a href="#1、创建玩家交互接口" class="headerlink" title="1、创建玩家交互接口"></a>1、创建玩家交互接口</h4><p>创建交互接口类SInteractionInterface，声明交互函数Interact()</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">&#x2F;&#x2F;SInteractionInterface.h
 &#x2F;&#x2F;提供交互的API
 class ACTIONROGUELIKE_API ISInteractionInterface
@@ -521,7 +520,7 @@ public:
 	void Interact(APawn* InstigatorPawn);
 &#125;;</code></pre>
 
-<h4 id="2-2-创建宝箱类"><a href="#2-2-创建宝箱类" class="headerlink" title="2.2 创建宝箱类"></a>2.2 创建宝箱类</h4><p>创建宝箱类STreasureChestItem，声明所需组件</p>
+<h4 id="2、创建宝箱类"><a href="#2、创建宝箱类" class="headerlink" title="2、创建宝箱类"></a>2、创建宝箱类</h4><p>创建宝箱类STreasureChestItem，声明所需组件</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">&#x2F;&#x2F;STreasureChestItem.h
 &#x2F;&#x2F;继承交互接口类
 class ACTIONROGUELIKE_API ASTreasureChestItem : public AActor, public ISInteractionInterface
@@ -566,7 +565,7 @@ void ASTreasureChestItem::Interact_Implementation(APawn* InstigatorPawn)
 	LidMesh-&gt;SetRelativeRotation(FRotator(OpenPitch, 0, 0));
 &#125;</code></pre>
 
-<h4 id="2-3-创建玩家交互组件"><a href="#2-3-创建玩家交互组件" class="headerlink" title="2.3 创建玩家交互组件"></a>2.3 创建玩家交互组件</h4><p>此时还差实现玩家能够碰撞查询到玩家面前可交互的Actor是什么，然后与Actor进行交互。将这一功能从Character类中抽离出来实现交互组件，实现交互功能的解耦，也避免Character类越来越庞大。</p>
+<h4 id="3、创建玩家交互组件"><a href="#3、创建玩家交互组件" class="headerlink" title="3、创建玩家交互组件"></a>3、创建玩家交互组件</h4><p>此时还差实现玩家能够碰撞查询到玩家面前可交互的Actor是什么，然后与Actor进行交互。将这一功能从Character类中抽离出来实现交互组件，实现交互功能的解耦，也避免Character类越来越庞大。</p>
 <p>新建一个ActorComponent类SInteractionComponent表示交互组件，交互组件中声明一个公共方法来表示进行交互。</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">&#x2F;&#x2F;SInteractionComponent.h
 class ACTIONROGUELIKE_API USInteractionComponent : public UActorComponent
@@ -641,10 +640,8 @@ void AMyCharacter::PickUp()
 	&#125;
 &#125;</code></pre>
 
-<p>最终效果如下：</p>
-<img src="../pic/%E3%80%90UE4C-ActionRougelike-03%E3%80%91%E5%8F%AF%E4%BA%A4%E4%BA%92%E5%AF%B9%E8%B1%A1/%E5%AE%9D%E7%AE%B1%E4%BA%A4%E4%BA%92.gif" alt="宝箱交互" style="zoom: 50%;" />
-
-<h3 id="3、攻击动画优化"><a href="#3、攻击动画优化" class="headerlink" title="3、攻击动画优化"></a>3、攻击动画优化</h3><h4 id="3-1-添加攻击动画"><a href="#3-1-添加攻击动画" class="headerlink" title="3.1 添加攻击动画"></a>3.1 添加攻击动画</h4><p>MyCharacter.h中声明攻击动画AttackAnim(UAnimMontage*)</p>
+<h4 id="4、效果演示"><a href="#4、效果演示" class="headerlink" title="4、效果演示"></a>4、效果演示</h4><p><img src="/../pic/%E3%80%90UE4C-ActionRougelike-03%E3%80%91%E5%8F%AF%E4%BA%A4%E4%BA%92%E5%AF%B9%E8%B1%A1/%E5%AE%9D%E7%AE%B1%E4%BA%A4%E4%BA%92.gif" alt="宝箱交互"></p>
+<h3 id="三、攻击动画优化"><a href="#三、攻击动画优化" class="headerlink" title="三、攻击动画优化"></a>三、攻击动画优化</h3><h4 id="1、添加攻击动画"><a href="#1、添加攻击动画" class="headerlink" title="1、添加攻击动画"></a>1、添加攻击动画</h4><p>MyCharacter.h中声明攻击动画AttackAnim(UAnimMontage*)</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">&#x2F;&#x2F;AMyCharacter.h
 class ACTIONROGUELIKE_API AMyCharacter : public ACharacter
 &#123;
@@ -666,7 +663,7 @@ void AMyCharacter::PrimaryAttack()
 &#125;</code></pre>
 
 <p>效果如下：</p>
-<img src="../pic/%E3%80%90UE4C-ActionRougelike-03%E3%80%91%E5%8F%AF%E4%BA%A4%E4%BA%92%E5%AF%B9%E8%B1%A1/%E6%94%BB%E5%87%BB.gif" alt="攻击" style="zoom:50%;" />
+<img src="../pic/%E3%80%90UE4C-ActionRougelike-03%E3%80%91%E5%8F%AF%E4%BA%A4%E4%BA%92%E5%AF%B9%E8%B1%A1/%E6%94%BB%E5%87%BB.gif" alt="攻击" style="zoom:67%;" />
 
 <p>问题：魔法攻击类生成位置在初始手部的插槽，而不是完成攻击动画后手部插槽的位置</p>
 <p>如何解决？</p>
@@ -674,7 +671,7 @@ void AMyCharacter::PrimaryAttack()
 <li>通过一个Timer设置延迟生成攻击效果</li>
 <li>动画通知&#x2F;动画事件生成攻击效果</li>
 </ul>
-<h4 id="3-2-延迟攻击特性生成"><a href="#3-2-延迟攻击特性生成" class="headerlink" title="3.2 延迟攻击特性生成"></a>3.2 延迟攻击特性生成</h4><p>MyCharacter.h声明定时器TimerHandle_PrimaryAttack和定时器结束处理函数PrimaryAttack_TimeElapsed()</p>
+<h4 id="2、延迟攻击特性生成"><a href="#2、延迟攻击特性生成" class="headerlink" title="2、延迟攻击特性生成"></a>2、延迟攻击特性生成</h4><p>MyCharacter.h声明定时器TimerHandle_PrimaryAttack和定时器结束处理函数PrimaryAttack_TimeElapsed()</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">&#x2F;&#x2F;MyCharacter.h
 class ACTIONROGUELIKE_API AMyCharacter : public ACharacter
 &#123;
@@ -715,8 +712,7 @@ void AMyCharacter::PrimaryAttack_TimeElapsed()
 	GetWorld()-&gt;SpawnActor&lt;AActor&gt;(Projectileclass ,SpawnTM, SpawnParams);
 &#125;</code></pre>
 
-<p>效果如下：</p>
-<img src="../pic/%E3%80%90UE4C-ActionRougelike-03%E3%80%91%E5%8F%AF%E4%BA%A4%E4%BA%92%E5%AF%B9%E8%B1%A1/%E4%BC%98%E5%8C%96%E6%94%BB%E5%87%BB%E5%8A%A8%E7%94%BB.gif" alt="优化攻击动画" style="zoom:50%;" />
+<h4 id="3、效果演示"><a href="#3、效果演示" class="headerlink" title="3、效果演示"></a>3、效果演示</h4><img src="../pic/%E3%80%90UE4C-ActionRougelike-03%E3%80%91%E5%8F%AF%E4%BA%A4%E4%BA%92%E5%AF%B9%E8%B1%A1/%E4%BC%98%E5%8C%96%E6%94%BB%E5%87%BB%E5%8A%A8%E7%94%BB.gif" alt="优化攻击动画" style="zoom:67%;" />
 
                                     
                             </div>

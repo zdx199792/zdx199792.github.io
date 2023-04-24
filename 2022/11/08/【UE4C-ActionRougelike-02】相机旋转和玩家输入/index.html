@@ -5,14 +5,14 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="【UE4C++ ActionRougelike-02】相机旋转和玩家输入, Woilin&#39;s Blog">
-    <meta name="description" content="【UE4C++ ActionRougelike-02】相机旋转和玩家输入1、UE4坐标系UE4是左手坐标系：
+    <meta name="description" content="【UE4C++ ActionRougelike-02】相机旋转和玩家输入一、UE4坐标系UE4是左手坐标系：
 
 Roll：绕着X轴(红色)旋转
 Pitch：绕着Y轴(绿色)旋转
 Yaw：绕着Z轴(蓝色)旋转
 
-1.1 Rotation
-Co">
+1、 Rotation
+Con">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -418,7 +418,7 @@ Co">
                             <div class="post-date info-break-policy">
                                 <i class="far fa-calendar-check fa-fw"></i>
                                 更新日期:&nbsp;&nbsp;
-                                    2023-04-21
+                                    2023-04-25
                             </div>
                             
 
@@ -459,24 +459,24 @@ Co">
 
                         <div class="card-content article-card-content">
                             <div id="articleContent">
-                                <h2 id="【UE4C-ActionRougelike-02】相机旋转和玩家输入"><a href="#【UE4C-ActionRougelike-02】相机旋转和玩家输入" class="headerlink" title="【UE4C++ ActionRougelike-02】相机旋转和玩家输入"></a>【UE4C++ ActionRougelike-02】相机旋转和玩家输入</h2><h3 id="1、UE4坐标系"><a href="#1、UE4坐标系" class="headerlink" title="1、UE4坐标系"></a>1、UE4坐标系</h3><p>UE4是左手坐标系：<img src="/pic/%E3%80%90UE4C-ActionRougelike-02%E3%80%91%E7%9B%B8%E6%9C%BA%E6%97%8B%E8%BD%AC%E5%92%8C%E7%8E%A9%E5%AE%B6%E8%BE%93%E5%85%A5/ue4%E5%9D%90%E6%A0%87%E7%B3%BB.png" alt="ue4坐标系"></p>
+                                <h2 id="【UE4C-ActionRougelike-02】相机旋转和玩家输入"><a href="#【UE4C-ActionRougelike-02】相机旋转和玩家输入" class="headerlink" title="【UE4C++ ActionRougelike-02】相机旋转和玩家输入"></a>【UE4C++ ActionRougelike-02】相机旋转和玩家输入</h2><h3 id="一、UE4坐标系"><a href="#一、UE4坐标系" class="headerlink" title="一、UE4坐标系"></a>一、UE4坐标系</h3><p>UE4是左手坐标系：<img src="/pic/%E3%80%90UE4C-ActionRougelike-02%E3%80%91%E7%9B%B8%E6%9C%BA%E6%97%8B%E8%BD%AC%E5%92%8C%E7%8E%A9%E5%AE%B6%E8%BE%93%E5%85%A5/ue4%E5%9D%90%E6%A0%87%E7%B3%BB.png" alt="ue4坐标系"></p>
 <ul>
 <li>Roll：绕着X轴(红色)旋转</li>
 <li>Pitch：绕着Y轴(绿色)旋转</li>
 <li>Yaw：绕着Z轴(蓝色)旋转</li>
 </ul>
-<h4 id="1-1-Rotation"><a href="#1-1-Rotation" class="headerlink" title="1.1 Rotation"></a>1.1 Rotation</h4><ul>
+<h4 id="1、-Rotation"><a href="#1、-Rotation" class="headerlink" title="1、 Rotation"></a>1、 Rotation</h4><ul>
 <li><strong>ControllerRotation</strong>表示<strong>PlayerController的方位</strong>，PlayerController和PlayerCameraMenager会在游戏开始的时候生成。</li>
 <li><strong>ActorRotation</strong>表示<strong>RootComponent的方位</strong></li>
 </ul>
-<h4 id="1-2-常见的相机旋转模式"><a href="#1-2-常见的相机旋转模式" class="headerlink" title="1.2 常见的相机旋转模式"></a>1.2 常见的相机旋转模式</h4><p>FPS&#x2F;TPS：角色的正面和摄像机朝向一致，设置<strong>bUseControllerRotationYaw &#x3D; true</strong>即可，即<strong>玩家的正朝向</strong>一直会<strong>与控制器PlayController的朝向保持一致</strong>。</p>
+<h4 id="2、常见的相机旋转模式"><a href="#2、常见的相机旋转模式" class="headerlink" title="2、常见的相机旋转模式"></a>2、常见的相机旋转模式</h4><p>FPS&#x2F;TPS：角色的正面和摄像机朝向一致，设置<strong>bUseControllerRotationYaw &#x3D; true</strong>即可，即<strong>玩家的正朝向</strong>一直会<strong>与控制器PlayController的朝向保持一致</strong>。</p>
 <p>MMORPG：类似上帝视角，摄像机悬挂在半空中，玩家可以前后左右跑动，面朝移动方向。设置<strong>bUseControllerRotationYaw &#x3D; false</strong>，并将<strong>GetCharacterMovement()-&gt;bOrientRotationToMovement &#x3D; true</strong></p>
 <ul>
 <li><strong>bUseControllerRotationYaw</strong> 和<img src="/pic/%E3%80%90UE4C-ActionRougelike-02%E3%80%91%E7%9B%B8%E6%9C%BA%E6%97%8B%E8%BD%AC%E5%92%8C%E7%8E%A9%E5%AE%B6%E8%BE%93%E5%85%A5/bUseControllerRotationYaw.png" alt="bUseControllerRotationYaw" style="zoom:67%;" />表示<strong>角色的ActorRotation跟随ControllerRotation旋转</strong></li>
 <li><strong>bUsePawnControlRotation</strong>使用<strong>Pawn(ControllerRotation)控制弹簧臂旋转</strong></li>
 <li><strong>bOrientRotationToMovement</strong>表示<strong>角色的ActorRotation跟随加速度方向(即运动方向)旋转</strong></li>
 </ul>
-<h3 id="2、玩家相机旋转"><a href="#2、玩家相机旋转" class="headerlink" title="2、玩家相机旋转"></a>2、玩家相机旋转</h3><p>在MyCharacter.cpp中设置角色的相机旋转模式</p>
+<h3 id="二、玩家相机旋转"><a href="#二、玩家相机旋转" class="headerlink" title="二、玩家相机旋转"></a>二、玩家相机旋转</h3><p>在MyCharacter.cpp中设置角色的相机旋转模式</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">&#x2F;&#x2F;MyCharacter.cpp
 AMyCharacter::AMyCharacter()
 &#123;
@@ -490,7 +490,7 @@ AMyCharacter::AMyCharacter()
 	bUseControllerRotationYaw &#x3D; false;
 &#125;</code></pre>
 
-<h3 id="3、角色攻击"><a href="#3、角色攻击" class="headerlink" title="3、角色攻击"></a>3、角色攻击</h3><h4 id="3-1-创建魔法攻击类"><a href="#3-1-创建魔法攻击类" class="headerlink" title="3.1 创建魔法攻击类"></a>3.1 创建魔法攻击类</h4><p>创建抛体类MyMagicProjectile，表示基础魔法攻击类，在MyMagicProjectile.h中声明所需组件：</p>
+<h3 id="三、角色攻击"><a href="#三、角色攻击" class="headerlink" title="三、角色攻击"></a>三、角色攻击</h3><h4 id="1、创建魔法攻击类"><a href="#1、创建魔法攻击类" class="headerlink" title="1、创建魔法攻击类"></a>1、创建魔法攻击类</h4><p>创建抛体类MyMagicProjectile，表示基础魔法攻击类，在MyMagicProjectile.h中声明所需组件：</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">&#x2F;&#x2F;MyMagicProjectile.h
 UCLASS()
 class ACTIONROGUELIKE_API AMyMagicProjectile : public AActor
@@ -531,8 +531,8 @@ AMyMagicProjectile::AMyMagicProjectile()
 &#125;</code></pre>
 
 <p>基于MyMagicProjectile创建MagicProjectile_BP蓝图类：<img src="/pic/%E3%80%90UE4C-ActionRougelike-02%E3%80%91%E7%9B%B8%E6%9C%BA%E6%97%8B%E8%BD%AC%E5%92%8C%E7%8E%A9%E5%AE%B6%E8%BE%93%E5%85%A5/%E5%88%9B%E5%BB%BAMagicProjectile_BP%E8%93%9D%E5%9B%BE%E7%B1%BB.png" alt="创建MagicProjectile_BP蓝图类" style="zoom: 50%;" />并设置粒子效果。</p>
-<h4 id="3-2-绑定攻击按键"><a href="#3-2-绑定攻击按键" class="headerlink" title="3.2 绑定攻击按键"></a>3.2 绑定攻击按键</h4><p>在<strong>项目设置-&gt;Input-&gt;Action Mapping</strong>中添加攻击的按键绑定<img src="/pic/%E3%80%90UE4C-ActionRougelike-02%E3%80%91%E7%9B%B8%E6%9C%BA%E6%97%8B%E8%BD%AC%E5%92%8C%E7%8E%A9%E5%AE%B6%E8%BE%93%E5%85%A5/%E7%BB%91%E5%AE%9A%E6%94%BB%E5%87%BB%E6%8C%89%E9%94%AE.png" alt="绑定攻击按键"></p>
-<h4 id="3-3-控制魔法攻击类生成"><a href="#3-3-控制魔法攻击类生成" class="headerlink" title="3.3 控制魔法攻击类生成"></a>3.3 控制魔法攻击类生成</h4><p>在MyCharacter.h声明攻击产生的抛体类和攻击方法</p>
+<h4 id="2、绑定攻击按键"><a href="#2、绑定攻击按键" class="headerlink" title="2、绑定攻击按键"></a>2、绑定攻击按键</h4><p>在<strong>项目设置-&gt;Input-&gt;Action Mapping</strong>中添加攻击的按键绑定<img src="/pic/%E3%80%90UE4C-ActionRougelike-02%E3%80%91%E7%9B%B8%E6%9C%BA%E6%97%8B%E8%BD%AC%E5%92%8C%E7%8E%A9%E5%AE%B6%E8%BE%93%E5%85%A5/%E7%BB%91%E5%AE%9A%E6%94%BB%E5%87%BB%E6%8C%89%E9%94%AE.png" alt="绑定攻击按键"></p>
+<h4 id="3、控制魔法攻击类生成"><a href="#3、控制魔法攻击类生成" class="headerlink" title="3、控制魔法攻击类生成"></a>3、控制魔法攻击类生成</h4><p>在MyCharacter.h声明攻击产生的抛体类和攻击方法</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">&#x2F;&#x2F;MyCharacter.h
 class ACTIONROGUELIKE_API AMyCharacter : public ACharacter
 &#123;
@@ -570,14 +570,14 @@ void AMyCharacter::PrimaryAttack()
 	GetWorld()-&gt;SpawnActor&lt;AActor&gt;(Projectileclass ,SpawnTM, SpawnParams);
 &#125;</code></pre>
 
-<h4 id="3-4-实现物理碰撞"><a href="#3-4-实现物理碰撞" class="headerlink" title="3.4 实现物理碰撞"></a>3.4 实现物理碰撞</h4><p>在<strong>项目设置-&gt;collision-&gt;Preset</strong>添加抛体类MagicProjectile的碰撞配置</p>
+<h4 id="4、实现物理碰撞"><a href="#4、实现物理碰撞" class="headerlink" title="4、实现物理碰撞"></a>4、实现物理碰撞</h4><p>在<strong>项目设置-&gt;collision-&gt;Preset</strong>添加抛体类MagicProjectile的碰撞配置</p>
 <img src="/pic/%E3%80%90UE4C-ActionRougelike-02%E3%80%91%E7%9B%B8%E6%9C%BA%E6%97%8B%E8%BD%AC%E5%92%8C%E7%8E%A9%E5%AE%B6%E8%BE%93%E5%85%A5/%E7%A2%B0%E6%92%9E%E8%AE%BE%E7%BD%AE.png" alt="碰撞设置" style="zoom:67%;" />
 
-<p>设置</p>
+<p>设置碰撞体的collision profile</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">&#x2F;&#x2F;设置碰撞体的collision profile
 SphereComp-&gt;SetCollisionProfileName(&quot;Projectile&quot;);</code></pre>
 
-<h3 id="4、角色跳跃"><a href="#4、角色跳跃" class="headerlink" title="4、角色跳跃"></a>4、角色跳跃</h3><h4 id="1、绑定跳跃按键"><a href="#1、绑定跳跃按键" class="headerlink" title="1、绑定跳跃按键"></a>1、绑定跳跃按键</h4><p><strong>项目设置-&gt;Input-&gt;Action Mapping</strong>中添加跳跃的按键绑定<img src="/pic/%E3%80%90UE4C-ActionRougelike-02%E3%80%91%E7%9B%B8%E6%9C%BA%E6%97%8B%E8%BD%AC%E5%92%8C%E7%8E%A9%E5%AE%B6%E8%BE%93%E5%85%A5/%E7%BB%91%E5%AE%9A%E8%B7%B3%E8%B7%83%E6%8C%89%E9%94%AE.png" alt="绑定跳跃按键" style="zoom: 80%;" /></p>
+<h3 id="四、角色跳跃"><a href="#四、角色跳跃" class="headerlink" title="四、角色跳跃"></a>四、角色跳跃</h3><h4 id="1、绑定跳跃按键"><a href="#1、绑定跳跃按键" class="headerlink" title="1、绑定跳跃按键"></a>1、绑定跳跃按键</h4><p><strong>项目设置-&gt;Input-&gt;Action Mapping</strong>中添加跳跃的按键绑定<img src="/pic/%E3%80%90UE4C-ActionRougelike-02%E3%80%91%E7%9B%B8%E6%9C%BA%E6%97%8B%E8%BD%AC%E5%92%8C%E7%8E%A9%E5%AE%B6%E8%BE%93%E5%85%A5/%E7%BB%91%E5%AE%9A%E8%B7%B3%E8%B7%83%E6%8C%89%E9%94%AE.png" alt="绑定跳跃按键" style="zoom: 80%;" /></p>
 <h4 id="2、绑定跳跃事件"><a href="#2、绑定跳跃事件" class="headerlink" title="2、绑定跳跃事件"></a>2、绑定跳跃事件</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 &#123;
     &#x2F;&#x2F;绑定跳跃事件和处理函数(Character已有对应jump函数)
