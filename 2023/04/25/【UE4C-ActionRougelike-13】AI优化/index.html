@@ -411,7 +411,7 @@
                             <div class="post-date info-break-policy">
                                 <i class="far fa-calendar-check fa-fw"></i>
                                 更新日期:&nbsp;&nbsp;
-                                    2023-04-25
+                                    2023-04-26
                             </div>
                             
 
@@ -647,7 +647,7 @@ void AMyAICharacter::SetTargetActor(AActor* NewTarget)
 
 <h4 id="3、效果演示"><a href="#3、效果演示" class="headerlink" title="3、效果演示"></a>3、效果演示</h4><p><img src="/pic/%E3%80%90UE4C-ActionRougelike-13%E3%80%91AI%E4%BC%98%E5%8C%96/AI%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%AD%BB%E4%BA%A1%E6%95%88%E6%9E%9C%E6%BC%94%E7%A4%BA.gif" alt="AI机器人死亡效果演示"></p>
 <h3 id="三、射击逻辑优化"><a href="#三、射击逻辑优化" class="headerlink" title="三、射击逻辑优化"></a>三、射击逻辑优化</h3><h4 id="1、静态函数"><a href="#1、静态函数" class="headerlink" title="1、静态函数"></a>1、静态函数</h4><p>在MyAttributeComponent中声明两个静态函数，分别用于获取某个对象的属性组件和判断对象是否存活</p>
-<pre class="line-numbers language-none"><code class="language-none">class ACTIONROGUELIKE_API UMyAttributeComponent : public UActorComponent
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">class ACTIONROGUELIKE_API UMyAttributeComponent : public UActorComponent
 &#123;
 public:	
 	UFUNCTION(BlueprintCallable, Category &#x3D; &quot;Attributes&quot;)
@@ -657,7 +657,7 @@ public:
 	static bool IsActorAlive(AActor* Actor);
 &#125;</code></pre>
 
-<p>在MyAttributeComponent.cpp中给出函数的实现</p>
+<p>MyAttributeComponent.cpp中给出函数的实现</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">UMyAttributeComponent* UMyAttributeComponent::GetAttributes(AActor* FromActor)
 &#123;
 	if (FromActor)
