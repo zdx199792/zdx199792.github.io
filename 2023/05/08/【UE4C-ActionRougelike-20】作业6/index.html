@@ -5,21 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="【UE4C++-ActionRougelike-20】作业6, Woilin&#39;s Blog">
-    <meta name="description" content="【UE4C++-ActionRougelike-20】作业6
-愤怒属性
-玩家受到伤害增加愤怒值
-黑洞攻击消耗愤怒值释放
-屏幕显示愤怒值
-
-
-反伤Buff
-反伤给攻击者
-
-
-力量提升
-发现玩家UI
-继承自WorldUserWidget
-Min">
+    <meta name="description" content="【UE4C++-ActionRougelike-20】作业6一、愤怒属性1、添加愤怒属性在属性组件MyAttributeComponent.h中添加愤怒值和最大愤怒值属性，声明愤怒值变换多播事件FOnRageChanged，以及愤怒值修改函">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -433,7 +419,7 @@ Min">
                                     <div class="info-break-policy">
                                         <i class="far fa-file-word fa-fw"></i>
                                         文章字数:&nbsp;&nbsp;
-                                            1.7k
+                                            1.6k
                                     </div>
                                     
 
@@ -466,25 +452,7 @@ Min">
 
                         <div class="card-content article-card-content">
                             <div id="articleContent">
-                                <h2 id="【UE4C-ActionRougelike-20】作业6"><a href="#【UE4C-ActionRougelike-20】作业6" class="headerlink" title="【UE4C++-ActionRougelike-20】作业6"></a>【UE4C++-ActionRougelike-20】作业6</h2><ul>
-<li>愤怒属性<ul>
-<li>玩家受到伤害增加愤怒值</li>
-<li>黑洞攻击消耗愤怒值释放</li>
-<li>屏幕显示愤怒值</li>
-</ul>
-</li>
-<li>反伤Buff<ul>
-<li>反伤给攻击者</li>
-</ul>
-</li>
-<li>力量提升</li>
-<li>发现玩家UI<ul>
-<li>继承自WorldUserWidget</li>
-<li>Minion看到玩家时头上显示“!”</li>
-</ul>
-</li>
-</ul>
-<h3 id="一、愤怒属性"><a href="#一、愤怒属性" class="headerlink" title="一、愤怒属性"></a>一、愤怒属性</h3><h4 id="1、添加愤怒属性"><a href="#1、添加愤怒属性" class="headerlink" title="1、添加愤怒属性"></a>1、添加愤怒属性</h4><p>在属性组件MyAttributeComponent.h中添加愤怒值和最大愤怒值属性，声明愤怒值变换多播事件FOnRageChanged，以及愤怒值修改函数。</p>
+                                <h2 id="【UE4C-ActionRougelike-20】作业6"><a href="#【UE4C-ActionRougelike-20】作业6" class="headerlink" title="【UE4C++-ActionRougelike-20】作业6"></a>【UE4C++-ActionRougelike-20】作业6</h2><h3 id="一、愤怒属性"><a href="#一、愤怒属性" class="headerlink" title="一、愤怒属性"></a>一、愤怒属性</h3><h4 id="1、添加愤怒属性"><a href="#1、添加愤怒属性" class="headerlink" title="1、添加愤怒属性"></a>1、添加愤怒属性</h4><p>在属性组件MyAttributeComponent.h中添加愤怒值和最大愤怒值属性，声明愤怒值变换多播事件FOnRageChanged，以及愤怒值修改函数。</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">&#x2F;&#x2F;愤怒值变化多播事件
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FOnRageChanged, AActor*, InstigatorActor, UMyAttributeComponent*, OwningComp, float, NewRage, float, Delta);
 UCLASS( ClassGroup&#x3D;(Custom), meta&#x3D;(BlueprintSpawnableComponent) )
