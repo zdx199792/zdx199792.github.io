@@ -1,0 +1,1924 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="【UE4C++-ActionRougelike-23】保存游戏状态, Woilin&#39;s Blog">
+    <meta name="description" content="【UE4C++-ActionRougelike-23】保存游戏状态SaveGame：
+用于创建和管理游戏保存数据。它提供了一个基础类，允许您创建一个自定义的保存类，用于存储和加载游戏进度、设置、角色状态等信息
+GameplayStatics">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>【UE4C++-ActionRougelike-23】保存游戏状态 | Woilin&#39;s Blog</title>
+    <link rel="icon" type="image/jpeg" href="/head.jpg">
+    
+
+
+    <!-- bg-cover style     -->
+
+
+
+<link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="/css/matery.css">
+<link rel="stylesheet" type="text/css" href="/css/my.css">
+<link rel="stylesheet" type="text/css" href="/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="/css/post.css">
+
+
+
+
+    
+        <link rel="stylesheet" type="text/css" href="/css/reward.css">
+    
+
+
+
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/head.jpg" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Woilin&#39;s Blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/head.jpg" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Woilin&#39;s Blog</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/blinkfox/hexo-theme-matery" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/blinkfox/hexo-theme-matery" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/17.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">【UE4C++-ActionRougelike-23】保存游戏状态</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/UE4/">
+                                    <span class="chip bg-color">
+                                        UE4
+                                    </span>
+                                </a>
+                                
+                                <a href="/tags/C/">
+                                    <span class="chip bg-color">
+                                        C++
+                                    </span>
+                                </a>
+                                
+                                <a href="/tags/ActionRougelike-Game/">
+                                    <span class="chip bg-color">
+                                        ActionRougelike Game
+                                    </span>
+                                </a>
+                                
+                        </div>
+                        
+                </div>
+                <div class="col s5 right-align">
+                    
+                        <div class="post-cate">
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                                <a href="/categories/ActionRougelike-Game/" class="post-category">
+                                    ActionRougelike Game
+                                </a>
+                                
+                        </div>
+                        
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                    <div class="post-date info-break-policy">
+                        <i class="far fa-calendar-minus fa-fw"></i>
+                        发布日期:&nbsp;&nbsp;
+                            2023-05-10
+                    </div>
+                    
+
+                        
+                            <div class="post-date info-break-policy">
+                                <i class="far fa-calendar-check fa-fw"></i>
+                                更新日期:&nbsp;&nbsp;
+                                    2023-05-10
+                            </div>
+                            
+
+                                
+                                    <div class="info-break-policy">
+                                        <i class="far fa-file-word fa-fw"></i>
+                                        文章字数:&nbsp;&nbsp;
+                                            3.5k
+                                    </div>
+                                    
+
+                                        
+                                            <div class="info-break-policy">
+                                                <i class="far fa-clock fa-fw"></i>
+                                                阅读时长:&nbsp;&nbsp;
+                                                    14
+                                                        分
+                                            </div>
+                                            
+
+                                                
+                                                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                                                        <i class="far fa-eye fa-fw"></i>
+                                                        阅读次数:&nbsp;&nbsp;
+                                                            <span id="busuanzi_value_page_pv"></span>
+                                                    </div>
+                                                    
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+            <!-- 是否加载使用自带的 prismjs. -->
+            <link rel="stylesheet" href="/libs/prism/prism.min.css">
+            
+
+                
+
+                        <div class="card-content article-card-content">
+                            <div id="articleContent">
+                                <h2 id="【UE4C-ActionRougelike-23】保存游戏状态"><a href="#【UE4C-ActionRougelike-23】保存游戏状态" class="headerlink" title="【UE4C++-ActionRougelike-23】保存游戏状态"></a>【UE4C++-ActionRougelike-23】保存游戏状态</h2><p>SaveGame：</p>
+<p>用于创建和管理游戏保存数据。它提供了一个基础类，允许您创建一个自定义的保存类，用于存储和加载游戏进度、设置、角色状态等信息</p>
+<p>GameplayStatics：提供了许多实用功能的静态类，包括了许多与游戏世界和游戏对象交互的常用方法，例如游戏保存和加载。</p>
+<ul>
+<li>CreateSaveGameObject()：创建一个继承自<code>USaveGame</code>类的实例，用于保存游戏数据。</li>
+<li>SaveGameToSlot()：将<code>USaveGame</code>实例中的游戏数据保存到指定槽位。</li>
+<li>LoadGameFromSlot()：从指定槽位加载保存的游戏数据。</li>
+<li>DoesSaveGameExist()：检查指定槽位中是否存在保存的游戏数据。</li>
+</ul>
+<h3 id="一、保存游戏"><a href="#一、保存游戏" class="headerlink" title="一、保存游戏"></a>一、保存游戏</h3><h4 id="1、创建SaveGame实例"><a href="#1、创建SaveGame实例" class="headerlink" title="1、创建SaveGame实例"></a>1、创建SaveGame实例</h4><p>以SaveGame为父类创建游戏保存游戏类MySaveGame，</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">UCLASS()
+class ACTIONROGUELIKE_API UMySaveGame : public USaveGame
+&#123;
+	GENERATED_BODY()
+public:
+	&#x2F;&#x2F; 用于存储游戏中的Credits数据
+	UPROPERTY()
+	int32 Credits;
+&#125;;</code></pre>
+
+<h4 id="2、保存和读取SaveGame"><a href="#2、保存和读取SaveGame" class="headerlink" title="2、保存和读取SaveGame"></a>2、保存和读取SaveGame</h4><p>在MyGameModeBase中进行以下修改：</p>
+<ul>
+<li>增加一个MySaveGame对象CurrentSaveGame表示当前游戏存档的对象和SlotName表示游戏存档名；</li>
+<li>重写InitGame方法，用于游戏初始化</li>
+<li>增加两个游戏存档方法WriteSaveGame和LoadSaveGame，分别用于写入和加载游戏存档</li>
+</ul>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">UCLASS()
+class ACTIONROGUELIKE_API AMyGameModeBase : public AGameModeBase
+&#123;
+protected:
+    &#x2F;&#x2F; 用于保存游戏存档的槽位名称
+    FString SlotName;
+    &#x2F;&#x2F; 当前的游戏存档对象
+    UPROPERTY()
+    UMySaveGame* CurrentSaveGame;
+public:
+    &#x2F;&#x2F; 重写AGameModeBase的InitGame方法，用于游戏初始化
+    void InitGame(const FString&amp; MapName, const FString&amp; Options, FString&amp; ErrorMessage) override;
+    &#x2F;&#x2F; 将游戏数据写入存档
+    UFUNCTION(BlueprintCallable, Category &#x3D; &quot;SaveGame&quot;)
+    void WriteSaveGame();
+    &#x2F;&#x2F; 加载游戏存档的函数
+    void LoadSaveGame();
+&#125;;</code></pre>
+
+<p>在MyGameModeBase中的构造函数中对SlotName初始化，并实现和游戏存档相关的三个方法</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">&#x2F;&#x2F; 用于游戏初始化
+void AMyGameModeBase::InitGame(const FString&amp; MapName, const FString&amp; Options, FString&amp; ErrorMessage)
+&#123;
+    Super::InitGame(MapName, Options, ErrorMessage);
+    &#x2F;&#x2F; 在游戏初始化时加载游戏存档
+    LoadSaveGame();
+&#125;
+&#x2F;&#x2F; 将游戏数据写入存档
+void AMyGameModeBase::WriteSaveGame()
+&#123;
+    &#x2F;&#x2F; 使用UGameplayStatics的SaveGameToSlot方法将当前游戏存档对象保存到指定的槽位
+    UGameplayStatics::SaveGameToSlot(CurrentSaveGame, SlotName, 0);
+&#125;
+&#x2F;&#x2F; 加载游戏存档
+void AMyGameModeBase::LoadSaveGame()
+&#123;
+    &#x2F;&#x2F; 判断指定槽位是否存在存档
+    if (UGameplayStatics::DoesSaveGameExist(SlotName, 0))
+    &#123;
+        &#x2F;&#x2F; 从指定槽位加载游戏存档
+        CurrentSaveGame &#x3D; Cast&lt;UMySaveGame&gt;(UGameplayStatics::LoadGameFromSlot(SlotName, 0));
+        if (CurrentSaveGame &#x3D;&#x3D; nullptr)
+        &#123;
+            UE_LOG(LogTemp, Warning, TEXT(&quot;Failed to load SaveGame Data.&quot;));
+            return;
+        &#125;
+        UE_LOG(LogTemp, Log, TEXT(&quot;Loaded SaveGame Data.&quot;));
+    &#125;
+    else
+    &#123;
+        &#x2F;&#x2F; 若指定槽位不存在存档，则创建新的存档对象
+        CurrentSaveGame &#x3D; Cast&lt;UMySaveGame&gt;(UGameplayStatics::CreateSaveGameObject(UMySaveGame::StaticClass()));
+        UE_LOG(LogTemp, Log, TEXT(&quot;Created New SaveGame Data.&quot;));
+    &#125;
+&#125;</code></pre>
+
+<h4 id="3、保存游戏按键绑定"><a href="#3、保存游戏按键绑定" class="headerlink" title="3、保存游戏按键绑定"></a>3、保存游戏按键绑定</h4><p>在PlayerController_BP中进行保存游戏按键绑定</p>
+<img src="/pic/%E3%80%90UE4C-ActionRougelike-23%E3%80%91%E4%BF%9D%E5%AD%98%E6%B8%B8%E6%88%8F%E7%8A%B6%E6%80%81/%E4%BF%9D%E5%AD%98%E6%B8%B8%E6%88%8F%E6%8C%89%E9%94%AE%E7%BB%91%E5%AE%9A.jpg" alt="保存游戏按键绑定" style="zoom:67%;" />
+
+<h4 id="4、效果演示"><a href="#4、效果演示" class="headerlink" title="4、效果演示"></a>4、效果演示</h4><img src="/pic/%E3%80%90UE4C-ActionRougelike-23%E3%80%91%E4%BF%9D%E5%AD%98%E6%B8%B8%E6%88%8F%E7%8A%B6%E6%80%81/%E4%BF%9D%E5%AD%98%E6%B8%B8%E6%88%8F.gif" alt="保存游戏" style="zoom:67%;" />
+
+<h3 id="二、保存玩家积分"><a href="#二、保存玩家积分" class="headerlink" title="二、保存玩家积分"></a>二、保存玩家积分</h3><p>SaveGame()</p>
+<ul>
+<li>创建一个SaveGame实例</li>
+<li>从PlayerState中复制积分到SaveGame</li>
+<li>调用UGameStatics::SaveGameToSlot()</li>
+</ul>
+<p>LoadGame()</p>
+<ul>
+<li>检查SaveGame文件是否存在</li>
+<li>调用UGameStatics::LoadGameFromSlot()</li>
+<li>从SaveGame中复制积分到PlayerState</li>
+</ul>
+<h4 id="1、多人游戏下的保存游戏"><a href="#1、多人游戏下的保存游戏" class="headerlink" title="1、多人游戏下的保存游戏"></a>1、多人游戏下的保存游戏</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">&#x2F;&#x2F;MyGameModeBase.h
+&#x2F;&#x2F;处理新玩家加入游戏的逻辑。当新玩家连接到游戏服务器时，服务器会调用此函数
+void HandleStartingNewPlayer_Implementation(APlayerController* NewPlayer) override;
+
+&#x2F;&#x2F;MyGameModeBase.cpp
+void AMyGameModeBase::WriteSaveGame()
+&#123;
+	&#x2F;&#x2F; 遍历GameState中的PlayerArray
+	for (int32 i &#x3D; 0; i &lt; GameState-&gt;PlayerArray.Num(); i++)
+	&#123;
+		AMyPlayerState* PS &#x3D; Cast&lt;AMyPlayerState&gt;(GameState-&gt;PlayerArray[i]);
+		if (PS)
+		&#123;
+			&#x2F;&#x2F; 如果成功获取到PlayerState，调用PS的SavePlayerState方法，传入当前的SaveGame对象
+			PS-&gt;SavePlayerState(CurrentSaveGame);
+			break; &#x2F;&#x2F; 目前只支持单人游戏，所以处理一个玩家后就退出循环
+		&#125;
+	&#125;
+	&#x2F;&#x2F; 将当前游戏存档对象保存到指定的槽位
+	UGameplayStatics::SaveGameToSlot(CurrentSaveGame, SlotName, 0);
+&#125;
+&#x2F;&#x2F;有新玩家加入时，首先为其加载其PlayerState
+void AMyGameModeBase::HandleStartingNewPlayer_Implementation(APlayerController* NewPlayer)
+&#123;
+	Super::HandleStartingNewPlayer_Implementation(NewPlayer);
+	&#x2F;&#x2F; 获取NewPlayer的PlayerState，并存储到PS变量中
+	AMyPlayerState* PS &#x3D; NewPlayer-&gt;GetPlayerState&lt;AMyPlayerState&gt;();
+	if (PS)
+	&#123;
+		&#x2F;&#x2F;调用PS的LoadPlayerState方法,传入当前的SaveGame对象
+		PS-&gt;LoadPlayerState(CurrentSaveGame);
+	&#125;
+&#125;</code></pre>
+
+<h4 id="2、保存和加载PlayerState"><a href="#2、保存和加载PlayerState" class="headerlink" title="2、保存和加载PlayerState"></a>2、保存和加载PlayerState</h4><p>在MyPlayerState中增加保存和加载PlayerState的方法</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">class ACTIONROGUELIKE_API AMyPlayerState : public APlayerState
+&#123;
+    &#x2F;&#x2F; 用于保存玩家状态
+    UFUNCTION(BlueprintNativeEvent)
+    void SavePlayerState(UMySaveGame* SaveObject);
+    &#x2F;&#x2F; 用于加载玩家状态
+    UFUNCTION(BlueprintNativeEvent)
+    void LoadPlayerState(UMySaveGame* SaveObject);
+&#125;
+void AMyPlayerState::SavePlayerState_Implementation(UMySaveGame* SaveObject)
+&#123;
+    if (SaveObject)
+    &#123;
+        &#x2F;&#x2F; 将玩家的Credits保存到SaveObject中
+        SaveObject-&gt;Credits &#x3D; Credits;
+    &#125;
+&#125;
+void AMyPlayerState::LoadPlayerState_Implementation(UMySaveGame* SaveObject)
+&#123;
+    if (SaveObject)
+    &#123;
+        &#x2F;&#x2F; 从SaveObject中加载玩家的Credits
+        Credits &#x3D; SaveObject-&gt;Credits;
+    &#125;
+&#125;</code></pre>
+
+<h4 id="3、效果演示"><a href="#3、效果演示" class="headerlink" title="3、效果演示"></a>3、效果演示</h4><p>这里需要先修改Credits_Widget，每次创建时先初始化Credits值，方法类似于先前的Health</p>
+<img src="/pic/%E3%80%90UE4C-ActionRougelike-23%E3%80%91%E4%BF%9D%E5%AD%98%E6%B8%B8%E6%88%8F%E7%8A%B6%E6%80%81/%E4%BF%9D%E5%AD%98%E7%8E%A9%E5%AE%B6%E7%A7%AF%E5%88%86.gif" alt="保存玩家积分" style="zoom:80%;" />
+
+<h3 id="三、保存游戏可移动Actor的位置"><a href="#三、保存游戏可移动Actor的位置" class="headerlink" title="三、保存游戏可移动Actor的位置"></a>三、保存游戏可移动Actor的位置</h3><p>SaveGame()</p>
+<ul>
+<li>遍历World中的Actors</li>
+<li>根据接口、类、标签等查找相关的角色。</li>
+<li>保存一个包含ActorName和ActorTransform的结构体</li>
+<li>添加结构体到SaveGame</li>
+</ul>
+<p>LoadGame()</p>
+<ul>
+<li>加载Actor数据(ActorName和ActorTransform的数组)</li>
+<li>遍历World中的Actors</li>
+<li>从可用的SaveGame数据中按名称查找匹配的角色</li>
+<li>移动每个Actor到它保存的位置(Actor-&gt;SetActorTransform(LoadedTransform))</li>
+</ul>
+<h4 id="1、SaveGame中添加Actor数据"><a href="#1、SaveGame中添加Actor数据" class="headerlink" title="1、SaveGame中添加Actor数据"></a>1、SaveGame中添加Actor数据</h4><p>在SaveGame中要保存一个包含ActorName和ActorTransform的结构体，创建这样的一个结构体ActorSaveData，并保存一个结构体数组SavedActors</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">USTRUCT()
+struct FActorSaveData
+&#123;
+	GENERATED_BODY()
+public:
+	&#x2F;&#x2F; 用于表示该结构体所属的Actor的名称
+	UPROPERTY()
+	FString ActorName;
+	&#x2F;&#x2F; 用于存储可移动Actor的位置、旋转和缩放信息
+	UPROPERTY()
+	FTransform Transform;
+&#125;;
+UCLASS()
+class ACTIONROGUELIKE_API UMySaveGame : public USaveGame
+&#123;
+public:	
+    &#x2F;&#x2F; 用于存储游戏中多个Actor的保存数据
+	UPROPERTY()
+	TArray&lt;FActorSaveData&gt; SavedActors;
+&#125;;</code></pre>
+
+<h4 id="2、写入和加载Actor数据"><a href="#2、写入和加载Actor数据" class="headerlink" title="2、写入和加载Actor数据"></a>2、写入和加载Actor数据</h4><p>在MyGameModeBase的写入SaveGame和加载SaveGame中，添加对SavedActors的写入和加载</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">void AMyGameModeBase::WriteSaveGame()
+&#123;
+	&#x2F;&#x2F; 遍历GameState中的PlayerArray
+	&#x2F;&#x2F;...
+	&#x2F;&#x2F; 清空SavedActors数组，避免受先前保存的影响
+	CurrentSaveGame-&gt;SavedActors.Empty();
+	&#x2F;&#x2F; 遍历整个世界的Actor
+	for (FActorIterator It(GetWorld()); It; ++It)
+	&#123;
+		AActor* Actor &#x3D; *It;
+		&#x2F;&#x2F; 只关心实现USInteractionInterface接口的&quot;游戏内Actor&quot;
+		if (!Actor-&gt;Implements&lt;USInteractionInterface&gt;())
+		&#123;
+			continue;
+		&#125;
+		&#x2F;&#x2F; 为每个Actor创建一个FActorSaveData实例
+		FActorSaveData ActorData;
+		ActorData.ActorName &#x3D; Actor-&gt;GetName();
+		ActorData.Transform &#x3D; Actor-&gt;GetActorTransform();
+		&#x2F;&#x2F; 将ActorData添加到CurrentSaveGame的SavedActors数组中
+		CurrentSaveGame-&gt;SavedActors.Add(ActorData);
+	&#125;
+	&#x2F;&#x2F; 将当前游戏存档对象保存到指定的槽位
+	UGameplayStatics::SaveGameToSlot(CurrentSaveGame, SlotName, 0);
+&#125;
+void AMyGameModeBase::LoadSaveGame()
+&#123;
+	&#x2F;&#x2F; 判断指定槽位是否存在存档
+	if (UGameplayStatics::DoesSaveGameExist(SlotName, 0))
+	&#123;
+		&#x2F;&#x2F; 从指定槽位加载游戏存档
+         &#x2F;&#x2F;...
+		for (FActorIterator It(GetWorld()); It; ++It)
+		&#123;
+			AActor* Actor &#x3D; *It;
+			&#x2F;&#x2F; 只关心实现USInteractionInterface接口的&quot;游戏内Actor&quot;
+			if (!Actor-&gt;Implements&lt;USInteractionInterface&gt;())
+			&#123;
+				continue;
+			&#125;
+			&#x2F;&#x2F; 遍历保存的Actor数据
+			for (FActorSaveData ActorData : CurrentSaveGame-&gt;SavedActors)
+			&#123;
+				&#x2F;&#x2F; 检查Actor名称是否匹配
+				if (ActorData.ActorName &#x3D;&#x3D; Actor-&gt;GetName())
+				&#123;
+					&#x2F;&#x2F; 设置Actor的位置、旋转和缩放
+					Actor-&gt;SetActorTransform(ActorData.Transform);
+					break;
+				&#125;
+			&#125;
+		&#125;
+	&#125;
+	else
+	&#123;
+		&#x2F;&#x2F; 若指定槽位不存在存档，则创建新的存档对象
+		CurrentSaveGame &#x3D; Cast&lt;UMySaveGame&gt;(UGameplayStatics::CreateSaveGameObject(UMySaveGame::StaticClass()));
+		UE_LOG(LogTemp, Log, TEXT(&quot;Created New SaveGame Data.&quot;));
+	&#125;
+&#125;</code></pre>
+
+<h4 id="3、效果演示-1"><a href="#3、效果演示-1" class="headerlink" title="3、效果演示"></a>3、效果演示</h4><p>这里拿实现ISInteractionInterface的宝箱作为测试的Actor（需打开宝箱蓝图中的模拟物理）</p>
+<img src="/pic/%E3%80%90UE4C-ActionRougelike-23%E3%80%91%E4%BF%9D%E5%AD%98%E6%B8%B8%E6%88%8F%E7%8A%B6%E6%80%81/%E4%BF%9D%E5%AD%98%E5%8F%AF%E7%A7%BB%E5%8A%A8Actor%E7%9A%84%E4%BD%8D%E7%BD%AE.gif" alt="保存可移动Actor的位置" style="zoom: 80%;" />
+
+<h3 id="四、序列化保存任何数据"><a href="#四、序列化保存任何数据" class="headerlink" title="四、序列化保存任何数据"></a>四、序列化保存任何数据</h3><p>将所需变量标记为UPROPERTY(SaveGame)</p>
+<ul>
+<li>例如变量bLidOpened</li>
+</ul>
+<p>SaveGame()</p>
+<ul>
+<li>遍历World中的Actors</li>
+<li>根据接口、类、标签等查找相关的角色。</li>
+<li>Actor-&gt;Serialize()，将UPROPERTY（SaveGame）变量转换为FArchive（二进制）。</li>
+<li>将包含序列化Actor数据的生成二进制数据添加到保存游戏中。</li>
+</ul>
+<p>LoadGame()</p>
+<ul>
+<li>从SaveGame中获取二进制数据</li>
+<li>遍历World中的Actors</li>
+<li>从可用的SaveGame数据中按名称查找匹配的角色</li>
+<li>Actor-&gt;Serialize()，将二进制数据转换为Actor数据</li>
+</ul>
+<p>这里拿宝箱开启状态举例</p>
+<h4 id="1、标记变量"><a href="#1、标记变量" class="headerlink" title="1、标记变量"></a>1、标记变量</h4><p>在STreasureChestItem.h中将bLidOpened属性标记为SaveGame</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">&#x2F;&#x2F; SaveGame 标签，它是一个特定的 UPROPERTY 参数，用于表示该变量将在保存游戏时被序列化并存储在磁盘上
+UPROPERTY(ReplicatedUsing&#x3D;&quot;OnRep_LidOpened&quot;, BlueprintReadOnly, SaveGame)
+bool bLidOpened;</code></pre>
+
+<h4 id="2、写入和加载变量"><a href="#2、写入和加载变量" class="headerlink" title="2、写入和加载变量"></a>2、写入和加载变量</h4><p>在MyGameModeBase的写入SaveGame和加载SaveGame中，添加对变量的序列化以及之后的写入和加载</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">void AMyGameModeBase::WriteSaveGame()
+&#123;
+	&#x2F;&#x2F;...
+	&#x2F;&#x2F; 遍历整个世界的Actor
+	for (FActorIterator It(GetWorld()); It; ++It)
+	&#123;
+		AActor* Actor &#x3D; *It;
+		&#x2F;&#x2F; 只关心实现USInteractionInterface接口的&quot;游戏内Actor&quot;
+		if (!Actor-&gt;Implements&lt;USInteractionInterface&gt;())
+		&#123;
+			continue;
+		&#125;
+		&#x2F;&#x2F; 为每个Actor创建一个FActorSaveData实例
+		FActorSaveData ActorData;
+		ActorData.ActorName &#x3D; Actor-&gt;GetName();
+		ActorData.Transform &#x3D; Actor-&gt;GetActorTransform();	
+		&#x2F;&#x2F; 将ActorData的ByteData数组传递给内存缓冲区MemWriter
+		FMemoryWriter MemWriter(ActorData.ByteData);
+		&#x2F;&#x2F; 创建一个以对象和名称为字符串的代理存档
+		FObjectAndNameAsStringProxyArchive Ar(MemWriter, true);
+		&#x2F;&#x2F; 表示当前的反序列化操作是为了加载游戏
+		Ar.ArIsSaveGame &#x3D; true;
+		&#x2F;&#x2F; 将带有SaveGame标签的UPROPERTY转换为二进制数组
+		Actor-&gt;Serialize(Ar);
+		&#x2F;&#x2F; 将ActorData添加到CurrentSaveGame的SavedActors数组中
+		CurrentSaveGame-&gt;SavedActors.Add(ActorData);
+	&#125;
+	&#x2F;&#x2F; 将当前游戏存档对象保存到指定的槽位
+	UGameplayStatics::SaveGameToSlot(CurrentSaveGame, SlotName, 0);
+&#125;
+void AMyGameModeBase::LoadSaveGame()
+&#123;
+	&#x2F;&#x2F; 判断指定槽位是否存在存档
+	if (UGameplayStatics::DoesSaveGameExist(SlotName, 0))
+	&#123;
+		&#x2F;&#x2F; ...
+		for (FActorIterator It(GetWorld()); It; ++It)
+		&#123;
+			&#x2F;&#x2F;...
+			&#x2F;&#x2F; 遍历保存的Actor数据
+			for (FActorSaveData ActorData : CurrentSaveGame-&gt;SavedActors)
+			&#123;
+				&#x2F;&#x2F; 检查Actor名称是否匹配
+				if (ActorData.ActorName &#x3D;&#x3D; Actor-&gt;GetName())
+				&#123;
+					&#x2F;&#x2F; 设置Actor的位置、旋转和缩放
+					Actor-&gt;SetActorTransform(ActorData.Transform);
+					&#x2F;&#x2F; 将ActorData的ByteData数组传递给内存缓冲区MemReader
+					FMemoryReader MemReader(ActorData.ByteData);
+					&#x2F;&#x2F; 创建一个以对象和名称为字符串的代理存档
+					FObjectAndNameAsStringProxyArchive Ar(MemReader, true);
+					&#x2F;&#x2F; 表示当前的反序列化操作是为了加载游戏
+					Ar.ArIsSaveGame &#x3D; true;
+					&#x2F;&#x2F; 将带有SaveGame标签的UPROPERTY转换为二进制数组
+					Actor-&gt;Serialize(Ar);
+					&#x2F;&#x2F; 设置Actor的位置、旋转和缩放(这一步要等到下面完成初始化加载函数后进行)
+					ISInteractionInterface::Execute_OnActorLoaded(Actor);
+					break;
+				&#125;
+			&#125;
+		&#125;
+	&#125;
+	else
+	&#123;
+		&#x2F;&#x2F; 若指定槽位不存在存档，则创建新的存档对象
+         &#x2F;&#x2F;...
+	&#125;
+&#125;</code></pre>
+
+<h4 id="3、宝箱初始化加载"><a href="#3、宝箱初始化加载" class="headerlink" title="3、宝箱初始化加载"></a>3、宝箱初始化加载</h4><p>在InteractionInterface.h中创建函数OnActorLoaded用于Actor的初始化加载，在宝箱类STreasureChestItem中添加OnActorLoad的实现</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">&#x2F;&#x2F;InteractionInterface.h
+UFUNCTION(BlueprintNativeEvent)
+void OnActorLoaded();
+&#x2F;&#x2F;STreasureChestItem.h
+void OnActorLoaded_Implementation();
+&#x2F;&#x2F;STreasureChestItem.cpp	
+void ASTreasureChestItem::OnActorLoaded_Implementation()
+&#123;
+	OnRep_LidOpened();
+&#125;</code></pre>
+
+<h4 id="4、开启复制"><a href="#4、开启复制" class="headerlink" title="4、开启复制"></a>4、开启复制</h4><p>勾选宝箱的<strong>Replicate Movement</strong>和RootComponent中的<strong>Component Replicates</strong>。</p>
+<ul>
+<li>Replicate Movement 主要用于在多人游戏中同步角色或其他移动对象的位置、旋转和速度。当为一个对象启用 Replicate Movement 时，引擎会自动处理位置、旋转和速度的同步，确保游戏中的所有客户端看到的对象位置和动作保持一致。</li>
+<li>Component Replicates 用于同步 Actor 组件的状态。当为一个组件启用 Component Replicates 时，引擎会自动处理组件属性的同步，确保所有客户端看到的组件状态保持一致。</li>
+</ul>
+<h4 id="5、效果演示"><a href="#5、效果演示" class="headerlink" title="5、效果演示"></a>5、效果演示</h4><p><img src="/pic/%E3%80%90UE4C-ActionRougelike-23%E3%80%91%E4%BF%9D%E5%AD%98%E6%B8%B8%E6%88%8F%E7%8A%B6%E6%80%81/%E5%AE%9D%E7%AE%B1%E7%8A%B6%E6%80%81%E5%90%8C%E6%AD%A5.gif" alt="宝箱状态同步"></p>
+<h4 id="6、总结"><a href="#6、总结" class="headerlink" title="6、总结"></a>6、总结</h4><h5 id="6-1-UPROPERTY-SaveGame"><a href="#6-1-UPROPERTY-SaveGame" class="headerlink" title="6.1 UPROPERTY(SaveGame)"></a>6.1 UPROPERTY(SaveGame)</h5><ul>
+<li>概念：<code>UPROPERTY(SaveGame)</code> 是虚幻引擎中一个特殊的 <code>UPROPERTY</code> 标签，它用于标记在保存游戏进度时需要序列化和存储的类成员变量。当使用此标签时，引擎会确保在游戏保存和加载时，这些变量的值得到正确地存储和恢复。</li>
+<li>使用：只需在类成员变量声明之前添加此宏</li>
+<li>注意事项：确保保存类继承自 <code>USaveGame</code>，这样引擎才能正确处理保存和加载逻辑</li>
+</ul>
+<h5 id="6-2-FMemoryWriter和FMemoryReader"><a href="#6-2-FMemoryWriter和FMemoryReader" class="headerlink" title="6.2 FMemoryWriter和FMemoryReader"></a>6.2 FMemoryWriter和FMemoryReader</h5><ul>
+<li><p>概念</p>
+<ul>
+<li><code>FMemoryWriter</code> 类用于将序列化数据写入内存缓冲区。</li>
+<li><code>FMemoryReader</code> 类用于从内存缓冲区中读取序列化数据。</li>
+</ul>
+</li>
+<li><p>使用</p>
+<ul>
+<li><pre><code class="cpp">// FMemoryWriter用法
+// 创建一个 TArray&lt;uint8&gt; 对象，用于存储序列化数据。
+// 创建一个 FMemoryWriter 对象，将数据写入 `TArray&lt;uint8&gt;` 缓冲区。
+// 使用 FMemoryWriter 对象将对象（如Actor）序列化到内存缓冲区中
+
+// 创建一个TArray对象，用于存储序列化数据
+TArray&lt;uint8&gt; SerializedData;
+// 创建一个FMemoryWriter对象，将数据写入SerializedData缓冲区
+FMemoryWriter MemoryWriter(SerializedData, true);
+// 使用FMemoryWriter对象将Actor对象序列化到内存缓冲区中
+MyActor-&gt;Serialize(MemoryWriter);
+
+// FMemoryReader用法
+//从文件或其他来源获取序列化数据，并存储在 TArray&lt;uint8&gt; 对象中。
+//创建一个 FMemoryReader 对象，从 TArray&lt;uint8&gt; 缓冲区中读取数据。
+//使用 FMemoryReader 对象从内存缓冲区中反序列化对象（如Actor）。
+
+// 从文件等读取序列化数据
+TArray&lt;uint8&gt; SerializedData;
+// 创建一个 FMemoryReader 对象，从 SerializedData 缓冲区中读取数据
+FMemoryReader MemoryReader(SerializedData, true);
+// 使用FMemoryReader对象从内存缓冲区中反序列化Actor对象
+MyActor-&gt;Serialize(MemoryReader);
+</code></pre>
+</li>
+</ul>
+</li>
+<li><p>注意事项</p>
+<ul>
+<li>在序列化和反序列化过程中，确保对象的属性已经标记为 <code>UProperty</code>，否则反射系统无法识别这些属性</li>
+<li>序列化后的数据存储在 <code>TArray&lt;uint8&gt;</code> 对象中，需要确保该对象在序列化和反序列化过程中一直存在。在性能敏感的场景中，可以考虑预先分配足够的内存空间，以避免动态扩展数组带来的性能开销</li>
+</ul>
+</li>
+</ul>
+<h5 id="6-3-FObjectAndNameAsStringProxyArchive"><a href="#6-3-FObjectAndNameAsStringProxyArchive" class="headerlink" title="6.3 FObjectAndNameAsStringProxyArchive"></a>6.3 FObjectAndNameAsStringProxyArchive</h5><ul>
+<li>概念：<code>FObjectAndNameAsStringProxyArchive</code> 是Unreal Engine中的一个代理序列化类，它继承自 <code>FArchive</code> 类。它的主要作用是在序列化和反序列化过程中，将对象引用和名字引用以字符串形式存储。</li>
+</ul>
+<h5 id="6-4-ArIsSaveGame"><a href="#6-4-ArIsSaveGame" class="headerlink" title="6.4 ArIsSaveGame"></a>6.4 ArIsSaveGame</h5><ul>
+<li>概念：<code>ArIsSaveGame</code> 是虚幻引擎中 <code>FArchive</code> 类的一个成员变量，当序列化操作是为了保存游戏时，它的值为 <code>true</code>，否则为 <code>false</code></li>
+</ul>
+<h5 id="6-5-Serialize"><a href="#6-5-Serialize" class="headerlink" title="6.5 Serialize"></a>6.5 Serialize</h5><ul>
+<li>概念：<code>Serialize()</code> 函数是虚幻引擎中用于实现对象序列化和反序列化的核心方法，用于处理对象的序列化和反序列化。通过序列化，我们可以将对象的状态转换为二进制数据以便存储或传输。反序列化则是将二进制数据转换回对象的状态。</li>
+<li>使用：<ul>
+<li>在序列化过程中，<code>Serialize()</code> 函数将对象的状态（成员变量）写入 <code>FArchive</code> 对象。</li>
+<li>在反序列化过程中，<code>Serialize()</code> 函数从 <code>FArchive</code> 对象中读取数据，并将其应用到对象的状态。</li>
+</ul>
+</li>
+</ul>
+
+                                    
+                            </div>
+                            <hr />
+
+                            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">Woilin</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://zdx199792.github.io/2023/05/10/%E3%80%90UE4C-ActionRougelike-23%E3%80%91%E4%BF%9D%E5%AD%98%E6%B8%B8%E6%88%8F%E7%8A%B6%E6%80%81/">https://zdx199792.github.io/2023/05/10/%E3%80%90UE4C-ActionRougelike-23%E3%80%91%E4%BF%9D%E5%AD%98%E6%B8%B8%E6%88%8F%E7%8A%B6%E6%80%81/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">Woilin</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+                                <div class="tag_share" style="display: block;">
+                                    <div class="post-meta__tag-list" style="display: inline-block;">
+                                        
+                                            <div class="article-tag">
+                                                
+                                                    <a href="/tags/UE4/">
+                                                        <span class="chip bg-color">
+                                                            UE4
+                                                        </span>
+                                                    </a>
+                                                    
+                                                    <a href="/tags/C/">
+                                                        <span class="chip bg-color">
+                                                            C++
+                                                        </span>
+                                                    </a>
+                                                    
+                                                    <a href="/tags/ActionRougelike-Game/">
+                                                        <span class="chip bg-color">
+                                                            ActionRougelike Game
+                                                        </span>
+                                                    </a>
+                                                    
+                                            </div>
+                                            
+                                    </div>
+                                    <div class="post_share"
+                                        style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                                        <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                                    </div>
+                                </div>
+                                
+                                    <div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.png" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+                                        
+                        </div>
+    </div>
+
+    
+
+                
+
+                            
+
+                                        
+
+                                                    
+                                                        <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments textarea {
+        box-sizing: border-box;
+        background: url("/medias/comment_bg.png") 100% 100% no-repeat;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #4cbf30;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="vcomments" class="card-content" style="display: grid">
+    </div>
+</div>
+
+<script src="/libs/valine/av-min.js"></script>
+<script src="/libs/valine/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: 'FA8Iw62BrZZFMhahnSqyjDvL-gzGzoHsz',
+        appKey: 'A60z6ZP81d4ELNMi8exPQi4s',
+        serverURLs: 'https://fa8iw62b.lc-cn-n1-shared.com',
+        notify: 'false' === 'true',
+        verify: 'false' === 'true',
+        visitor: 'true' === 'true',
+        avatar: 'mm',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: 'just go go'
+    });
+</script>
+
+<!--酷Q推送-->
+
+
+                                                            
+
+                                                                
+
+                                                                            
+
+                                                                                        
+
+                                                                                                    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2023/05/10/%E3%80%90UE4C-ActionRougelike-23%E3%80%91%E4%BF%9D%E5%AD%98%E6%B8%B8%E6%88%8F%E7%8A%B6%E6%80%81/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="【UE4C++-ActionRougelike-23】保存游戏状态">
+                        
+                        <span class="card-title">【UE4C++-ActionRougelike-23】保存游戏状态</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-05-10
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/ActionRougelike-Game/" class="post-category">
+                                    ActionRougelike Game
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/UE4/">
+                        <span class="chip bg-color">UE4</span>
+                    </a>
+                    
+                    <a href="/tags/C/">
+                        <span class="chip bg-color">C++</span>
+                    </a>
+                    
+                    <a href="/tags/ActionRougelike-Game/">
+                        <span class="chip bg-color">ActionRougelike Game</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2023/05/09/%E3%80%90UE4C-ActionRougelike-22%E3%80%91%E9%97%AE%E9%A2%98%E4%BF%AE%E5%A4%8D%E2%80%94%E2%80%94%E7%BA%A6%E6%9D%9F%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%9A%84%E6%9D%83%E9%99%90/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="【UE4C++-ActionRougelike-22】问题修复——约束客户端的权限">
+                        
+                        <span class="card-title">【UE4C++-ActionRougelike-22】问题修复——约束客户端的权限</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-05-09
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/ActionRougelike-Game/" class="post-category">
+                                    ActionRougelike Game
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/UE4/">
+                        <span class="chip bg-color">UE4</span>
+                    </a>
+                    
+                    <a href="/tags/C/">
+                        <span class="chip bg-color">C++</span>
+                    </a>
+                    
+                    <a href="/tags/ActionRougelike-Game/">
+                        <span class="chip bg-color">ActionRougelike Game</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+    <script>
+        $('#articleContent').on('copy', function (e) {
+            // IE8 or earlier browser is 'undefined'
+            if (typeof window.getSelection === 'undefined') return;
+
+            var selection = window.getSelection();
+            // if the selection is short let's not annoy our users.
+            if (('' + selection).length < Number.parseInt('120')) {
+                return;
+            }
+
+            // create a div outside of the visible area and fill it with the selected text.
+            var bodyElement = document.getElementsByTagName('body')[0];
+            var newdiv = document.createElement('div');
+            newdiv.style.position = 'absolute';
+            newdiv.style.left = '-99999px';
+            bodyElement.appendChild(newdiv);
+            newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+            // we need a <pre> tag workaround.
+            // otherwise the text inside "pre" loses all the line breaks!
+            if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE' || selection.getRangeAt(0).commonAncestorContainer.nodeName === 'CODE') {
+                newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+            }
+
+            var url = document.location.href;
+            newdiv.innerHTML += '<br />'
+                + '来源: Woilin&#39;s Blog<br />'
+                + '文章作者: Woilin<br />'
+                + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+                + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+            selection.selectAllChildren(newdiv);
+            window.setTimeout(function () { bodyElement.removeChild(newdiv); }, 200);
+        });
+    </script>
+    
+
+        <!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="7732994877"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="/libs/aplayer/Meting.min.js"></script>
+
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2022-2023</span>
+            
+            <a href="/about" target="_blank">Woilin</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/zdx199792" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:1372443644@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1372443644" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1372443644" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    
+
+    
+        
+        <script type="text/javascript">
+            // 只在桌面版网页启用特效
+            var windowWidth = $(window).width();
+            if (windowWidth > 768) {
+                document.write('<script type="text/javascript" src="/libs/others/sakura.js"><\/script>');
+            }
+        </script>
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+     
+        <script type="text/javascript">
+            // 只在桌面版网页启用特效
+            var windowWidth = $(window).width();
+            if (windowWidth > 768) {
+                document.write('<script type="text/javascript" src="/libs/others/star.js"><\/script>');
+            }
+        </script>
+    
+
+     
+        <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
+        <script src="/libs/others/TencentCaptcha.js"></script>
+        <button id="TencentCaptcha" data-appid="xxxxxxxxxx" data-cbfn="callback" type="button" hidden></button>
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>
