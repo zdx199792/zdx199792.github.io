@@ -580,7 +580,7 @@ void UMyAction_ProjectileAttack::StartAction_Implementation(AActor* Instigator)
 	&#125;
 &#125;</code></pre>
 
-<h3 id="三、客户端伤害计算"><a href="#三、客户端伤害计算" class="headerlink" title="三、客户端伤害计算"></a>三、客户端伤害计算</h3><h4 id="1、问题情况-2"><a href="#1、问题情况-2" class="headerlink" title="1、问题情况"></a>1、问题情况</h4><p>问题：在问题二未被修复情况下，服务器攻击后，其中客户端产生的抛射物命中客户端角色后，本地客户端角色依然会造成伤害，但服务器端的客户端角色并不会收到伤害。可以看到客户端本地显示掉血，服务器端上的的客户端角色并不掉血。</p>
+<h3 id="三、限制客户端伤害计算"><a href="#三、限制客户端伤害计算" class="headerlink" title="三、限制客户端伤害计算"></a>三、限制客户端伤害计算</h3><h4 id="1、问题情况-2"><a href="#1、问题情况-2" class="headerlink" title="1、问题情况"></a>1、问题情况</h4><p>问题：在问题二未被修复情况下，服务器攻击后，其中客户端产生的抛射物命中客户端角色后，本地客户端角色依然会造成伤害，但服务器端的客户端角色并不会收到伤害。可以看到客户端本地显示掉血，服务器端上的的客户端角色并不掉血。</p>
 <img src="/pic/%E3%80%90UE4C-ActionRougelike-22%E3%80%91%E9%97%AE%E9%A2%98%E4%BF%AE%E5%A4%8D%E2%80%94%E2%80%94%E7%BA%A6%E6%9D%9F%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%9A%84%E6%9D%83%E9%99%90/%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%9C%AC%E5%9C%B0%E4%BC%A4%E5%AE%B3%E8%AE%A1%E7%AE%97-16835518981622.gif" alt="客户端本地伤害计算" style="zoom:67%;" />
 
 <p>原因：</p>
