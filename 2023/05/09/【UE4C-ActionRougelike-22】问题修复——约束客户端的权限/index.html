@@ -1,0 +1,1787 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="【UE4C++-ActionRougelike-22】问题修复——约束客户端的权限, Woilin&#39;s Blog">
+    <meta name="description" content="【UE4C++-ActionRougelike-22】问题修复——约束客户端的权限这一部分是对先前各部分游戏功能模块在多人游戏中的一些Bug修复，很多问题是客户端和服务器端不同步，本质上是客户端的权限过大，很多行为操作应当只放在服务器端上执">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>【UE4C++-ActionRougelike-22】问题修复——约束客户端的权限 | Woilin&#39;s Blog</title>
+    <link rel="icon" type="image/jpeg" href="/head.jpg">
+    
+
+
+    <!-- bg-cover style     -->
+
+
+
+<link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="/css/matery.css">
+<link rel="stylesheet" type="text/css" href="/css/my.css">
+<link rel="stylesheet" type="text/css" href="/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="/css/post.css">
+
+
+
+
+    
+        <link rel="stylesheet" type="text/css" href="/css/reward.css">
+    
+
+
+
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/head.jpg" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Woilin&#39;s Blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/head.jpg" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Woilin&#39;s Blog</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/blinkfox/hexo-theme-matery" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/blinkfox/hexo-theme-matery" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">【UE4C++-ActionRougelike-22】问题修复——约束客户端的权限</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/UE4/">
+                                    <span class="chip bg-color">
+                                        UE4
+                                    </span>
+                                </a>
+                                
+                                <a href="/tags/C/">
+                                    <span class="chip bg-color">
+                                        C++
+                                    </span>
+                                </a>
+                                
+                                <a href="/tags/ActionRougelike-Game/">
+                                    <span class="chip bg-color">
+                                        ActionRougelike Game
+                                    </span>
+                                </a>
+                                
+                        </div>
+                        
+                </div>
+                <div class="col s5 right-align">
+                    
+                        <div class="post-cate">
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                                <a href="/categories/ActionRougelike-Game/" class="post-category">
+                                    ActionRougelike Game
+                                </a>
+                                
+                        </div>
+                        
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                    <div class="post-date info-break-policy">
+                        <i class="far fa-calendar-minus fa-fw"></i>
+                        发布日期:&nbsp;&nbsp;
+                            2023-05-09
+                    </div>
+                    
+
+                        
+                            <div class="post-date info-break-policy">
+                                <i class="far fa-calendar-check fa-fw"></i>
+                                更新日期:&nbsp;&nbsp;
+                                    2023-05-09
+                            </div>
+                            
+
+                                
+                                    <div class="info-break-policy">
+                                        <i class="far fa-file-word fa-fw"></i>
+                                        文章字数:&nbsp;&nbsp;
+                                            2.5k
+                                    </div>
+                                    
+
+                                        
+                                            <div class="info-break-policy">
+                                                <i class="far fa-clock fa-fw"></i>
+                                                阅读时长:&nbsp;&nbsp;
+                                                    10
+                                                        分
+                                            </div>
+                                            
+
+                                                
+                                                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                                                        <i class="far fa-eye fa-fw"></i>
+                                                        阅读次数:&nbsp;&nbsp;
+                                                            <span id="busuanzi_value_page_pv"></span>
+                                                    </div>
+                                                    
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+            <!-- 是否加载使用自带的 prismjs. -->
+            <link rel="stylesheet" href="/libs/prism/prism.min.css">
+            
+
+                
+
+                        <div class="card-content article-card-content">
+                            <div id="articleContent">
+                                <h2 id="【UE4C-ActionRougelike-22】问题修复——约束客户端的权限"><a href="#【UE4C-ActionRougelike-22】问题修复——约束客户端的权限" class="headerlink" title="【UE4C++-ActionRougelike-22】问题修复——约束客户端的权限"></a>【UE4C++-ActionRougelike-22】问题修复——约束客户端的权限</h2><p>这一部分是对先前各部分游戏功能模块在多人游戏中的一些Bug修复，很多问题是客户端和服务器端不同步，本质上是客户端的权限过大，很多行为操作应当只放在服务器端上执行。</p>
+<h3 id="一、攻击动作不能同步到客户端"><a href="#一、攻击动作不能同步到客户端" class="headerlink" title="一、攻击动作不能同步到客户端"></a>一、攻击动作不能同步到客户端</h3><h4 id="1、问题情况"><a href="#1、问题情况" class="headerlink" title="1、问题情况"></a>1、问题情况</h4><p>问题：这里将先前编写的Action_MagicProjectile添加到Player的ActionComp组件中的Default Actions数组后，会发现执行攻击后，魔法攻击抛射物能够正常在服务器和客户端生成，但是攻击动画不会同步到客户端。</p>
+<p>原因：</p>
+<ul>
+<li>先前的执行Action回调函数写的有问题，StartAction方法传入的是空，客户端在执行MyAction_ProjectileAttack的StartAction时由于传入的Instigator为空，所以无法正常播放攻击动画。</li>
+<li>在<a href="https://zdx199792.github.io/2023/05/07/%E3%80%90UE4C-ActionRougelike-19%E3%80%91%E5%A4%9A%E4%BA%BA%E6%B8%B8%E6%88%8F%E7%BD%91%E7%BB%9C%E5%90%8C%E6%AD%A5/#%E4%BA%8C%E3%80%81%E8%81%94%E7%BD%91%E5%B1%9E%E6%80%A7%E5%92%8C%E7%94%A8%E6%88%B7%E7%95%8C%E9%9D%A2">多人游戏网络同步</a>时我们就已经在生成抛射物MyMagicProjectile的父类MyProjectileBase的构造函数中设置了SetReplicates(true)，所以魔法攻击抛射物能够同步给客户端。</li>
+</ul>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">void UMyAction::OnRep_IsRunning()
+&#123;
+	&#x2F;&#x2F;如果bIsRunning为真，则会调用该MyAction的StartAction从而更新本地客户端这个MyAction的动作
+	if (bIsRunning)
+	&#123;
+		StartAction(nullptr);
+	&#125;
+	else
+	&#123;
+		StopAction(nullptr);
+	&#125;
+&#125;
+&#x2F;&#x2F;服务器端执行这个函数时会触发定时器，从而调用AttackDelay_Elapsed生成抛射物类
+&#x2F;&#x2F;但是其他客户端在执行该函数时，传入的Instigator是null，所以不能够正常播放动画
+void UMyAction_ProjectileAttack::StartAction_Implementation(AActor* Instigator)
+&#123;
+	Super::StartAction_Implementation(Instigator);
+	&#x2F;&#x2F; 如果 Instigator 是 ACharacter 类型，则进行攻击
+	ACharacter* Character &#x3D; Cast&lt;ACharacter&gt;(Instigator);
+	if (Character)
+	&#123;
+		&#x2F;&#x2F;播放攻击动画
+		Character-&gt;PlayAnimMontage(AttackAnim);
+		&#x2F;&#x2F; 在手部 socket 上播放粒子特效
+		UGameplayStatics::SpawnEmitterAttached(CastingEffect, Character-&gt;GetMesh(), HandSocketName, FVector::ZeroVector, FRotator::ZeroRotator, EAttachLocation::SnapToTarget);
+		&#x2F;&#x2F; 创建一个定时器，在攻击动画延迟之后调用 AttackDelay_Elapsed 函数
+		FTimerHandle TimerHandle_AttackDelay;
+		FTimerDelegate Delegate;
+		Delegate.BindUFunction(this, &quot;AttackDelay_Elapsed&quot;, Character);
+		GetWorld()-&gt;GetTimerManager().SetTimer(TimerHandle_AttackDelay, Delegate, AttackAnimDelay, false);
+	&#125;
+&#125;</code></pre>
+
+<h4 id="2、解决方案"><a href="#2、解决方案" class="headerlink" title="2、解决方案"></a>2、解决方案</h4><p>在MyAction.h中添加结构体FActionRepData来表示服务器发回客户端的Action数据，包含该Action是否运行，以及该Action的发起者Instigator。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">USTRUCT()
+struct FActionRepData
+&#123;
+	GENERATED_BODY()
+public:
+	UPROPERTY()
+	bool bIsRunning;
+
+	UPROPERTY()
+	AActor* Instigator;
+&#125;;
+UCLASS(Blueprintable)
+class ACTIONROGUELIKE_API UMyAction : public UObject
+&#123;
+	&#x2F;&#x2F;RepData属性将进行网络复制，当该属性发生变化时（由服务器接收到更新），将调用名为OnRep_RepData的函数
+	UPROPERTY(ReplicatedUsing&#x3D;&quot;OnRep_RepData&quot;)
+	FActionRepData RepData;
+
+	UFUNCTION()
+	void OnRep_RepData();
+&#125;</code></pre>
+
+<p>在MyAction.cpp中的StartAction和StopAction除了要更新bIsRunning，也要更新Instigator。这样在回调函数执行OnRep_RepData时，可以将RepData.Instigator作为参数传入。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">void UMyAction::StartAction_Implementation(AActor* Instigator)
+&#123;
+    &#x2F;&#x2F;...
+	&#x2F;&#x2F; 将RepData.bIsRunning设置为true，表示UMyAction正在运行
+	RepData.bIsRunning &#x3D; true;
+    &#x2F;&#x2F; 将RepData.Instigator设置为Instigator
+	RepData.Instigator &#x3D; Instigator;
+&#125;
+void UMyAction::StopAction_Implementation(AActor* Instigator)
+&#123;
+    &#x2F;&#x2F;...
+    &#x2F;&#x2F; 将RepData.bIsRunning设置为false，表示UMyAction停止运行
+	RepData.bIsRunning &#x3D; false;
+    &#x2F;&#x2F; 将RepData.Instigator设置为Instigator
+	RepData.Instigator &#x3D; Instigator;
+&#125;
+&#x2F;&#x2F;被服务器告知RepData属性变化后的回调函数，根据RepData.bIsRunning来更新是否执行该MyAction动作
+void UMyAction::OnRep_RepData()
+&#123;    
+	&#x2F;&#x2F;如果RepData.bIsRunning为真，则会调用该MyAction的StartAction从而更新本地客户端这个MyAction的动作
+	if (RepData.bIsRunning)
+	&#123;
+		StartAction(RepData.Instigator);
+	&#125;
+	else
+	&#123;
+		StopAction(RepData.Instigator);
+	&#125;
+&#125;</code></pre>
+
+<h4 id="3、效果演示"><a href="#3、效果演示" class="headerlink" title="3、效果演示"></a>3、效果演示</h4><img src="/pic/%E3%80%90UE4C-ActionRougelike-22%E3%80%91%E9%97%AE%E9%A2%98%E4%BF%AE%E5%A4%8D%E2%80%94%E2%80%94%E7%BA%A6%E6%9D%9F%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%9A%84%E6%9D%83%E9%99%90/%E6%94%BB%E5%87%BB%E5%8A%A8%E7%94%BB%E5%90%8C%E6%AD%A5%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%95%88%E6%9E%9C%E6%BC%94%E7%A4%BA.gif" alt="攻击动画同步客户端效果演示" style="zoom:67%;" />
+
+<h3 id="二、客户端生成两次抛射物"><a href="#二、客户端生成两次抛射物" class="headerlink" title="二、客户端生成两次抛射物"></a>二、客户端生成两次抛射物</h3><h4 id="1、问题情况-1"><a href="#1、问题情况-1" class="headerlink" title="1、问题情况"></a>1、问题情况</h4><p>我们修复了上面的问题后，会产生一个新的问题：客户端会生成两次抛射物。当服务器端攻击时，可以看到客户端产生了两个抛射物。</p>
+<p><img src="/pic/%E3%80%90UE4C-ActionRougelike-22%E3%80%91%E9%97%AE%E9%A2%98%E4%BF%AE%E5%A4%8D%E2%80%94%E2%80%94%E7%BA%A6%E6%9D%9F%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%9A%84%E6%9D%83%E9%99%90/%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%94%9F%E6%88%90%E4%B8%A4%E6%AC%A1%E6%8A%9B%E5%B0%84%E7%89%A9.gif" alt="客户端生成两次抛射物"></p>
+<p>原因：</p>
+<ul>
+<li>当服务器端告知客户端RepData变化时，会调用客户端的StartAction，本地客户端在执行完播放动画后，会触发一个定时委托调用 AttackDelay_Elapsed，产生一个抛射物。</li>
+<li>我们先前又已经将抛射物复制，所以服务器也会同步生成一个抛射物到客户端。</li>
+</ul>
+<h4 id="2、解决方案-1"><a href="#2、解决方案-1" class="headerlink" title="2、解决方案"></a>2、解决方案</h4><p>在MyAction_ProjectileAttack的StartAction中只允许服务器端调用AttackDelay_Elapsed产生抛射物</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">&#x2F;&#x2F;实现攻击能力的逻辑
+void UMyAction_ProjectileAttack::StartAction_Implementation(AActor* Instigator)
+&#123;
+	Super::StartAction_Implementation(Instigator);
+	&#x2F;&#x2F; 如果 Instigator 是 ACharacter 类型，则进行攻击
+	ACharacter* Character &#x3D; Cast&lt;ACharacter&gt;(Instigator);
+	if (Character)
+	&#123;
+		&#x2F;&#x2F;播放攻击动画
+		Character-&gt;PlayAnimMontage(AttackAnim);
+		&#x2F;&#x2F; 在手部 socket 上播放粒子特效
+		UGameplayStatics::SpawnEmitterAttached(CastingEffect, Character-&gt;GetMesh(), HandSocketName, FVector::ZeroVector, FRotator::ZeroRotator, EAttachLocation::SnapToTarget);	
+		&#x2F;&#x2F;只在服务器端调用AttackDelay_Elapsed产生抛射物，通过复制同步到客户端
+		if (Character-&gt;HasAuthority()) 
+		&#123;
+			&#x2F;&#x2F; 创建一个定时器，在攻击动画延迟之后调用 AttackDelay_Elapsed 函数
+			FTimerHandle TimerHandle_AttackDelay;
+			FTimerDelegate Delegate;
+			Delegate.BindUFunction(this, &quot;AttackDelay_Elapsed&quot;, Character);
+			GetWorld()-&gt;GetTimerManager().SetTimer(TimerHandle_AttackDelay, Delegate, AttackAnimDelay, false);
+		&#125;
+	&#125;
+&#125;</code></pre>
+
+<h3 id="三、客户端伤害计算"><a href="#三、客户端伤害计算" class="headerlink" title="三、客户端伤害计算"></a>三、客户端伤害计算</h3><h4 id="1、问题情况-2"><a href="#1、问题情况-2" class="headerlink" title="1、问题情况"></a>1、问题情况</h4><p>问题：在问题二未被修复情况下，服务器攻击后，其中客户端产生的抛射物命中客户端角色后，本地客户端角色依然会造成伤害，但服务器端的客户端角色并不会收到伤害。可以看到客户端本地显示掉血，服务器端上的的客户端角色并不掉血。</p>
+<img src="/pic/%E3%80%90UE4C-ActionRougelike-22%E3%80%91%E9%97%AE%E9%A2%98%E4%BF%AE%E5%A4%8D%E2%80%94%E2%80%94%E7%BA%A6%E6%9D%9F%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%9A%84%E6%9D%83%E9%99%90/%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%9C%AC%E5%9C%B0%E4%BC%A4%E5%AE%B3%E8%AE%A1%E7%AE%97-16835518981622.gif" alt="客户端本地伤害计算" style="zoom:67%;" />
+
+<p>原因：</p>
+<ul>
+<li>因为我们在属性组件中的ApplyHealthChange方法中，健康值计算都是在客户端和服务器端都会执行</li>
+<li>本地客户端产生的抛射物与本地客户端角色碰撞后进行伤害计算，所以在本地造成了伤害。</li>
+<li>在服务器端是没有这个抛射物的，因此服务器端，客户端角色并未受到伤害</li>
+</ul>
+<h4 id="2、解决方案-2"><a href="#2、解决方案-2" class="headerlink" title="2、解决方案"></a>2、解决方案</h4><p>使伤害计算仅在服务器端执行</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">bool UMyAttributeComponent::ApplyHealthChange(AActor* InstigatorActor, float Delta)
+&#123;
+	if (!GetOwner()-&gt;CanBeDamaged() &amp;&amp; Delta &lt; 0.0f)
+	&#123;
+		return false;
+	&#125;
+	&#x2F;&#x2F; 如果 Delta 值小于 0，即表示要对角色造成伤害
+	if (Delta &lt; 0.0f)
+	&#123;
+		&#x2F;&#x2F; 获取 CVarDamageMultiplier 控制台变量在游戏线程上的值
+		float DamageMultiplier &#x3D; CVarDamageMultiplier.GetValueOnGameThread();
+		&#x2F;&#x2F; 根据全局伤害乘数调整 Delta 值
+		Delta *&#x3D; DamageMultiplier;
+	&#125;
+	float OldHealth &#x3D; Health;
+	float NewHealth &#x3D; FMath::Clamp(Health + Delta, 0.0f, MaxHealth);
+	float ActualDelta &#x3D; NewHealth - OldHealth;
+	&#x2F;&#x2F;只在服务器端进行伤害计算
+	if (GetOwner()-&gt;HasAuthority())
+	&#123;
+		Health &#x3D; NewHealth;
+		if (ActualDelta !&#x3D; 0.0f)
+		&#123;
+			&#x2F;&#x2F;如果实际变化量不为0，则通知客户端
+			MulticastHealthChanged(InstigatorActor, Health, ActualDelta);
+		&#125;
+		&#x2F;&#x2F; 死亡
+		if (ActualDelta &lt; 0.0f &amp;&amp; Health &#x3D;&#x3D; 0.0f)
+		&#123;
+			AMyGameModeBase* GM &#x3D; GetWorld()-&gt;GetAuthGameMode&lt;AMyGameModeBase&gt;();
+			if (GM)
+			&#123;
+				GM-&gt;OnActorKilled(GetOwner(), InstigatorActor);
+			&#125;
+		&#125;
+	&#125;
+	return ActualDelta !&#x3D; 0;
+&#125;</code></pre>
+
+<h4 id="3、效果演示-1"><a href="#3、效果演示-1" class="headerlink" title="3、效果演示"></a>3、效果演示</h4><p>此时客户端不会再进行伤害计算，我们将所有伤害计算放在了服务器端。</p>
+<img src="/pic/%E3%80%90UE4C-ActionRougelike-22%E3%80%91%E9%97%AE%E9%A2%98%E4%BF%AE%E5%A4%8D%E2%80%94%E2%80%94%E7%BA%A6%E6%9D%9F%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%9A%84%E6%9D%83%E9%99%90/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E8%AE%A1%E7%AE%97%E4%BC%A4%E5%AE%B3.gif" alt="服务器端计算伤害" style="zoom:67%;" />
+
+<h3 id="四、加速能力Bug"><a href="#四、加速能力Bug" class="headerlink" title="四、加速能力Bug"></a>四、加速能力Bug</h3><p>注：先前添加Action行为是服务器和客户端都允许执行的，但添加Action应当只让服务器端进行，要限制客户端添加行为Action</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">void UMyActionComponent::AddAction(AActor* Instigator, TSubclassOf&lt;UMyAction&gt; ActionClass)
+&#123;
+	if (!ensure(ActionClass))
+	&#123;
+		return;
+	&#125;
+    &#x2F;&#x2F;只允许服务器端进行Action的添加
+	if (!GetOwner()-&gt;HasAuthority())
+	&#123;
+		UE_LOG(LogTemp, Warning, TEXT(&quot;Client attempting to AddAction. [Class: %s]&quot;), *GetNameSafe(ActionClass));
+		return;
+	&#125;
+	&#x2F;&#x2F; 创建一个新的动作对象添加到 Actions 数组中
+	&#x2F;&#x2F;...
+&#125;
+
+void AMyMagicProjectile::OnActorOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult&amp; SweepResult)
+&#123;
+    &#x2F;&#x2F; 如果重叠的物体不是发射该魔法弹道的角色本身
+	if (OtherActor &amp;&amp; OtherActor !&#x3D; GetInstigator())
+	&#123;			
+        &#x2F;&#x2F;...
+        &#x2F;&#x2F; 对重叠的物体施加方向性伤害，如果该物体受到伤害，则执行 Explode() 函数
+		if (UMyGameplayFunctionLibrary::ApplyDirectionalDamage(GetInstigator(), OtherActor, DamageAmount, SweepResult))
+		&#123;
+			Explode();
+             &#x2F;&#x2F;只有服务器端才能施加燃烧效果
+			if (ActionComp &amp;&amp; BurningActionClass &amp;&amp; HasAuthority())
+			&#123;
+				ActionComp-&gt;AddAction(GetInstigator(), BurningActionClass);
+			&#125;
+		&#125;
+	&#125;
+&#125;</code></pre>
+
+<h4 id="1、问题情况-3"><a href="#1、问题情况-3" class="headerlink" title="1、问题情况"></a>1、问题情况</h4><p>问题：客户端角色按Shift键进行加速后，松下Shift键后，服务器端客户端角色仍会以加速状态移动</p>
+<img src="/pic/%E3%80%90UE4C-ActionRougelike-22%E3%80%91%E9%97%AE%E9%A2%98%E4%BF%AE%E5%A4%8D%E2%80%94%E2%80%94%E7%BA%A6%E6%9D%9F%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%9A%84%E6%9D%83%E9%99%90/%E5%8A%A0%E9%80%9FAction%E6%89%A7%E8%A1%8C%E6%83%85%E5%86%B5.gif" alt="加速Action执行情况" style="zoom:67%;" />
+
+<p>原因：在停止Action时，没有向服务器端发送请求</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">&#x2F;&#x2F;修改前
+bool UMyActionComponent::StopActionByName(AActor* Instigator, FName ActionName)
+&#123;
+	&#x2F;&#x2F; 遍历 Actions 数组，查找并停止指定名称的动作
+	for (UMyAction* Action : Actions)
+	&#123;
+		if (Action &amp;&amp; Action-&gt;ActionName &#x3D;&#x3D; ActionName)
+		&#123;
+			if (Action-&gt;IsRunning())
+			&#123;
+				Action-&gt;StopAction(Instigator);
+				return true;
+			&#125;
+		&#125;
+	&#125;
+	return false;
+&#125;</code></pre>
+
+<h4 id="2、解决方案-3"><a href="#2、解决方案-3" class="headerlink" title="2、解决方案"></a>2、解决方案</h4><p>在停止Action时也要通过一个服务端RPC函数告诉服务器停止Action</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">&#x2F;&#x2F;MyActionComponent.h
+UFUNCTION(Server, Reliable)
+void ServerStopAction(AActor* Instigator, FName ActionName);
+
+&#x2F;&#x2F;MyActionComponent.cpp
+&#x2F;&#x2F; 实现服务器 RPC 函数 ServerStopAction，调用 StopActionByName 启动动作
+void UMyActionComponent::ServerStopAction_Implementation(AActor* Instigator, FName ActionName)
+&#123;
+	StopActionByName(Instigator, ActionName);
+&#125;
+&#x2F;&#x2F;根据名称停止一个动作
+bool UMyActionComponent::StopActionByName(AActor* Instigator, FName ActionName)
+&#123;
+	&#x2F;&#x2F; 遍历 Actions 数组，查找并停止指定名称的动作
+	for (UMyAction* Action : Actions)
+	&#123;
+		if (Action &amp;&amp; Action-&gt;ActionName &#x3D;&#x3D; ActionName)
+		&#123;
+			if (Action-&gt;IsRunning())
+			&#123;
+				&#x2F;&#x2F; 如果当前组件不在服务器上，向服务器发送 RPC 启动动作
+				if (!GetOwner()-&gt;HasAuthority())
+				&#123;
+					ServerStopAction(Instigator, ActionName);
+				&#125;
+				Action-&gt;StopAction(Instigator);
+				return true;
+			&#125;
+		&#125;
+	&#125;
+	return false;
+&#125;</code></pre>
+
+<h3 id="五、死亡后血量条UI不刷新问题"><a href="#五、死亡后血量条UI不刷新问题" class="headerlink" title="五、死亡后血量条UI不刷新问题"></a>五、死亡后血量条UI不刷新问题</h3><h4 id="1、问题情况-4"><a href="#1、问题情况-4" class="headerlink" title="1、问题情况"></a>1、问题情况</h4><p>问题：当玩家死亡后，血量条UI不会更新，仍然是死亡时的空白状态</p>
+<img src="/pic/%E3%80%90UE4C-ActionRougelike-22%E3%80%91%E9%97%AE%E9%A2%98%E4%BF%AE%E5%A4%8D%E2%80%94%E2%80%94%E7%BA%A6%E6%9D%9F%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%9A%84%E6%9D%83%E9%99%90/%E8%A1%80%E9%87%8FUI%E9%97%AE%E9%A2%98-16836131534091.gif" alt="血量UI问题" style="zoom:67%;" />
+
+<p>原因：血量UI控件PlayerHealth_Widget是与我们的PlayerPawn绑定的，当玩家死亡重生后，会产生一个新的Pawn，但先前的PlayerHealth_Widget并没有绑定到新的Pawn上进行血量UI变化，所以血量条会一直显示死亡的空白状态</p>
+<h4 id="2、解决方案-4"><a href="#2、解决方案-4" class="headerlink" title="2、解决方案"></a>2、解决方案</h4><p>解决思路：当玩家控制器切换Pawn时，我们更新玩家的PlayerHealth_Widget</p>
+<h5 id="2-1-创建玩家控制器类"><a href="#2-1-创建玩家控制器类" class="headerlink" title="2.1 创建玩家控制器类"></a>2.1 创建玩家控制器类</h5><p>以PlayerController为父类创建游戏玩家控制类MyPlayerController，声明一个动态多播委托用于玩家Pawn改变时触发委托。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">&#x2F;&#x2F; 声明一个具有一个参数的动态多播委托类型FOnPawnChanged，当玩家Pawn变化时触发
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnPawnChanged, APawn*, NewPawn);
+UCLASS()
+class ACTIONROGUELIKE_API AMyPlayerController : public APlayerController
+&#123;
+	GENERATED_BODY()
+protected:
+	UPROPERTY(BlueprintAssignable)
+	FOnPawnChanged OnPawnChanged;
+
+	virtual void SetPawn(APawn* InPawn) override;
+&#125;;
+
+void AMyPlayerController::SetPawn(APawn* InPawn)
+&#123;
+	Super::SetPawn(InPawn);
+	&#x2F;&#x2F; 广播OnPawnChanged事件，将新设置的角色作为参数
+	OnPawnChanged.Broadcast(InPawn);
+&#125;</code></pre>
+
+<p>还要再PlayerController_BP的Class Setting中将父类设置为MyPlayerController</p>
+<h5 id="2-2-玩家切换Pawn后更新UI"><a href="#2-2-玩家切换Pawn后更新UI" class="headerlink" title="2.2 玩家切换Pawn后更新UI"></a>2.2 玩家切换Pawn后更新UI</h5><p>在PlayerHealth_Widget蓝图中设置当Pawn修改时，将新的Pawn用来为PlayerHealth_Widget更新血量UI</p>
+<img src="/pic/%E3%80%90UE4C-ActionRougelike-22%E3%80%91%E9%97%AE%E9%A2%98%E4%BF%AE%E5%A4%8D%E2%80%94%E2%80%94%E7%BA%A6%E6%9D%9F%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%9A%84%E6%9D%83%E9%99%90/%E8%A1%80%E9%87%8FUI%E8%93%9D%E5%9B%BE%E8%AE%BE%E7%BD%AE.jpg" alt="血量UI蓝图设置" style="zoom:50%;" />
+
+<h4 id="3、效果演示-2"><a href="#3、效果演示-2" class="headerlink" title="3、效果演示"></a>3、效果演示</h4><img src="/pic/%E3%80%90UE4C-ActionRougelike-22%E3%80%91%E9%97%AE%E9%A2%98%E4%BF%AE%E5%A4%8D%E2%80%94%E2%80%94%E7%BA%A6%E6%9D%9F%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%9A%84%E6%9D%83%E9%99%90/%E8%A1%80%E9%87%8FUI%E9%97%AE%E9%A2%98%E4%BF%AE%E5%A4%8D.gif" alt="血量UI问题修复" style="zoom:67%;" />
+
+                                    
+                            </div>
+                            <hr />
+
+                            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">Woilin</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://zdx199792.github.io/2023/05/09/%E3%80%90UE4C-ActionRougelike-22%E3%80%91%E9%97%AE%E9%A2%98%E4%BF%AE%E5%A4%8D%E2%80%94%E2%80%94%E7%BA%A6%E6%9D%9F%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%9A%84%E6%9D%83%E9%99%90/">https://zdx199792.github.io/2023/05/09/%E3%80%90UE4C-ActionRougelike-22%E3%80%91%E9%97%AE%E9%A2%98%E4%BF%AE%E5%A4%8D%E2%80%94%E2%80%94%E7%BA%A6%E6%9D%9F%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%9A%84%E6%9D%83%E9%99%90/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">Woilin</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+                                <div class="tag_share" style="display: block;">
+                                    <div class="post-meta__tag-list" style="display: inline-block;">
+                                        
+                                            <div class="article-tag">
+                                                
+                                                    <a href="/tags/UE4/">
+                                                        <span class="chip bg-color">
+                                                            UE4
+                                                        </span>
+                                                    </a>
+                                                    
+                                                    <a href="/tags/C/">
+                                                        <span class="chip bg-color">
+                                                            C++
+                                                        </span>
+                                                    </a>
+                                                    
+                                                    <a href="/tags/ActionRougelike-Game/">
+                                                        <span class="chip bg-color">
+                                                            ActionRougelike Game
+                                                        </span>
+                                                    </a>
+                                                    
+                                            </div>
+                                            
+                                    </div>
+                                    <div class="post_share"
+                                        style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                                        <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                                    </div>
+                                </div>
+                                
+                                    <div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.png" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+                                        
+                        </div>
+    </div>
+
+    
+
+                
+
+                            
+
+                                        
+
+                                                    
+                                                        <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments textarea {
+        box-sizing: border-box;
+        background: url("/medias/comment_bg.png") 100% 100% no-repeat;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #4cbf30;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="vcomments" class="card-content" style="display: grid">
+    </div>
+</div>
+
+<script src="/libs/valine/av-min.js"></script>
+<script src="/libs/valine/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: 'FA8Iw62BrZZFMhahnSqyjDvL-gzGzoHsz',
+        appKey: 'A60z6ZP81d4ELNMi8exPQi4s',
+        serverURLs: 'https://fa8iw62b.lc-cn-n1-shared.com',
+        notify: 'false' === 'true',
+        verify: 'false' === 'true',
+        visitor: 'true' === 'true',
+        avatar: 'mm',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: 'just go go'
+    });
+</script>
+
+<!--酷Q推送-->
+
+
+                                                            
+
+                                                                
+
+                                                                            
+
+                                                                                        
+
+                                                                                                    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2023/05/09/%E3%80%90UE4C-ActionRougelike-22%E3%80%91%E9%97%AE%E9%A2%98%E4%BF%AE%E5%A4%8D%E2%80%94%E2%80%94%E7%BA%A6%E6%9D%9F%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%9A%84%E6%9D%83%E9%99%90/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="【UE4C++-ActionRougelike-22】问题修复——约束客户端的权限">
+                        
+                        <span class="card-title">【UE4C++-ActionRougelike-22】问题修复——约束客户端的权限</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-05-09
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/ActionRougelike-Game/" class="post-category">
+                                    ActionRougelike Game
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/UE4/">
+                        <span class="chip bg-color">UE4</span>
+                    </a>
+                    
+                    <a href="/tags/C/">
+                        <span class="chip bg-color">C++</span>
+                    </a>
+                    
+                    <a href="/tags/ActionRougelike-Game/">
+                        <span class="chip bg-color">ActionRougelike Game</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2023/05/08/%E3%80%90UE4C-ActionRougelike-21%E3%80%91%E5%90%8C%E6%AD%A5%E8%A1%8C%E5%8A%A8%E7%B3%BB%E7%BB%9F/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="【UE4C++-ActionRougelike-21】同步行动系统">
+                        
+                        <span class="card-title">【UE4C++-ActionRougelike-21】同步行动系统</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-05-08
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/ActionRougelike-Game/" class="post-category">
+                                    ActionRougelike Game
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/UE4/">
+                        <span class="chip bg-color">UE4</span>
+                    </a>
+                    
+                    <a href="/tags/C/">
+                        <span class="chip bg-color">C++</span>
+                    </a>
+                    
+                    <a href="/tags/ActionRougelike-Game/">
+                        <span class="chip bg-color">ActionRougelike Game</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+    <script>
+        $('#articleContent').on('copy', function (e) {
+            // IE8 or earlier browser is 'undefined'
+            if (typeof window.getSelection === 'undefined') return;
+
+            var selection = window.getSelection();
+            // if the selection is short let's not annoy our users.
+            if (('' + selection).length < Number.parseInt('120')) {
+                return;
+            }
+
+            // create a div outside of the visible area and fill it with the selected text.
+            var bodyElement = document.getElementsByTagName('body')[0];
+            var newdiv = document.createElement('div');
+            newdiv.style.position = 'absolute';
+            newdiv.style.left = '-99999px';
+            bodyElement.appendChild(newdiv);
+            newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+            // we need a <pre> tag workaround.
+            // otherwise the text inside "pre" loses all the line breaks!
+            if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE' || selection.getRangeAt(0).commonAncestorContainer.nodeName === 'CODE') {
+                newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+            }
+
+            var url = document.location.href;
+            newdiv.innerHTML += '<br />'
+                + '来源: Woilin&#39;s Blog<br />'
+                + '文章作者: Woilin<br />'
+                + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+                + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+            selection.selectAllChildren(newdiv);
+            window.setTimeout(function () { bodyElement.removeChild(newdiv); }, 200);
+        });
+    </script>
+    
+
+        <!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="7732994877"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="/libs/aplayer/Meting.min.js"></script>
+
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2022-2023</span>
+            
+            <a href="/about" target="_blank">Woilin</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/zdx199792" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:1372443644@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1372443644" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1372443644" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    
+
+    
+        
+        <script type="text/javascript">
+            // 只在桌面版网页启用特效
+            var windowWidth = $(window).width();
+            if (windowWidth > 768) {
+                document.write('<script type="text/javascript" src="/libs/others/sakura.js"><\/script>');
+            }
+        </script>
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+     
+        <script type="text/javascript">
+            // 只在桌面版网页启用特效
+            var windowWidth = $(window).width();
+            if (windowWidth > 768) {
+                document.write('<script type="text/javascript" src="/libs/others/star.js"><\/script>');
+            }
+        </script>
+    
+
+     
+        <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
+        <script src="/libs/others/TencentCaptcha.js"></script>
+        <button id="TencentCaptcha" data-appid="xxxxxxxxxx" data-cbfn="callback" type="button" hidden></button>
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>
