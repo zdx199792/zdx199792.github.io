@@ -4,10 +4,9 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="【UE4C++-ActionRougelike-26】动画蓝图, Woilin&#39;s Blog">
-    <meta name="description" content="【UE4C++-ActionRougelike-26】动画蓝图一、眩晕状态1、动画状态机在Gideon_AnimBlueprint中的Locomotion状态机中添加以下眩晕相关状态。设置变量bIsStunned来控制眩晕状态执行流程。
-
-">
+    <meta name="keywords" content="【UE4C++-ActionRougelike-27】资产、数据、异步加载, Woilin&#39;s Blog">
+    <meta name="description" content="【UE4C++-ActionRougelike-27】资产、数据、异步加载一、AI机器人数据表和资产1、创建数据表结构在MyGameModeBase.h中创建怪物信息结构体MonsterInforRow
+&amp;#x2F;&amp;#x2F; MyGam">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -19,7 +18,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>【UE4C++-ActionRougelike-26】动画蓝图 | Woilin&#39;s Blog</title>
+    <title>【UE4C++-ActionRougelike-27】资产、数据、异步加载 | Woilin&#39;s Blog</title>
     <link rel="icon" type="image/jpeg" href="/head.jpg">
     
 
@@ -336,12 +335,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">【UE4C++-ActionRougelike-26】动画蓝图</h1>
+                    <h1 class="description center-align post-title">【UE4C++-ActionRougelike-27】资产、数据、异步加载</h1>
                 </div>
             </div>
         </div>
@@ -405,7 +404,7 @@
                     <div class="post-date info-break-policy">
                         <i class="far fa-calendar-minus fa-fw"></i>
                         发布日期:&nbsp;&nbsp;
-                            2023-05-18
+                            2023-05-21
                     </div>
                     
 
@@ -413,7 +412,7 @@
                             <div class="post-date info-break-policy">
                                 <i class="far fa-calendar-check fa-fw"></i>
                                 更新日期:&nbsp;&nbsp;
-                                    2023-05-18
+                                    2023-05-21
                             </div>
                             
 
@@ -421,7 +420,7 @@
                                     <div class="info-break-policy">
                                         <i class="far fa-file-word fa-fw"></i>
                                         文章字数:&nbsp;&nbsp;
-                                            751
+                                            1.9k
                                     </div>
                                     
 
@@ -429,7 +428,7 @@
                                             <div class="info-break-policy">
                                                 <i class="far fa-clock fa-fw"></i>
                                                 阅读时长:&nbsp;&nbsp;
-                                                    3
+                                                    8
                                                         分
                                             </div>
                                             
@@ -454,115 +453,219 @@
 
                         <div class="card-content article-card-content">
                             <div id="articleContent">
-                                <h2 id="【UE4C-ActionRougelike-26】动画蓝图"><a href="#【UE4C-ActionRougelike-26】动画蓝图" class="headerlink" title="【UE4C++-ActionRougelike-26】动画蓝图"></a>【UE4C++-ActionRougelike-26】动画蓝图</h2><h3 id="一、眩晕状态"><a href="#一、眩晕状态" class="headerlink" title="一、眩晕状态"></a>一、眩晕状态</h3><h4 id="1、动画状态机"><a href="#1、动画状态机" class="headerlink" title="1、动画状态机"></a>1、动画状态机</h4><p>在Gideon_AnimBlueprint中的Locomotion状态机中添加以下眩晕相关状态。设置变量bIsStunned来控制眩晕状态执行流程。</p>
-<img src="/pic/%E3%80%90UE4C-ActionRougelike-26%E3%80%91%E5%8A%A8%E7%94%BB%E8%93%9D%E5%9B%BE/%E5%8A%A8%E7%94%BB%E7%8A%B6%E6%80%81%E6%9C%BA-16843358423832.jpg" alt="动画状态机" style="zoom:50%;" />
-
-<h4 id="2、创建动画实例类"><a href="#2、创建动画实例类" class="headerlink" title="2、创建动画实例类"></a>2、创建动画实例类</h4><p>以AnimInstance为父类创建动画实例类MyAnimInstance</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">&#x2F;&#x2F;MyAnimInstance.h
-UCLASS()
-class ACTIONROGUELIKE_API UMyAnimInstance : public UAnimInstance
+                                <h2 id="【UE4C-ActionRougelike-27】资产、数据、异步加载"><a href="#【UE4C-ActionRougelike-27】资产、数据、异步加载" class="headerlink" title="【UE4C++-ActionRougelike-27】资产、数据、异步加载"></a>【UE4C++-ActionRougelike-27】资产、数据、异步加载</h2><h3 id="一、AI机器人数据表和资产"><a href="#一、AI机器人数据表和资产" class="headerlink" title="一、AI机器人数据表和资产"></a>一、AI机器人数据表和资产</h3><h4 id="1、创建数据表结构"><a href="#1、创建数据表结构" class="headerlink" title="1、创建数据表结构"></a>1、创建数据表结构</h4><p>在MyGameModeBase.h中创建怪物信息结构体MonsterInforRow</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">&#x2F;&#x2F; MyGameModeBase.h
+USTRUCT(BlueprintType)
+struct FMonsterInfoRow : public FTableRowBase
 &#123;
 	GENERATED_BODY()
-protected:
-
-	&#x2F;&#x2F; 表示角色是否处于被击晕状态
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category &#x3D; &quot;Animation&quot;)
-	bool bIsStunned;
-	&#x2F;&#x2F; 动作组件
-	UPROPERTY(BlueprintReadOnly, Category &#x3D; &quot;Animation&quot;)
-	UMyActionComponent* ActionComp;
-	&#x2F;&#x2F; 重写UAnimInstance的NativeInitializeAnimation方法
-	void NativeInitializeAnimation() override;
-	&#x2F;&#x2F; 重写UAnimInstance的NativeUpdateAnimation方法
-	void NativeUpdateAnimation(float DeltaSeconds) override;
-&#125;;
-&#x2F;&#x2F;MyAnimInstance.cpp
-void UMyAnimInstance::NativeInitializeAnimation()
-&#123;
-	Super::NativeInitializeAnimation();
-	&#x2F;&#x2F; 获取当前动画实例的所有者Actor
-	AActor* OwningActor &#x3D; GetOwningActor();
-	if (OwningActor)
+public:
+	&#x2F;&#x2F; 默认构造函数
+	FMonsterInfoRow()
 	&#123;
-		&#x2F;&#x2F; 如果所有者Actor存在，通过类类型UMyActionComponent::StaticClass()获取Actor中的组件，
-		&#x2F;&#x2F; 并尝试将其转化为UMyActionComponent类型，然后赋值给ActionComp
-		ActionComp &#x3D; Cast&lt;UMyActionComponent&gt;(OwningActor-&gt;GetComponentByClass(UMyActionComponent::StaticClass()));
+		Weight &#x3D; 1.0f;
+		SpawnCost &#x3D; 5.0f;
+		KillReward &#x3D; 20.0f;
 	&#125;
-&#125;
-void UMyAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
+	&#x2F;&#x2F; 定义一个名为MonsterClass的字段，类型为AActor子类，该字段用于标识怪物
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	TSubclassOf&lt;AActor&gt; MonsterClass;
+	&#x2F;&#x2F; 定义一个名为Weight的字段，表示选择此怪物的相对机会
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	float Weight;
+	&#x2F;&#x2F; 定义一个名为SpawnCost的字段，表示游戏模式生成此单位所需的点数
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+    float SpawnCost;
+	&#x2F;&#x2F; 定义一个名为KillReward的字段，表示杀死此单位的奖励金额
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	float KillReward;
+&#125;;</code></pre>
+
+<h4 id="2、创建怪物DataAsset"><a href="#2、创建怪物DataAsset" class="headerlink" title="2、创建怪物DataAsset"></a>2、创建怪物DataAsset</h4><h5 id="2-1-创建怪物数据类"><a href="#2-1-创建怪物数据类" class="headerlink" title="2.1 创建怪物数据类"></a>2.1 创建怪物数据类</h5><p>以PrimaryAssetLabel为父类创建怪物数据类MyMonsterData</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">UCLASS()
+class ACTIONROGUELIKE_API UMyMonsterData : public UPrimaryAssetLabel 
 &#123;
-	Super::NativeUpdateAnimation(DeltaSeconds);
-	&#x2F;&#x2F; 请求一个名为&quot;Status.Stunned&quot;的游戏标签
-	static FGameplayTag StunnedTag &#x3D; FGameplayTag::RequestGameplayTag(&quot;Status.Stunned&quot;);
-	if (ActionComp)
+	GENERATED_BODY()
+public:
+    &#x2F;&#x2F; 定义一个怪物类，它是AActor的子类
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category &#x3D; &quot;Spawn Info&quot;) 
+	TSubclassOf&lt;AActor&gt; MonsterClass;
+	&#x2F;&#x2F; 定义一个数组，存储怪物可以执行的动作，这些动作是UMyAction的子类
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category &#x3D; &quot;Spawn Info&quot;)
+	TArray&lt;TSubclassOf&lt;UMyAction&gt;&gt; Actions;
+    &#x2F;&#x2F; 定义一个2D纹理，表示怪物的图标
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category &#x3D; &quot;UI&quot;)
+	UTexture2D* Icon;
+&#125;;</code></pre>
+
+<h5 id="2-2-创建怪物类资产"><a href="#2-2-创建怪物类资产" class="headerlink" title="2.2 创建怪物类资产"></a>2.2 创建怪物类资产</h5><p>以MyMonsterData为基础创建DataAsset</p>
+<img src="/pic/%E3%80%90UE4C-ActionRougelike-27%E3%80%91%E8%B5%84%E4%BA%A7%E3%80%81%E6%95%B0%E6%8D%AE%E3%80%81%E5%BC%82%E6%AD%A5%E5%8A%A0%E8%BD%BD/DataAsset%E8%AE%BE%E7%BD%AE.jpg" alt="DataAsset设置" style="zoom:50%;" />
+
+<h4 id="3、创建怪物DataTable"><a href="#3、创建怪物DataTable" class="headerlink" title="3、创建怪物DataTable"></a>3、创建怪物DataTable</h4><p>以MonsterInforRow为结构创建怪物数据表DT_Monsters，并设置相应属性值</p>
+<img src="/pic/%E3%80%90UE4C-ActionRougelike-27%E3%80%91%E8%B5%84%E4%BA%A7%E3%80%81%E6%95%B0%E6%8D%AE%E3%80%81%E5%BC%82%E6%AD%A5%E5%8A%A0%E8%BD%BD/DataAsset%E8%AE%BE%E7%BD%AE-16845789634241.jpg" alt="DataAsset设置" style="zoom:50%;" />
+
+<h4 id="4、调用怪物数据表"><a href="#4、调用怪物数据表" class="headerlink" title="4、调用怪物数据表"></a>4、调用怪物数据表</h4><p>在MyGameModeBase.h中增加数据表属性MonsterTable</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">&#x2F;&#x2F; MyGameModeBase.h
+class ACTIONROGUELIKE_API AMyGameModeBase : public AGameModeBase
+&#123;
+protected:
+	&#x2F;&#x2F; 怪物数据表
+	UPROPERTY(EditDefaultsOnly, Category &#x3D; &quot;AI&quot;)
+	UDataTable* MonsterTable;
+    &#x2F;&#x2F;指定要生成的AI角色的类
+	&#x2F;&#x2F;UPROPERTY(EditDefaultsOnly, Category &#x3D; &quot;AI&quot;)
+	&#x2F;&#x2F;TSubclassOf&lt;AActor&gt; MinionClass;
+&#125;
+&#x2F;&#x2F; MyGameModeBase.cpp</code></pre>
+
+<p>在MyGameModeBase.cpp中修改OnBotSpawnQueryCompleted方法，使得生成AI机器人时是从数据表MonsterTable中获取信息。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">void AMyGameModeBase::OnBotSpawnQueryCompleted(UEnvQueryInstanceBlueprintWrapper* QueryInstance, EEnvQueryStatus::Type QueryStatus)
+&#123;
+	&#x2F;&#x2F;...
+    if (Locations.IsValidIndex(0))
 	&#123;
-		&#x2F;&#x2F; 如果ActionComp存在，就检查其ActiveGameplayTags是否包含StunnedTag标签，并将结果赋值给bIsStunned
-		bIsStunned &#x3D; ActionComp-&gt;ActiveGameplayTags.HasTag(StunnedTag);
+		&#x2F;&#x2F; 如果怪物表存在
+		if (MonsterTable)
+		&#123;
+			&#x2F;&#x2F; 定义一个MonsterInfoRow指针的数组
+			TArray&lt;FMonsterInfoRow*&gt; Rows;
+			&#x2F;&#x2F; 从怪物表中获取所有行，将其存入Rows数组
+			MonsterTable-&gt;GetAllRows(&quot;&quot;, Rows);
+			&#x2F;&#x2F; 随机选择一个怪物
+			int32 RandomIndex &#x3D; FMath::RandRange(0, Rows.Num() - 1);
+			FMonsterInfoRow* SelectedRow &#x3D; Rows[RandomIndex];
+			&#x2F;&#x2F; 在选定的位置生成这个怪物
+			GetWorld()-&gt;SpawnActor&lt;AActor&gt;(SelectedRow-&gt;MonsterData-&gt;MonsterClass, Locations[0], FRotator::ZeroRotator);
+		&#125;
 	&#125;
 &#125;</code></pre>
 
-<p>修改Gideon_AnimBlueprint类设置的父类为MyAnimInstance，并设置蓝图中bIsStunned为MyAnimInstance中的属性。</p>
-<h3 id="二、漂浮加速动画"><a href="#二、漂浮加速动画" class="headerlink" title="二、漂浮加速动画"></a>二、漂浮加速动画</h3><h4 id="1、新建动画混合空间"><a href="#1、新建动画混合空间" class="headerlink" title="1、新建动画混合空间"></a>1、新建动画混合空间</h4><p>以Gideon_Skeleton为骨架新建混合空间Sprinting_BS_1D，混合空间设置如下：</p>
-<img src="/pic/%E3%80%90UE4C-ActionRougelike-26%E3%80%91%E5%8A%A8%E7%94%BB%E8%93%9D%E5%9B%BE/%E6%B7%B7%E5%90%88%E7%A9%BA%E9%97%B4%E8%AE%BE%E7%BD%AE.jpg" alt="混合空间设置" style="zoom:50%;" />
-
-<h4 id="2、应用混合空间"><a href="#2、应用混合空间" class="headerlink" title="2、应用混合空间"></a>2、应用混合空间</h4><h5 id="2-1-创建加速动画蓝图节点"><a href="#2-1-创建加速动画蓝图节点" class="headerlink" title="2.1 创建加速动画蓝图节点"></a>2.1 创建加速动画蓝图节点</h5><img src="/pic/%E3%80%90UE4C-ActionRougelike-26%E3%80%91%E5%8A%A8%E7%94%BB%E8%93%9D%E5%9B%BE/%E5%8A%A0%E9%80%9F%E5%8A%A8%E7%94%BB%E8%93%9D%E5%9B%BE%E8%8A%82%E7%82%B9.jpg" alt="加速动画蓝图节点" style="zoom:50%;" />
-
-<h5 id="2-2-应用加速动画蓝图节点"><a href="#2-2-应用加速动画蓝图节点" class="headerlink" title="2.2 应用加速动画蓝图节点"></a>2.2 应用加速动画蓝图节点</h5><img src="/pic/%E3%80%90UE4C-ActionRougelike-26%E3%80%91%E5%8A%A8%E7%94%BB%E8%93%9D%E5%9B%BE/%E4%BF%AE%E6%94%B9Idle&Jogs(state).jpg" alt="修改Idle&Jogs(state)" style="zoom:50%;" />
-
-<h5 id="2-3-更新是否加速变量"><a href="#2-3-更新是否加速变量" class="headerlink" title="2.3 更新是否加速变量"></a>2.3 更新是否加速变量</h5><img src="/pic/%E3%80%90UE4C-ActionRougelike-26%E3%80%91%E5%8A%A8%E7%94%BB%E8%93%9D%E5%9B%BE/%E6%9B%B4%E6%96%B0BIsSprinting%E5%8F%98%E9%87%8F-16843976370022.jpg" alt="更新BIsSprinting变量" style="zoom:50%;" />
-
-<h4 id="3、效果演示"><a href="#3、效果演示" class="headerlink" title="3、效果演示"></a>3、效果演示</h4><img src="/pic/%E3%80%90UE4C-ActionRougelike-26%E3%80%91%E5%8A%A8%E7%94%BB%E8%93%9D%E5%9B%BE/%E5%8A%A0%E9%80%9F%E6%82%AC%E6%B5%AE%E5%8A%A8%E7%94%BB%E6%95%88%E6%9E%9C%E6%BC%94%E7%A4%BA.gif" alt="加速悬浮动画效果演示" style="zoom:80%;" />
-
-<h3 id="三、交互信息"><a href="#三、交互信息" class="headerlink" title="三、交互信息"></a>三、交互信息</h3><h4 id="1、添加获取交互信息文本方法"><a href="#1、添加获取交互信息文本方法" class="headerlink" title="1、添加获取交互信息文本方法"></a>1、添加获取交互信息文本方法</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">&#x2F;&#x2F; SInteractionInterface.h
-class ACTIONROGUELIKE_API ISInteractionInterface
-&#123;
-public:
-	&#x2F;&#x2F; 获取交互信息文本
-	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
-	FText GetInteractText(APawn* InstigatorPawn);
-&#125;
-&#x2F;&#x2F; MyPickup.h
-class ACTIONROGUELIKE_API AMyPickup : public AActor, public ISInteractionInterface
+<h3 id="二、弱引用和强引用"><a href="#二、弱引用和强引用" class="headerlink" title="二、弱引用和强引用"></a>二、弱引用和强引用</h3><h4 id="1、弱引用和强引用"><a href="#1、弱引用和强引用" class="headerlink" title="1、弱引用和强引用"></a>1、弱引用和强引用</h4><p>弱引用和强引用都是描述资产引用方式的术语</p>
+<p><strong>Hard Reference (强引用)</strong></p>
+<ul>
+<li>概念：强引用指的是直接引用其他资产的方式。当资产A强引用了资产B，那么资产A被加载到内存中时，资产B也将被自动加载；只有当所有对资产B的强引用都被删除或卸载时，资产B才可能被卸载。</li>
+<li>使用：通常使用强引用来引用你需要立即访问的资产。例如，一个角色可能强引用其模型和纹理，因为这些资产需要在角色被创建时立即可用。</li>
+</ul>
+<p><strong>Soft Reference (弱引用)</strong></p>
+<ul>
+<li>概念：弱引用不会自动加载其引用的资产。一个资产A弱引用资产B，只是存储了资产B的标识符，但不会立即加载资产B。只有当明确请求加载弱引用的资产时，资产B才会被加载到内存中。</li>
+<li>使用：弱引用通常用于引用可能需要一些时间来加载的大型资产，或可能并不总是需要的资产。例如，一个角色可能弱引用一些高解析度的纹理或复杂的动画，这些资产只在特定的情况下需要，并且可能需要一些时间来加载。</li>
+<li>注意事项：虽然弱引用不会自动加载其引用的资产，但必须确保在访问弱引用的资产之前，明确加载了这个资产。否则会遇到无法访问资产的问题。</li>
+</ul>
+<h4 id="2、弱引用示例"><a href="#2、弱引用示例" class="headerlink" title="2、弱引用示例"></a>2、弱引用示例</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">class ACTIONROGUELIKE_API UMyAction : public UObject
 &#123;
 protected:
-	&#x2F;&#x2F; 实现获取交互信息文本方法
-	FText GetInteractText_Implementation(APawn* InstigatorPawn);
-&#125;;
-&#x2F;&#x2F; MyPickup.cpp
-FText AMyPickup::GetInteractText_Implementation(APawn* InstigatorPawn)
-&#123;
-	return FText::GetEmpty();
+	&#x2F;&#x2F; Buff状态图标
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category &#x3D; &quot;UI&quot;)
+	TSoftObjectPtr&lt;UTexture2D&gt; Icon;
 &#125;</code></pre>
 
-<h4 id="2、实现接口方法"><a href="#2、实现接口方法" class="headerlink" title="2、实现接口方法"></a>2、实现接口方法</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">&#x2F;&#x2F; MyPickup_Health.h
-class ACTIONROGUELIKE_API AMyPickup_Health : public AMyPickup
+<img src="/pic/%E3%80%90UE4C-ActionRougelike-27%E3%80%91%E8%B5%84%E4%BA%A7%E3%80%81%E6%95%B0%E6%8D%AE%E3%80%81%E5%BC%82%E6%AD%A5%E5%8A%A0%E8%BD%BD/%E5%BC%B1%E5%BC%95%E7%94%A8%E7%A4%BA%E4%BE%8B.jpg" alt="弱引用示例" style="zoom:50%;" />
+
+<h3 id="三、异步加载"><a href="#三、异步加载" class="headerlink" title="三、异步加载"></a>三、异步加载</h3><p>使用<strong>FPrimaryAssetId</strong>和<strong>FPrimaryAssetId</strong>实现对主要资产(Primary Asset)的异步加载。</p>
+<ul>
+<li>创建FPrimaryAssetId：创建一个FPrimaryAssetId来标识想要加载的主要资产。由两部分组成PrimaryAssetType和PrimaryAssetName。<ul>
+<li>PrimaryAssetType：表示资产的类型，</li>
+<li>PrimaryAssetName：表示资产的名称。</li>
+</ul>
+</li>
+<li>调用LoadPrimaryAsset加载主要资产：调用这个方法的时候，它会阻塞当前的执行流，直到资产加载完成为止</li>
+<li>设置完成回调：FStreamableDelegate是一个回调委托，在资产加载完成后被调用。创建一个FStreamableDelegate并把它绑定到 LoadPrimaryAsset方法上，当资产加载完成时，可以得到通知。</li>
+</ul>
+<h4 id="1、设置异步加载"><a href="#1、设置异步加载" class="headerlink" title="1、设置异步加载"></a>1、设置异步加载</h4><p>异步加载前怪物数据表DT_Monsters的SizeMap：</p>
+<img src="/pic/%E3%80%90UE4C-ActionRougelike-27%E3%80%91%E8%B5%84%E4%BA%A7%E3%80%81%E6%95%B0%E6%8D%AE%E3%80%81%E5%BC%82%E6%AD%A5%E5%8A%A0%E8%BD%BD/%E5%BC%82%E6%AD%A5%E5%8A%A0%E8%BD%BD%E5%89%8DSizeMap.jpg" alt="异步加载前SizeMap" style="zoom:50%;" />
+
+<p>在MyGameModeBase.h中修改怪物数据表结构</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">struct FMonsterInfoRow : public FTableRowBase
 &#123;
 public:
-	&#x2F;&#x2F; 实现获取交互信息文本方法
-	FText GetInteractText_Implementation(APawn* InstigatorPawn) override;
-&#125;
-&#x2F;&#x2F; MyPickup_Health.cpp
-&#x2F;&#x2F; 定义一个本地化文本的命名空间为&quot;InteractableActors&quot;
-#define LOCTEXT_NAMESPACE &quot;InteractableActors&quot;
-FText AMyPickup_Health::GetInteractText_Implementation(APawn* InstigatorPawn)
+	&#x2F;&#x2F;...
+	&#x2F;&#x2F; 定义一个名为MonsterId的字段，类型为FPrimaryAssetId，该字段用于标识怪物
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	FPrimaryAssetId MonsterId;
+	&#x2F;&#x2F;...
+&#125;</code></pre>
+
+<p>在MyMonsterData.h中添加常量函数，用于返回PrimaryAssetId</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">&#x2F;&#x2F; 定义一个常量函数，返回FPrimaryAssetId类型
+FPrimaryAssetId GetPrimaryAssetId() const override
 &#123;
-	&#x2F;&#x2F; 如果健康值已满
-	UMyAttributeComponent* AttributeComp &#x3D; UMyAttributeComponent::GetAttributes(InstigatorPawn);
-	if (AttributeComp &amp;&amp; AttributeComp-&gt;IsFullHealth())
+	&#x2F;&#x2F; 返回一个FPrimaryAssetId类型的对象，该对象用于唯一标识一个主要资产。
+	&#x2F;&#x2F; 这里使用的是本类对象的名称(GetFName())，和字符串&quot;Monsters&quot;组合生成这个唯一标识符。
+	return FPrimaryAssetId(&quot;Monsters&quot;, GetFName()); 
+&#125;</code></pre>
+
+<h4 id="2、设置资产管理器"><a href="#2、设置资产管理器" class="headerlink" title="2、设置资产管理器"></a>2、设置资产管理器</h4><img src="/pic/%E3%80%90UE4C-ActionRougelike-27%E3%80%91%E8%B5%84%E4%BA%A7%E3%80%81%E6%95%B0%E6%8D%AE%E3%80%81%E5%BC%82%E6%AD%A5%E5%8A%A0%E8%BD%BD/Asset%20Manager%E8%AE%BE%E7%BD%AE.jpg" alt="Asset Manager设置" style="zoom:50%;" />
+
+<p>此时的DT_Monsters的SizeMap</p>
+<img src="/pic/%E3%80%90UE4C-ActionRougelike-27%E3%80%91%E8%B5%84%E4%BA%A7%E3%80%81%E6%95%B0%E6%8D%AE%E3%80%81%E5%BC%82%E6%AD%A5%E5%8A%A0%E8%BD%BD/%E5%BC%82%E6%AD%A5%E5%8A%A0%E8%BD%BD%E5%90%8E%E7%9A%84SizeMap.jpg" alt="异步加载后的SizeMap" style="zoom:50%;" />
+
+<h4 id="3、启动异步加载"><a href="#3、启动异步加载" class="headerlink" title="3、启动异步加载"></a>3、启动异步加载</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">void AMyGameModeBase::OnBotSpawnQueryCompleted(UEnvQueryInstanceBlueprintWrapper* QueryInstance, EEnvQueryStatus::Type QueryStatus)
+&#123;
+    &#x2F;&#x2F; ...
+	TArray&lt;FVector&gt; Locations &#x3D; QueryInstance-&gt;GetResultsAsLocations();
+	if (Locations.IsValidIndex(0))
 	&#123;
-		&#x2F;&#x2F; 返回一段本地化文本，文本的key为&quot;HealthPotion_FullHealthWarning&quot;，默认值为&quot;Already at full health.&quot;
-		return LOCTEXT(&quot;HealthPotion_FullHealthWarning&quot;, &quot;Already at full health.&quot;);
+		&#x2F;&#x2F; 如果怪物表存在
+		if (MonsterTable)
+		&#123;
+			&#x2F;&#x2F; 定义一个MonsterInfoRow指针的数组
+			TArray&lt;FMonsterInfoRow*&gt; Rows;
+			&#x2F;&#x2F; 从怪物表中获取所有行，将其存入Rows数组
+			MonsterTable-&gt;GetAllRows(&quot;&quot;, Rows);
+			&#x2F;&#x2F; 随机选择一个怪物
+			int32 RandomIndex &#x3D; FMath::RandRange(0, Rows.Num() - 1);
+			FMonsterInfoRow* SelectedRow &#x3D; Rows[RandomIndex];
+			&#x2F;&#x2F; 获取资产管理器实例
+			UAssetManager* Manager &#x3D; UAssetManager::GetIfValid();
+			if (Manager)
+			&#123;
+				&#x2F;&#x2F; 输出加载怪物的提示信息
+				LogOnScreen(this, &quot;Loading monster...&quot;, FColor::Green);
+				&#x2F;&#x2F; 输出加载怪物的提示信息
+				TArray&lt;FName&gt; Bundles;
+				&#x2F;&#x2F; 创建一个回调代理
+                 &#x2F;&#x2F; FStreamableDelegate是一个特殊类型的委托，它主要用于异步加载资源时，在加载完成后执行指定的函数。
+                 &#x2F;&#x2F; 当LoadPrimaryAsset成功完成怪物资源的加载后，Delegate委托会被调用，并执行AMyGameModeBase类的OnMonsterLoaded成员函数。
+				FStreamableDelegate Delegate &#x3D; FStreamableDelegate::CreateUObject(this, &amp;AMyGameModeBase::OnMonsterLoaded, SelectedRow-&gt;MonsterId, Locations[0]);
+				&#x2F;&#x2F; 使用资产管理器加载选择的怪物
+				Manager-&gt;LoadPrimaryAsset(SelectedRow-&gt;MonsterId, Bundles, Delegate);
+			&#125;
+		&#125;
 	&#125;
-	&#x2F;&#x2F; 返回一段格式化的本地化文本，文本的key为&quot;HealthPotion_InteractMessage&quot;，
-	&#x2F;&#x2F; 默认值为&quot;Cost &#123;0&#125; Credits. Restores health to maximum.&quot;，并用CreditCost替换掉文本中的&#123;0&#125;
-	return FText::Format(LOCTEXT(&quot;HealthPotion_InteractMessage&quot;, &quot;Cost &#123;0&#125; Credits. Restores health to maximum.&quot;), CreditCost);
 &#125;
-&#x2F;&#x2F; 取消之前定义的本地化文本的命名空间
-#undef LOCTEXT_NAMESPACE</code></pre>
+void AMyGameModeBase::OnMonsterLoaded(FPrimaryAssetId LoadedId, FVector SpawnLocation)
+&#123;
+	LogOnScreen(this, &quot;Finished loading.&quot;, FColor::Green);
+	&#x2F;&#x2F; 获取资产管理器实例
+	UAssetManager* Manager &#x3D; UAssetManager::GetIfValid();
+	if (Manager)
+	&#123;
+		&#x2F;&#x2F; 通过管理器获取主资产对象（即怪物数据资源）
+		UMyMonsterData* MonsterData &#x3D; Cast&lt;UMyMonsterData&gt;(Manager-&gt;GetPrimaryAssetObject(LoadedId));
+		if (MonsterData)
+		&#123;
+			&#x2F;&#x2F; 通过怪物数据资源的信息生成一个新的怪物角色
+			AActor* NewBot &#x3D; GetWorld()-&gt;SpawnActor&lt;AActor&gt;(MonsterData-&gt;MonsterClass, SpawnLocation, FRotator::ZeroRotator);
+			if (NewBot)
+			&#123;
+				&#x2F;&#x2F; 输出生成新怪物的提示信息
+				LogOnScreen(this, FString::Printf(TEXT(&quot;Spawned enemy: %s (%s)&quot;), *GetNameSafe(NewBot), *GetNameSafe(MonsterData)));
+				&#x2F;&#x2F; 获取怪物角色的行为组件
+				UMyActionComponent* ActionComp &#x3D; Cast&lt;UMyActionComponent&gt;(NewBot-&gt;GetComponentByClass(UMyActionComponent::StaticClass()));
+				if (ActionComp)
+				&#123;
+					&#x2F;&#x2F; 为怪物角色添加其特有的行为
+					for (TSubclassOf&lt;UMyAction&gt; ActionClass : MonsterData-&gt;Actions)
+					&#123;
+						ActionComp-&gt;AddAction(NewBot, ActionClass);
+					&#125;
+				&#125;
+			&#125;
+		&#125;
+	&#125;
+&#125;</code></pre>
 
-<h4 id="3、UI控件中更新文本"><a href="#3、UI控件中更新文本" class="headerlink" title="3、UI控件中更新文本"></a>3、UI控件中更新文本</h4><img src="/pic/%E3%80%90UE4C-ActionRougelike-26%E3%80%91%E5%8A%A8%E7%94%BB%E8%93%9D%E5%9B%BE/%E4%BA%A4%E4%BA%92UI%E8%93%9D%E5%9B%BE%E8%AE%BE%E7%BD%AE.jpg" alt="交互UI蓝图设置" style="zoom:50%;" />
-
-<h4 id="4、效果演示"><a href="#4、效果演示" class="headerlink" title="4、效果演示"></a>4、效果演示</h4><img src="/pic/%E3%80%90UE4C-ActionRougelike-26%E3%80%91%E5%8A%A8%E7%94%BB%E8%93%9D%E5%9B%BE/%E4%BA%A4%E4%BA%92%E6%8F%90%E7%A4%BA%E4%BF%A1%E6%81%AF%E6%95%88%E6%9E%9C%E6%BC%94%E7%A4%BA.gif" alt="交互提示信息效果演示" style="zoom:80%;" />
 
                                     
                             </div>
@@ -589,7 +692,7 @@ FText AMyPickup_Health::GetInteractText_Implementation(APawn* InstigatorPawn)
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://zdx199792.github.io/2023/05/18/%E3%80%90UE4C-ActionRougelike-26%E3%80%91%E5%8A%A8%E7%94%BB%E8%93%9D%E5%9B%BE/">https://zdx199792.github.io/2023/05/18/%E3%80%90UE4C-ActionRougelike-26%E3%80%91%E5%8A%A8%E7%94%BB%E8%93%9D%E5%9B%BE/</a>
+                    <a href="https://zdx199792.github.io/2023/05/21/%E3%80%90UE4C-ActionRougelike-27%E3%80%91%E8%B5%84%E4%BA%A7%E3%80%81%E6%95%B0%E6%8D%AE%E3%80%81%E5%BC%82%E6%AD%A5%E5%8A%A0%E8%BD%BD/">https://zdx199792.github.io/2023/05/21/%E3%80%90UE4C-ActionRougelike-27%E3%80%91%E8%B5%84%E4%BA%A7%E3%80%81%E6%95%B0%E6%8D%AE%E3%80%81%E5%BC%82%E6%AD%A5%E5%8A%A0%E8%BD%BD/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -989,9 +1092,10 @@ FText AMyPickup_Health::GetInteractText_Implementation(APawn* InstigatorPawn)
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2023/05/21/%E3%80%90UE4C-ActionRougelike-27%E3%80%91%E8%B5%84%E4%BA%A7%E3%80%81%E6%95%B0%E6%8D%AE%E3%80%81%E5%BC%82%E6%AD%A5%E5%8A%A0%E8%BD%BD/">
                     <div class="card-image">
@@ -1009,9 +1113,9 @@ FText AMyPickup_Health::GetInteractText_Implementation(APawn* InstigatorPawn)
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2023-05-21
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-05-21
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -1024,6 +1128,7 @@ FText AMyPickup_Health::GetInteractText_Implementation(APawn* InstigatorPawn)
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -1050,13 +1155,13 @@ FText AMyPickup_Health::GetInteractText_Implementation(APawn* InstigatorPawn)
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2023/05/13/%E3%80%90UE4C-ActionRougelike-25%E3%80%91Buff%E7%8A%B6%E6%80%81%E6%A0%8F/">
+                <a href="/2023/05/18/%E3%80%90UE4C-ActionRougelike-26%E3%80%91%E5%8A%A8%E7%94%BB%E8%93%9D%E5%9B%BE/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="【UE4C++-ActionRougelike-25】Buff状态栏">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="【UE4C++-ActionRougelike-26】动画蓝图">
                         
-                        <span class="card-title">【UE4C++-ActionRougelike-25】Buff状态栏</span>
+                        <span class="card-title">【UE4C++-ActionRougelike-26】动画蓝图</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1067,7 +1172,7 @@ FText AMyPickup_Health::GetInteractText_Implementation(APawn* InstigatorPawn)
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-05-13
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-05-18
                             </span>
                         <span class="publish-author">
                             
