@@ -4,9 +4,13 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="【UE4C++-ActionRougelike-27】资产、数据、异步加载, Woilin&#39;s Blog">
-    <meta name="description" content="【UE4C++-ActionRougelike-27】资产、数据、异步加载一、AI机器人数据表和资产1、创建数据表结构在MyGameModeBase.h中创建怪物信息结构体MonsterInforRow
-&amp;#x2F;&amp;#x2F; MyGam">
+    <meta name="keywords" content="【UE4C++-ActionRougelike-28】封装、性能、打磨, Woilin&#39;s Blog">
+    <meta name="description" content="【UE4C++-ActionRougelike-28】封装、性能、打磨一、打包1、指定地图列表指定在打包构建时要包含的地图列表，在Project Setting-&amp;gt;Packaging中设置要包含的地图列表。
+
+
+2、打包
+
+3、运行游">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -18,7 +22,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>【UE4C++-ActionRougelike-27】资产、数据、异步加载 | Woilin&#39;s Blog</title>
+    <title>【UE4C++-ActionRougelike-28】封装、性能、打磨 | Woilin&#39;s Blog</title>
     <link rel="icon" type="image/jpeg" href="/head.jpg">
     
 
@@ -335,12 +339,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">【UE4C++-ActionRougelike-27】资产、数据、异步加载</h1>
+                    <h1 class="description center-align post-title">【UE4C++-ActionRougelike-28】封装、性能、打磨</h1>
                 </div>
             </div>
         </div>
@@ -404,7 +408,7 @@
                     <div class="post-date info-break-policy">
                         <i class="far fa-calendar-minus fa-fw"></i>
                         发布日期:&nbsp;&nbsp;
-                            2023-05-21
+                            2023-05-26
                     </div>
                     
 
@@ -412,7 +416,7 @@
                             <div class="post-date info-break-policy">
                                 <i class="far fa-calendar-check fa-fw"></i>
                                 更新日期:&nbsp;&nbsp;
-                                    2023-05-21
+                                    2023-05-26
                             </div>
                             
 
@@ -420,7 +424,7 @@
                                     <div class="info-break-policy">
                                         <i class="far fa-file-word fa-fw"></i>
                                         文章字数:&nbsp;&nbsp;
-                                            1.9k
+                                            1.4k
                                     </div>
                                     
 
@@ -428,7 +432,7 @@
                                             <div class="info-break-policy">
                                                 <i class="far fa-clock fa-fw"></i>
                                                 阅读时长:&nbsp;&nbsp;
-                                                    8
+                                                    5
                                                         分
                                             </div>
                                             
@@ -453,217 +457,120 @@
 
                         <div class="card-content article-card-content">
                             <div id="articleContent">
-                                <h2 id="【UE4C-ActionRougelike-27】资产、数据、异步加载"><a href="#【UE4C-ActionRougelike-27】资产、数据、异步加载" class="headerlink" title="【UE4C++-ActionRougelike-27】资产、数据、异步加载"></a>【UE4C++-ActionRougelike-27】资产、数据、异步加载</h2><h3 id="一、AI机器人数据表和资产"><a href="#一、AI机器人数据表和资产" class="headerlink" title="一、AI机器人数据表和资产"></a>一、AI机器人数据表和资产</h3><h4 id="1、创建数据表结构"><a href="#1、创建数据表结构" class="headerlink" title="1、创建数据表结构"></a>1、创建数据表结构</h4><p>在MyGameModeBase.h中创建怪物信息结构体MonsterInforRow</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">&#x2F;&#x2F; MyGameModeBase.h
-USTRUCT(BlueprintType)
-struct FMonsterInfoRow : public FTableRowBase
-&#123;
-	GENERATED_BODY()
-public:
-	&#x2F;&#x2F; 默认构造函数
-	FMonsterInfoRow()
-	&#123;
-		Weight &#x3D; 1.0f;
-		SpawnCost &#x3D; 5.0f;
-		KillReward &#x3D; 20.0f;
-	&#125;
-	&#x2F;&#x2F; 定义一个名为MonsterClass的字段，类型为AActor子类，该字段用于标识怪物
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	TSubclassOf&lt;AActor&gt; MonsterClass;
-	&#x2F;&#x2F; 定义一个名为Weight的字段，表示选择此怪物的相对机会
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	float Weight;
-	&#x2F;&#x2F; 定义一个名为SpawnCost的字段，表示游戏模式生成此单位所需的点数
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-    float SpawnCost;
-	&#x2F;&#x2F; 定义一个名为KillReward的字段，表示杀死此单位的奖励金额
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	float KillReward;
-&#125;;</code></pre>
+                                <h2 id="【UE4C-ActionRougelike-28】封装、性能、打磨"><a href="#【UE4C-ActionRougelike-28】封装、性能、打磨" class="headerlink" title="【UE4C++-ActionRougelike-28】封装、性能、打磨"></a>【UE4C++-ActionRougelike-28】封装、性能、打磨</h2><h3 id="一、打包"><a href="#一、打包" class="headerlink" title="一、打包"></a>一、打包</h3><h4 id="1、指定地图列表"><a href="#1、指定地图列表" class="headerlink" title="1、指定地图列表"></a>1、指定地图列表</h4><p>指定在打包构建时要包含的地图列表，在Project Setting-&gt;Packaging中设置要包含的地图列表。</p>
+<img src="/pic/%E3%80%90UE4C-ActionRougelike-28%E3%80%91%E5%B0%81%E8%A3%85%E3%80%81%E6%80%A7%E8%83%BD%E3%80%81%E6%89%93%E7%A3%A8/%E6%B7%BB%E5%8A%A0%E5%9C%B0%E5%9B%BE.jpg" alt="添加地图" style="zoom:50%;" />
 
-<h4 id="2、创建怪物DataAsset"><a href="#2、创建怪物DataAsset" class="headerlink" title="2、创建怪物DataAsset"></a>2、创建怪物DataAsset</h4><h5 id="2-1-创建怪物数据类"><a href="#2-1-创建怪物数据类" class="headerlink" title="2.1 创建怪物数据类"></a>2.1 创建怪物数据类</h5><p>以PrimaryAssetLabel为父类创建怪物数据类MyMonsterData</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">UCLASS()
-class ACTIONROGUELIKE_API UMyMonsterData : public UPrimaryAssetLabel 
-&#123;
-	GENERATED_BODY()
-public:
-    &#x2F;&#x2F; 定义一个怪物类，它是AActor的子类
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category &#x3D; &quot;Spawn Info&quot;) 
-	TSubclassOf&lt;AActor&gt; MonsterClass;
-	&#x2F;&#x2F; 定义一个数组，存储怪物可以执行的动作，这些动作是UMyAction的子类
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category &#x3D; &quot;Spawn Info&quot;)
-	TArray&lt;TSubclassOf&lt;UMyAction&gt;&gt; Actions;
-    &#x2F;&#x2F; 定义一个2D纹理，表示怪物的图标
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category &#x3D; &quot;UI&quot;)
-	UTexture2D* Icon;
-&#125;;</code></pre>
+<h4 id="2、打包"><a href="#2、打包" class="headerlink" title="2、打包"></a>2、打包</h4><img src="/pic/%E3%80%90UE4C-ActionRougelike-28%E3%80%91%E5%B0%81%E8%A3%85%E3%80%81%E6%80%A7%E8%83%BD%E3%80%81%E6%89%93%E7%A3%A8/%E6%89%93%E5%8C%85.jpg" alt="打包" style="zoom:50%;" />
 
-<h5 id="2-2-创建怪物类资产"><a href="#2-2-创建怪物类资产" class="headerlink" title="2.2 创建怪物类资产"></a>2.2 创建怪物类资产</h5><p>以MyMonsterData为基础创建DataAsset</p>
-<img src="/pic/%E3%80%90UE4C-ActionRougelike-27%E3%80%91%E8%B5%84%E4%BA%A7%E3%80%81%E6%95%B0%E6%8D%AE%E3%80%81%E5%BC%82%E6%AD%A5%E5%8A%A0%E8%BD%BD/DataAsset%E8%AE%BE%E7%BD%AE.jpg" alt="DataAsset设置" style="zoom:50%;" />
+<h4 id="3、运行游戏"><a href="#3、运行游戏" class="headerlink" title="3、运行游戏"></a>3、运行游戏</h4><img src="/pic/%E3%80%90UE4C-ActionRougelike-28%E3%80%91%E5%B0%81%E8%A3%85%E3%80%81%E6%80%A7%E8%83%BD%E3%80%81%E6%89%93%E7%A3%A8/%E8%BF%90%E8%A1%8C%E6%B8%B8%E6%88%8F.jpg" alt="运行游戏" style="zoom:50%;" />
 
-<h4 id="3、创建怪物DataTable"><a href="#3、创建怪物DataTable" class="headerlink" title="3、创建怪物DataTable"></a>3、创建怪物DataTable</h4><p>以MonsterInforRow为结构创建怪物数据表DT_Monsters，并设置相应属性值</p>
-<img src="/pic/%E3%80%90UE4C-ActionRougelike-27%E3%80%91%E8%B5%84%E4%BA%A7%E3%80%81%E6%95%B0%E6%8D%AE%E3%80%81%E5%BC%82%E6%AD%A5%E5%8A%A0%E8%BD%BD/DataAsset%E8%AE%BE%E7%BD%AE-16845789634241.jpg" alt="DataAsset设置" style="zoom:50%;" />
-
-<h4 id="4、调用怪物数据表"><a href="#4、调用怪物数据表" class="headerlink" title="4、调用怪物数据表"></a>4、调用怪物数据表</h4><p>在MyGameModeBase.h中增加数据表属性MonsterTable</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">&#x2F;&#x2F; MyGameModeBase.h
-class ACTIONROGUELIKE_API AMyGameModeBase : public AGameModeBase
-&#123;
-protected:
-	&#x2F;&#x2F; 怪物数据表
-	UPROPERTY(EditDefaultsOnly, Category &#x3D; &quot;AI&quot;)
-	UDataTable* MonsterTable;
-    &#x2F;&#x2F;指定要生成的AI角色的类
-	&#x2F;&#x2F;UPROPERTY(EditDefaultsOnly, Category &#x3D; &quot;AI&quot;)
-	&#x2F;&#x2F;TSubclassOf&lt;AActor&gt; MinionClass;
-&#125;
-&#x2F;&#x2F; MyGameModeBase.cpp</code></pre>
-
-<p>在MyGameModeBase.cpp中修改OnBotSpawnQueryCompleted方法，使得生成AI机器人时是从数据表MonsterTable中获取信息。</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">void AMyGameModeBase::OnBotSpawnQueryCompleted(UEnvQueryInstanceBlueprintWrapper* QueryInstance, EEnvQueryStatus::Type QueryStatus)
-&#123;
-	&#x2F;&#x2F;...
-    if (Locations.IsValidIndex(0))
-	&#123;
-		&#x2F;&#x2F; 如果怪物表存在
-		if (MonsterTable)
-		&#123;
-			&#x2F;&#x2F; 定义一个MonsterInfoRow指针的数组
-			TArray&lt;FMonsterInfoRow*&gt; Rows;
-			&#x2F;&#x2F; 从怪物表中获取所有行，将其存入Rows数组
-			MonsterTable-&gt;GetAllRows(&quot;&quot;, Rows);
-			&#x2F;&#x2F; 随机选择一个怪物
-			int32 RandomIndex &#x3D; FMath::RandRange(0, Rows.Num() - 1);
-			FMonsterInfoRow* SelectedRow &#x3D; Rows[RandomIndex];
-			&#x2F;&#x2F; 在选定的位置生成这个怪物
-			GetWorld()-&gt;SpawnActor&lt;AActor&gt;(SelectedRow-&gt;MonsterData-&gt;MonsterClass, Locations[0], FRotator::ZeroRotator);
-		&#125;
-	&#125;
-&#125;</code></pre>
-
-<h3 id="二、弱引用和强引用"><a href="#二、弱引用和强引用" class="headerlink" title="二、弱引用和强引用"></a>二、弱引用和强引用</h3><h4 id="1、弱引用和强引用"><a href="#1、弱引用和强引用" class="headerlink" title="1、弱引用和强引用"></a>1、弱引用和强引用</h4><p>弱引用和强引用都是描述资产引用方式的术语</p>
-<p><strong>Hard Reference (强引用)</strong></p>
+<h3 id="二、优化"><a href="#二、优化" class="headerlink" title="二、优化"></a>二、优化</h3><p><strong>何时进行优化？</strong></p>
+<p>尽可能早的优化，避免堵塞工作流程</p>
+<p>优化太早：</p>
 <ul>
-<li>概念：强引用指的是直接引用其他资产的方式。当资产A强引用了资产B，那么资产A被加载到内存中时，资产B也将被自动加载；只有当所有对资产B的强引用都被删除或卸载时，资产B才可能被卸载。</li>
-<li>使用：通常使用强引用来引用你需要立即访问的资产。例如，一个角色可能强引用其模型和纹理，因为这些资产需要在角色被创建时立即可用。</li>
+<li>代码的可读性&#x2F;灵活性降低</li>
+<li>优化之后仍会多次修改功能</li>
+<li>在可能废弃的内容或永远不会影响性能瓶颈的功能上花费时间</li>
 </ul>
-<p><strong>Soft Reference (弱引用)</strong></p>
+<p>优化太晚：</p>
 <ul>
-<li>概念：弱引用不会自动加载其引用的资产。一个资产A弱引用资产B，只是存储了资产B的标识符，但不会立即加载资产B。只有当明确请求加载弱引用的资产时，资产B才会被加载到内存中。</li>
-<li>使用：弱引用通常用于引用可能需要一些时间来加载的大型资产，或可能并不总是需要的资产。例如，一个角色可能弱引用一些高解析度的纹理或复杂的动画，这些资产只在特定的情况下需要，并且可能需要一些时间来加载。</li>
-<li>注意事项：虽然弱引用不会自动加载其引用的资产，但必须确保在访问弱引用的资产之前，明确加载了这个资产。否则会遇到无法访问资产的问题。</li>
+<li>由于加载时间长、编译时间长和帧率低降低了项目的迭代速度</li>
+<li>直到流程后期才知道工作流问题</li>
 </ul>
-<h4 id="2、弱引用示例"><a href="#2、弱引用示例" class="headerlink" title="2、弱引用示例"></a>2、弱引用示例</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">class ACTIONROGUELIKE_API UMyAction : public UObject
-&#123;
-protected:
-	&#x2F;&#x2F; Buff状态图标
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category &#x3D; &quot;UI&quot;)
-	TSoftObjectPtr&lt;UTexture2D&gt; Icon;
-&#125;</code></pre>
-
-<img src="/pic/%E3%80%90UE4C-ActionRougelike-27%E3%80%91%E8%B5%84%E4%BA%A7%E3%80%81%E6%95%B0%E6%8D%AE%E3%80%81%E5%BC%82%E6%AD%A5%E5%8A%A0%E8%BD%BD/%E5%BC%B1%E5%BC%95%E7%94%A8%E7%A4%BA%E4%BE%8B.jpg" alt="弱引用示例" style="zoom:50%;" />
-
-<h3 id="三、异步加载"><a href="#三、异步加载" class="headerlink" title="三、异步加载"></a>三、异步加载</h3><p>使用<strong>FPrimaryAssetId</strong>和<strong>FPrimaryAssetId</strong>实现对主要资产(Primary Asset)的异步加载。</p>
+<p><strong>简单的优化方法</strong></p>
+<p>1、避免对Actors&#x2F;Components进行频繁的Tick操作</p>
 <ul>
-<li>创建FPrimaryAssetId：创建一个FPrimaryAssetId来标识想要加载的主要资产。由两部分组成PrimaryAssetType和PrimaryAssetName。<ul>
-<li>PrimaryAssetType：表示资产的类型，</li>
-<li>PrimaryAssetName：表示资产的名称。</li>
+<li>大部分逻辑可以通过事件或较低的频率使用定时器Timer来处理</li>
+</ul>
+<p>2、碰撞设置</p>
+<ul>
+<li>当不需要碰撞时，设置bGenerateOverlapEvents为false</li>
+<li>对于碰撞配置文件，只针对必要的通道作出反应，在小型&#x2F;无法到达的对象上完全禁用碰撞</li>
+<li>除非要进行物理模拟，否则<code>Collision Enable</code>设置为<code>Query Only</code></li>
+</ul>
+<p>3、尽量避免对其他内容的强引用</p>
+<p><strong>C++和蓝图的性能比较</strong></p>
+<p>1、蓝图不仅仅用于原型设计</p>
+<p>2、将耗时的函数转移到C++中</p>
+<ul>
+<li>例如，大型循环、数学密集操作等(在C++中更容易维护)</li>
+</ul>
+<p>3、蓝图本地化</p>
+<ul>
+<li>会增加打包大小，并且可能存在错误。对于复杂的操作，手动编写C++代码通常更好</li>
+</ul>
+<h4 id="1、Stat-Commands"><a href="#1、Stat-Commands" class="headerlink" title="1、Stat Commands"></a>1、Stat Commands</h4><p>stat命令是一组用于性能分析和统计的命令，可以通过控制台在游戏进行中使用。以下是一些常见的stat命令及其说明：</p>
+<ul>
+<li><p>stat命令用于显示标记代码段的CPU开销。 </p>
+<ul>
+<li>使用方法：stat <section_name></li>
 </ul>
 </li>
-<li>调用LoadPrimaryAsset加载主要资产：调用这个方法的时候，它会阻塞当前的执行流，直到资产加载完成为止</li>
-<li>设置完成回调：FStreamableDelegate是一个回调委托，在资产加载完成后被调用。创建一个FStreamableDelegate并把它绑定到 LoadPrimaryAsset方法上，当资产加载完成时，可以得到通知。</li>
+<li><p>可以添加自定义的stat命令，以便监视代码的特定部分。 </p>
+</li>
+<li><p>stat命令示例：</p>
+<ul>
+<li><p>stat game：显示游戏相关的统计信息。</p>
+</li>
+<li><p>stat unit 或 stat unitgraph：显示CPU和GPU性能的时间分布图。</p>
+</li>
+<li><p>stat slate：显示与Slate UI框架相关的统计信息。</p>
+</li>
+<li><p>stat UObject：显示与UObject系统相关的统计信息。</p>
+</li>
 </ul>
-<h4 id="1、设置异步加载"><a href="#1、设置异步加载" class="headerlink" title="1、设置异步加载"></a>1、设置异步加载</h4><p>异步加载前怪物数据表DT_Monsters的SizeMap：</p>
-<img src="/pic/%E3%80%90UE4C-ActionRougelike-27%E3%80%91%E8%B5%84%E4%BA%A7%E3%80%81%E6%95%B0%E6%8D%AE%E3%80%81%E5%BC%82%E6%AD%A5%E5%8A%A0%E8%BD%BD/%E5%BC%82%E6%AD%A5%E5%8A%A0%E8%BD%BD%E5%89%8DSizeMap.jpg" alt="异步加载前SizeMap" style="zoom:50%;" />
+</li>
+</ul>
+<h5 id="1-1-Stat命令"><a href="#1-1-Stat命令" class="headerlink" title="1.1 Stat命令"></a>1.1 Stat命令</h5><img src="/pic/%E3%80%90UE4C-ActionRougelike-28%E3%80%91%E5%B0%81%E8%A3%85%E3%80%81%E6%80%A7%E8%83%BD%E3%80%81%E6%89%93%E7%A3%A8/stat%20commands%E7%95%8C%E9%9D%A2.jpg" alt="stat commands界面" style="zoom:50%;" />
 
-<p>在MyGameModeBase.h中修改怪物数据表结构</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">struct FMonsterInfoRow : public FTableRowBase
+<h5 id="1-2-自定义Stat命令"><a href="#1-2-自定义Stat命令" class="headerlink" title="1.2 自定义Stat命令"></a>1.2 自定义Stat命令</h5><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">&#x2F;&#x2F; ActionRougelike.h
+&#x2F;&#x2F; 使用DECLARE_STATS_GROUP宏声明了一个名为&quot;STANFORD_Game&quot;的统计组。
+&#x2F;&#x2F; 这个统计组用于将相关的性能统计信息进行分组，并在性能分析中进行组织和显示
+&#x2F;&#x2F; 参数如下：
+&#x2F;&#x2F; TEXT(&quot;STANFORD_Game&quot;)：指定统计组的名称，用TEXT宏将字符串转换为FText类型。
+&#x2F;&#x2F; STATGROUP_STANFORD：指定统计组的名称标识符，用于在代码中引用该统计组。
+&#x2F;&#x2F; STATCAT_Advanced：指定统计组的分类，用于在性能分析工具中进行分类显示。
+DECLARE_STATS_GROUP(TEXT(&quot;STANFORD_Game&quot;), STATGROUP_STANFORD, STATCAT_Advanced);
+
+&#x2F;&#x2F; MyActionComponent.cpp
+&#x2F;&#x2F; 声明名为&quot;StartActionByName&quot;的循环统计，用于跟踪&quot;StartActionByName&quot;函数的性能
+DECLARE_CYCLE_STAT(TEXT(&quot;StartActionByName&quot;), STAT_StartActionByName, STATGROUP_STANFORD);
+
+bool UMyActionComponent::StartActionByName(AActor* Instigator, FName ActionName)
 &#123;
-public:
-	&#x2F;&#x2F;...
-	&#x2F;&#x2F; 定义一个名为MonsterId的字段，类型为FPrimaryAssetId，该字段用于标识怪物
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	FPrimaryAssetId MonsterId;
-	&#x2F;&#x2F;...
+	&#x2F;&#x2F; 创建一个循环计数器，用于在作用域内跟踪代码执行的性能
+	SCOPE_CYCLE_COUNTER(STAT_StartActionByName);
+    &#x2F;&#x2F;...
 &#125;</code></pre>
 
-<p>在MyMonsterData.h中添加常量函数，用于返回PrimaryAssetId</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">&#x2F;&#x2F; 定义一个常量函数，返回FPrimaryAssetId类型
-FPrimaryAssetId GetPrimaryAssetId() const override
+<p><img src="/pic/%E3%80%90UE4C-ActionRougelike-28%E3%80%91%E5%B0%81%E8%A3%85%E3%80%81%E6%80%A7%E8%83%BD%E3%80%81%E6%89%93%E7%A3%A8/%E8%87%AA%E5%AE%9A%E4%B9%89stat%E5%91%BD%E4%BB%A4.gif" alt="自定义stat命令"></p>
+<h4 id="2、Unreal-Insights"><a href="#2、Unreal-Insights" class="headerlink" title="2、Unreal Insights"></a>2、Unreal Insights</h4><p>Unreal Insights是虚幻引擎提供的一款强大的性能分析工具，用于帮助开发者深入分析和优化游戏的性能表现。它提供了可视化的界面和丰富的性能数据，让开发者能够更好地理解游戏的运行状况并进行针对性的优化。以下是Unreal Insights主要关注的几个方面：</p>
+<ul>
+<li>CPU性能：Unreal Insights提供了CPU性能分析功能，可以帮助您找到游戏中的瓶颈和性能瓶颈。它提供了时间轴视图和函数调用图，帮助您识别高耗时函数和代码路径。</li>
+<li>网络性能：Unreal Insights还提供了网络性能分析工具，可帮助您识别和调试与网络通信相关的问题。您可以查看网络事件、带宽使用情况、延迟等指标，以便优化网络性能。</li>
+<li>内存：Unreal Insights提供了内存分析工具，用于识别内存使用情况、泄漏和内存相关的问题。您可以查看对象和资源的内存使用情况，以及内存分配和释放的模式。</li>
+<li>加载时间：Unreal Insights还提供了加载时间分析功能，用于识别加载时间长的资源和过程。您可以查看资源加载时间、关卡加载时间和加载过程中的性能瓶颈。</li>
+</ul>
+<h3 id="三、修复日志警告和错误"><a href="#三、修复日志警告和错误" class="headerlink" title="三、修复日志警告和错误"></a>三、修复日志警告和错误</h3><h4 id="1、除0问题"><a href="#1、除0问题" class="headerlink" title="1、除0问题"></a>1、除0问题</h4><p>在几个除0的蓝图中，先判断值是否为0来决定是否向后执行逻辑</p>
+<h4 id="2、EndPlay"><a href="#2、EndPlay" class="headerlink" title="2、EndPlay"></a>2、EndPlay</h4><p>将Effect_Burning的Duration设置为0后，AI死亡后会报错提示：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Blueprint Runtime Error: &quot;Attempted to access ActionComp via property CallFunc_GetOwningComponent_ReturnValue, but ActionComp is pending kill&quot;. Blueprint:  Effect_Burning Function:  Execute Ubergraph Effect Burning Graph:  EventGraph Node:  Apply Damage</code></pre>
+
+<p>原因是：尝试访问一个已经处于”pending kill”状态的对象的问题。这个问题发生在一个名为”Effect_Burning”的函数的”EventGraph”中的”Apply Damage”节点上。</p>
+<p>因为AI已经死亡，组件销毁后，却没有停止Action。在MyActionComponent中添加EndPlay方法。使得组件销毁时，停止所有Action</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">&#x2F;&#x2F; 组件被销毁时，停止所有正在运行的动作
+void UMyActionComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 &#123;
-	&#x2F;&#x2F; 返回一个FPrimaryAssetId类型的对象，该对象用于唯一标识一个主要资产。
-	&#x2F;&#x2F; 这里使用的是本类对象的名称(GetFName())，和字符串&quot;Monsters&quot;组合生成这个唯一标识符。
-	return FPrimaryAssetId(&quot;Monsters&quot;, GetFName()); 
-&#125;</code></pre>
-
-<h4 id="2、设置资产管理器"><a href="#2、设置资产管理器" class="headerlink" title="2、设置资产管理器"></a>2、设置资产管理器</h4><img src="/pic/%E3%80%90UE4C-ActionRougelike-27%E3%80%91%E8%B5%84%E4%BA%A7%E3%80%81%E6%95%B0%E6%8D%AE%E3%80%81%E5%BC%82%E6%AD%A5%E5%8A%A0%E8%BD%BD/Asset%20Manager%E8%AE%BE%E7%BD%AE.jpg" alt="Asset Manager设置" style="zoom:50%;" />
-
-<p>此时的DT_Monsters的SizeMap</p>
-<img src="/pic/%E3%80%90UE4C-ActionRougelike-27%E3%80%91%E8%B5%84%E4%BA%A7%E3%80%81%E6%95%B0%E6%8D%AE%E3%80%81%E5%BC%82%E6%AD%A5%E5%8A%A0%E8%BD%BD/%E5%BC%82%E6%AD%A5%E5%8A%A0%E8%BD%BD%E5%90%8E%E7%9A%84SizeMap.jpg" alt="异步加载后的SizeMap" style="zoom:50%;" />
-
-<h4 id="3、启动异步加载"><a href="#3、启动异步加载" class="headerlink" title="3、启动异步加载"></a>3、启动异步加载</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">void AMyGameModeBase::OnBotSpawnQueryCompleted(UEnvQueryInstanceBlueprintWrapper* QueryInstance, EEnvQueryStatus::Type QueryStatus)
-&#123;
-    &#x2F;&#x2F; ...
-	TArray&lt;FVector&gt; Locations &#x3D; QueryInstance-&gt;GetResultsAsLocations();
-	if (Locations.IsValidIndex(0))
+	&#x2F;&#x2F; Stop all
+	TArray&lt;UMyAction*&gt; ActionsCopy &#x3D; Actions;
+	for (UMyAction* Action : ActionsCopy)
 	&#123;
-		&#x2F;&#x2F; 如果怪物表存在
-		if (MonsterTable)
+		if (Action &amp;&amp; Action-&gt;IsRunning())
 		&#123;
-			&#x2F;&#x2F; 定义一个MonsterInfoRow指针的数组
-			TArray&lt;FMonsterInfoRow*&gt; Rows;
-			&#x2F;&#x2F; 从怪物表中获取所有行，将其存入Rows数组
-			MonsterTable-&gt;GetAllRows(&quot;&quot;, Rows);
-			&#x2F;&#x2F; 随机选择一个怪物
-			int32 RandomIndex &#x3D; FMath::RandRange(0, Rows.Num() - 1);
-			FMonsterInfoRow* SelectedRow &#x3D; Rows[RandomIndex];
-			&#x2F;&#x2F; 获取资产管理器实例
-			UAssetManager* Manager &#x3D; UAssetManager::GetIfValid();
-			if (Manager)
-			&#123;
-				&#x2F;&#x2F; 输出加载怪物的提示信息
-				LogOnScreen(this, &quot;Loading monster...&quot;, FColor::Green);
-				&#x2F;&#x2F; 输出加载怪物的提示信息
-				TArray&lt;FName&gt; Bundles;
-				&#x2F;&#x2F; 创建一个回调代理
-                 &#x2F;&#x2F; FStreamableDelegate是一个特殊类型的委托，它主要用于异步加载资源时，在加载完成后执行指定的函数。
-                 &#x2F;&#x2F; 当LoadPrimaryAsset成功完成怪物资源的加载后，Delegate委托会被调用，并执行AMyGameModeBase类的OnMonsterLoaded成员函数。
-				FStreamableDelegate Delegate &#x3D; FStreamableDelegate::CreateUObject(this, &amp;AMyGameModeBase::OnMonsterLoaded, SelectedRow-&gt;MonsterId, Locations[0]);
-				&#x2F;&#x2F; 使用资产管理器加载选择的怪物
-				Manager-&gt;LoadPrimaryAsset(SelectedRow-&gt;MonsterId, Bundles, Delegate);
-			&#125;
+			Action-&gt;StopAction(GetOwner());
 		&#125;
 	&#125;
-&#125;
-void AMyGameModeBase::OnMonsterLoaded(FPrimaryAssetId LoadedId, FVector SpawnLocation)
-&#123;
-	LogOnScreen(this, &quot;Finished loading.&quot;, FColor::Green);
-	&#x2F;&#x2F; 获取资产管理器实例
-	UAssetManager* Manager &#x3D; UAssetManager::GetIfValid();
-	if (Manager)
-	&#123;
-		&#x2F;&#x2F; 通过管理器获取主资产对象（即怪物数据资源）
-		UMyMonsterData* MonsterData &#x3D; Cast&lt;UMyMonsterData&gt;(Manager-&gt;GetPrimaryAssetObject(LoadedId));
-		if (MonsterData)
-		&#123;
-			&#x2F;&#x2F; 通过怪物数据资源的信息生成一个新的怪物角色
-			AActor* NewBot &#x3D; GetWorld()-&gt;SpawnActor&lt;AActor&gt;(MonsterData-&gt;MonsterClass, SpawnLocation, FRotator::ZeroRotator);
-			if (NewBot)
-			&#123;
-				&#x2F;&#x2F; 输出生成新怪物的提示信息
-				LogOnScreen(this, FString::Printf(TEXT(&quot;Spawned enemy: %s (%s)&quot;), *GetNameSafe(NewBot), *GetNameSafe(MonsterData)));
-				&#x2F;&#x2F; 获取怪物角色的行为组件
-				UMyActionComponent* ActionComp &#x3D; Cast&lt;UMyActionComponent&gt;(NewBot-&gt;GetComponentByClass(UMyActionComponent::StaticClass()));
-				if (ActionComp)
-				&#123;
-					&#x2F;&#x2F; 为怪物角色添加其特有的行为
-					for (TSubclassOf&lt;UMyAction&gt; ActionClass : MonsterData-&gt;Actions)
-					&#123;
-						ActionComp-&gt;AddAction(NewBot, ActionClass);
-					&#125;
-				&#125;
-			&#125;
-		&#125;
-	&#125;
+
+	Super::EndPlay(EndPlayReason);
 &#125;</code></pre>
 
 
@@ -692,7 +599,7 @@ void AMyGameModeBase::OnMonsterLoaded(FPrimaryAssetId LoadedId, FVector SpawnLoc
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://zdx199792.github.io/2023/05/21/%E3%80%90UE4C-ActionRougelike-27%E3%80%91%E8%B5%84%E4%BA%A7%E3%80%81%E6%95%B0%E6%8D%AE%E3%80%81%E5%BC%82%E6%AD%A5%E5%8A%A0%E8%BD%BD/">https://zdx199792.github.io/2023/05/21/%E3%80%90UE4C-ActionRougelike-27%E3%80%91%E8%B5%84%E4%BA%A7%E3%80%81%E6%95%B0%E6%8D%AE%E3%80%81%E5%BC%82%E6%AD%A5%E5%8A%A0%E8%BD%BD/</a>
+                    <a href="https://zdx199792.github.io/2023/05/26/%E3%80%90UE4C-ActionRougelike-28%E3%80%91%E5%B0%81%E8%A3%85%E3%80%81%E6%80%A7%E8%83%BD%E3%80%81%E6%89%93%E7%A3%A8/">https://zdx199792.github.io/2023/05/26/%E3%80%90UE4C-ActionRougelike-28%E3%80%91%E5%B0%81%E8%A3%85%E3%80%81%E6%80%A7%E8%83%BD%E3%80%81%E6%89%93%E7%A3%A8/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -1092,9 +999,10 @@ void AMyGameModeBase::OnMonsterLoaded(FPrimaryAssetId LoadedId, FVector SpawnLoc
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2023/05/26/%E3%80%90UE4C-ActionRougelike-28%E3%80%91%E5%B0%81%E8%A3%85%E3%80%81%E6%80%A7%E8%83%BD%E3%80%81%E6%89%93%E7%A3%A8/">
                     <div class="card-image">
@@ -1112,9 +1020,9 @@ void AMyGameModeBase::OnMonsterLoaded(FPrimaryAssetId LoadedId, FVector SpawnLoc
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2023-05-26
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-05-26
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -1127,6 +1035,7 @@ void AMyGameModeBase::OnMonsterLoaded(FPrimaryAssetId LoadedId, FVector SpawnLoc
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -1153,13 +1062,13 @@ void AMyGameModeBase::OnMonsterLoaded(FPrimaryAssetId LoadedId, FVector SpawnLoc
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2023/05/18/%E3%80%90UE4C-ActionRougelike-26%E3%80%91%E5%8A%A8%E7%94%BB%E8%93%9D%E5%9B%BE/">
+                <a href="/2023/05/21/%E3%80%90UE4C-ActionRougelike-27%E3%80%91%E8%B5%84%E4%BA%A7%E3%80%81%E6%95%B0%E6%8D%AE%E3%80%81%E5%BC%82%E6%AD%A5%E5%8A%A0%E8%BD%BD/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="【UE4C++-ActionRougelike-26】动画蓝图">
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="【UE4C++-ActionRougelike-27】资产、数据、异步加载">
                         
-                        <span class="card-title">【UE4C++-ActionRougelike-26】动画蓝图</span>
+                        <span class="card-title">【UE4C++-ActionRougelike-27】资产、数据、异步加载</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1170,7 +1079,7 @@ void AMyGameModeBase::OnMonsterLoaded(FPrimaryAssetId LoadedId, FVector SpawnLoc
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-05-18
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-05-21
                             </span>
                         <span class="publish-author">
                             
