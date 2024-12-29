@@ -4,11 +4,9 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="【UEC++学习-UE容器之TArray】, Woilin&#39;s Blog">
-    <meta name="description" content="TArrayTArray：负责同类型对象（元素）序列的所有权和组织权。
-一、创建数组&amp;#x2F;&amp;#x2F; 创建数组
-TArray&amp;lt;int32&amp;gt; IntArray;
-InArray.Init(10, 5);	&amp;#x2F;&amp;#x">
+    <meta name="keywords" content="【UEC++学习-UE容器之TMap】, Woilin&#39;s Blog">
+    <meta name="description" content="TMapTMap：用于存储 键值对 数据。类似于字典或哈希表，每个元素由一个唯一的“键”（Key）和与之关联的“值”（Value）组成。
+UE中有两种Map：TMap 和 TMultiMap。TMap 中的键是唯一的，TMultiMap 可">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -20,7 +18,7 @@ InArray.Init(10, 5);	&amp;#x2F;&amp;#x">
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>【UEC++学习-UE容器之TArray】 | Woilin&#39;s Blog</title>
+    <title>【UEC++学习-UE容器之TMap】 | Woilin&#39;s Blog</title>
     <link rel="icon" type="image/jpeg" href="/head.jpg">
     
 
@@ -337,12 +335,12 @@ InArray.Init(10, 5);	&amp;#x2F;&amp;#x">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">【UEC++学习-UE容器之TArray】</h1>
+                    <h1 class="description center-align post-title">【UEC++学习-UE容器之TMap】</h1>
                 </div>
             </div>
         </div>
@@ -378,9 +376,9 @@ InArray.Init(10, 5);	&amp;#x2F;&amp;#x">
                                     </span>
                                 </a>
                                 
-                                <a href="/tags/TArray/">
+                                <a href="/tags/TMap/">
                                     <span class="chip bg-color">
-                                        TArray
+                                        TMap
                                     </span>
                                 </a>
                                 
@@ -422,7 +420,7 @@ InArray.Init(10, 5);	&amp;#x2F;&amp;#x">
                                     <div class="info-break-policy">
                                         <i class="far fa-file-word fa-fw"></i>
                                         文章字数:&nbsp;&nbsp;
-                                            2.1k
+                                            2k
                                     </div>
                                     
 
@@ -455,171 +453,205 @@ InArray.Init(10, 5);	&amp;#x2F;&amp;#x">
 
                         <div class="card-content article-card-content">
                             <div id="articleContent">
-                                <h2 id="TArray"><a href="#TArray" class="headerlink" title="TArray"></a>TArray</h2><p>TArray：负责同类型对象（元素）序列的所有权和组织权。</p>
-<h3 id="一、创建数组"><a href="#一、创建数组" class="headerlink" title="一、创建数组"></a>一、创建数组</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">&#x2F;&#x2F; 创建数组
-TArray&lt;int32&gt; IntArray;
-InArray.Init(10, 5);	&#x2F;&#x2F;InArray &#x3D; [10, 10, 10, 10, 10]</code></pre>
+                                <h2 id="TMap"><a href="#TMap" class="headerlink" title="TMap"></a>TMap</h2><p>TMap：用于存储 <strong>键值对</strong> 数据。类似于字典或哈希表，每个元素由一个唯一的“键”（Key）和与之关联的“值”（Value）组成。</p>
+<p>UE中有两种Map：<code>TMap</code> 和 <code>TMultiMap</code>。<code>TMap</code> 中的键是唯一的，<code>TMultiMap</code> 可存储多个相同的键。</p>
+<p><code>TMap</code> 添加新的键值时，如果键已存在，新对将替换原有的对。在 <code>TMultiMap</code> 中，容器可以同时存储新对和原有的对。</p>
+<h3 id="一、创建"><a href="#一、创建" class="headerlink" title="一、创建"></a>一、创建</h3><p><code>TMap</code> 是同质容器，所有元素的类型都相同</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TMap&lt;int32, FString&gt; FruitMap;</code></pre>
 
-<h3 id="二、填充数组"><a href="#二、填充数组" class="headerlink" title="二、填充数组"></a>二、填充数组</h3><h4 id="1、Add-和-Emplace：末尾添加元素"><a href="#1、Add-和-Emplace：末尾添加元素" class="headerlink" title="1、Add() 和 Emplace：末尾添加元素"></a>1、<code>Add()</code> 和 <code>Emplace</code>：末尾添加元素</h4><p><code>Add()</code>和<code>Emplace()</code>方法向数组末尾添加元素</p>
-<ul>
-<li><code>Add()</code>添加时创建临时变量，复制到数组中</li>
-<li><code>Emplace()</code>不创建临时变量，在容器内 “原地构造” 元素</li>
+<h3 id="二、填充"><a href="#二、填充" class="headerlink" title="二、填充"></a>二、填充</h3><h4 id="1、Add-：填充键值对"><a href="#1、Add-：填充键值对" class="headerlink" title="1、Add()：填充键值对"></a>1、<code>Add()</code>：填充键值对</h4><ul>
+<li><code>Add()</code>为<code>TMap</code>添加重复键时，会替代原来的<code>value</code>。</li>
+<li><code>Add()</code>可以接受不带值的键，调用时值将会被默认构建</li>
 </ul>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">&#x2F;&#x2F; Add 和 Emplace
-TArray&lt;FString&gt; StrArr;
-StrArr.Add    (TEXT(&quot;Hello&quot;));
-StrArr.Emplace(TEXT(&quot;World&quot;));	&#x2F;&#x2F; StrArr &#x3D;&#x3D; [&quot;Hello&quot;,&quot;World&quot;]</code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">FruitMap.Add(5, TEXT(&quot;Banana&quot;));
+FruitMap.Add(2, TEXT(&quot;Grapefruit&quot;));
+FruitMap.Add(7, TEXT(&quot;Pineapple&quot;));
+&#x2F;&#x2F; FruitMap &#x3D; [
+&#x2F;&#x2F;		&#123; Key:5, Value:Banana &#125;,
+&#x2F;&#x2F;		&#123; Key:2, Value:Grapefruit &#125;,
+&#x2F;&#x2F;		&#123; Key:7, Value:Pineapple &#125;,
+&#x2F;&#x2F;  ]
+FruitMap.Add(2, TEXT(&quot;Pear&quot;));
+&#x2F;&#x2F; FruitMap &#x3D; [
+&#x2F;&#x2F;		&#123; Key:5, Value:Banana &#125;,
+&#x2F;&#x2F;		&#123; Key:2, Value:Pear &#125;,
+&#x2F;&#x2F;		&#123; Key:7, Value:Pineapple &#125;,
+&#x2F;&#x2F;  ]
+FruitMap.Add(4);
+&#x2F;&#x2F; FruitMap &#x3D; [
+&#x2F;&#x2F;		&#123; Key:5, Value:Banana &#125;,
+&#x2F;&#x2F;		&#123; Key:2, Value:Pear &#125;,
+&#x2F;&#x2F;		&#123; Key:7, Value:Pineapple &#125;,
+&#x2F;&#x2F;		&#123; Key:4, Value:&quot;&quot;&#125;,
+&#x2F;&#x2F;  ]</code></pre>
 
-<h4 id="2、Append-：添加其他TArray中的多个元素"><a href="#2、Append-：添加其他TArray中的多个元素" class="headerlink" title="2、Append()：添加其他TArray中的多个元素"></a>2、<code>Append()</code>：添加其他<code>TArray</code>中的多个元素</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TArray&lt;FString&gt; StrArr &#x3D; &#123;TEXT(&quot;Hello&quot;), TEXT(&quot;World&quot;)&#125;;
-TArray&lt;FString&gt; NewStrArr &#x3D; &#123;TEXT(&quot;Unreal&quot;), TEXT(&quot;Engine&quot;)&#125;;
-StrArr.Append(NewStrArr);	&#x2F;&#x2F; StrArr &#x3D; [&quot;Hello&quot;, &quot;World&quot;, &quot;Unreal&quot;, &quot;Engine&quot;]</code></pre>
+<h4 id="2、Emplace-：填充键值对（原地创建）"><a href="#2、Emplace-：填充键值对（原地创建）" class="headerlink" title="2、Emplace()：填充键值对（原地创建）"></a>2、<code>Emplace()</code>：填充键值对（原地创建）</h4><p>同<code>TArray</code>一样，<code>Emplace()</code>与<code>Add()</code>区别在于插入映射时不创建临时文件</p>
+<h4 id="3、Append-：填充其他TMap中的多个键值对"><a href="#3、Append-：填充其他TMap中的多个键值对" class="headerlink" title="3、Append()：填充其他TMap中的多个键值对"></a>3、<code>Append()</code>：填充其他<code>TMap</code>中的多个键值对</h4><p><code>Append()</code>的过程就是一个个的<code>Add()</code>，因此如果被填充的TMap如果与填充的TMap有相同的Key，则会被替代为新的键值对</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TMap&lt;int32, FString&gt; FruitMap2;
+FruitMap2.Emplace(4, TEXT(&quot;Kiwi&quot;));
+FruitMap2.Emplace(9, TEXT(&quot;Melon&quot;));
+FruitMap2.Emplace(5, TEXT(&quot;Mango&quot;));
+FruitMap.Append(FruitMap2);
+&#x2F;&#x2F; FruitMap &#x3D; [
+&#x2F;&#x2F;        &#123; Key:5, Value:Mango &#125;,
+&#x2F;&#x2F;        &#123; Key:2, Value:Pear &#125;,
+&#x2F;&#x2F;        &#123; Key:7, Value:Pineapple &#125;,
+&#x2F;&#x2F;        &#123; Key:4, Value:Kiwi &#125;,
+&#x2F;&#x2F;        &#123; Key:9, Value:Melon &#125;,
+&#x2F;&#x2F;  ]</code></pre>
 
-<h4 id="3、Insert-：插入元素"><a href="#3、Insert-：插入元素" class="headerlink" title="3、Insert()：插入元素"></a>3、<code>Insert()</code>：插入元素</h4><p><code>Insert()</code>给定索引处添加元素</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">StrArr.Insert(TEXT(&quot;Brave&quot;), 1); &#x2F;&#x2F; StrArr &#x3D; [&quot;Hello&quot;, &quot;Brave&quot;, &quot;World&quot;, &quot;Unreal&quot;, &quot;Engine&quot;]</code></pre>
-
-<h4 id="4、SetNum-：设置数组数量"><a href="#4、SetNum-：设置数组数量" class="headerlink" title="4、SetNum()：设置数组数量"></a>4、<code>SetNum()</code>：设置数组数量</h4><p><code>SetNum()</code>设置数组元素的数量</p>
-<ul>
-<li>如新数量大于当前数量，则使用元素类型的默认构造函数新建元素；</li>
-<li>如新数量小于当前数量，<code>SetNum</code> 将移除元素。</li>
-</ul>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">StrArr.SetNum(8);		&#x2F;&#x2F; StrArr &#x3D; [Hello, Brave, World, Unreal, Engine, , , ]
-StrArr.SetNum(3);		&#x2F;&#x2F; StrArr &#x3D; [Hello, Brave, World]</code></pre>
-
-<h3 id="三、迭代"><a href="#三、迭代" class="headerlink" title="三、迭代"></a>三、迭代</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TArray&lt;int32&gt; Arr &#x3D; &#123;1, 2, 3&#125;
-&#x2F;&#x2F; auto 范围遍历
-for (auto&amp; i : Arr)
+<h3 id="三、迭代"><a href="#三、迭代" class="headerlink" title="三、迭代"></a>三、迭代</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">&#x2F;&#x2F; auto 范围遍历
+for (auto&amp; Elem : FruitMap)
 &#123;
-    i &#x3D; ...;
+    Elem.Key..;
+    Elem.Value..;
 &#125;
-&#x2F;&#x2F; 基于索引迭代
-for (int32 i &#x3D; 0; i &lt; Arr.Nums(); ++i)
-&#123;
-    Arr[i] &#x3D; ...;
-&#125;
+
 &#x2F;&#x2F; 迭代器迭代
-for (auto Iter &#x3D; Arr.CreateIterator(); Iter; ++Iter)	&#x2F;&#x2F; CreateConstIterator 只读迭代器
+for (auto Iter &#x3D; FruitMap.CreateIterator(); Iter; ++Iter)	&#x2F;&#x2F; CreateConstIterator 只读迭代器
 &#123;
-    *Iter &#x3D; ...;
+    Iter.Key...;
+    Iter.Value...;
 &#125;</code></pre>
 
-<h3 id="四、排序"><a href="#四、排序" class="headerlink" title="四、排序"></a>四、排序</h3><p><code>Sort()</code>方法可对数组排序</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">StrArr.Sort();	&#x2F;&#x2F; 按元素的 运算符&lt; 进行排序
-&#x2F;&#x2F; StrArr &#x3D; [&quot;Brave&quot;, &quot;Engine&quot;, &quot;Hello&quot;, &quot;Unreal&quot;, &quot;World&quot;]
-auto SortFunc &#x3D; [](const FString&amp; A, const FString&amp; B)
+<h3 id="四、查询"><a href="#四、查询" class="headerlink" title="四、查询"></a>四、查询</h3><h4 id="1、Num-：查询Map键值对个数"><a href="#1、Num-：查询Map键值对个数" class="headerlink" title="1、Num()：查询Map键值对个数"></a>1、<code>Num()</code>：查询Map键值对个数</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">int32 Count &#x3D; FruitMap.Num();		&#x2F;&#x2F; Count &#x3D; 5</code></pre>
+
+<h4 id="2、Contanis-：查询是否包含某个键"><a href="#2、Contanis-：查询是否包含某个键" class="headerlink" title="2、Contanis()：查询是否包含某个键"></a>2、<code>Contanis()</code>：查询是否包含某个键</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">bool bHas7 &#x3D; FruitMap.Contains(7);	&#x2F;&#x2F; bHas7 &#x3D; true
+bool bHas8 &#x3D; FruitMap.Contains(8);	&#x2F;&#x2F; bHas8 &#x3D; false</code></pre>
+
+<h4 id="3、-、Find-和FindRef-：查找某个键对应的值"><a href="#3、-、Find-和FindRef-：查找某个键对应的值" class="headerlink" title="3、[]、Find()和FindRef()：查找某个键对应的值"></a>3、<code>[]</code>、<code>Find()</code>和<code>FindRef()</code>：查找某个键对应的值</h4><p><code>[]</code>：返回所查找键对应值的引用，如果不存在该键，报错</p>
+<p><code>Find()</code>：返回所查找键对应值的指针，如果不存在该键，返回<code>nullptr</code></p>
+<p><code>FindRef</code> 会返回与给定键关联的值副本；若映射中未找到给定键，返回默认构建值。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">FString Val7 &#x3D; FruitMap[7];			&#x2F;&#x2F; Val7 &#x3D; Pineapple
+FString Val7 &#x3D; FruitMap[8];			&#x2F;&#x2F; 报错
+
+FString* Ptr7 &#x3D; FruitMap.Find(7);	&#x2F;&#x2F; Ptr7 &#x3D; 指向&quot;Pineapple&quot;这个值的指针
+FString* Ptr8 &#x3D; FruitMap.Find(8);	&#x2F;&#x2F; Ptr8 &#x3D; nullptr
+
+FString Str7 &#x3D; FruitMap.FindRef(7);	&#x2F;&#x2F; Str7 &#x3D; Pineapple
+FString Str8 &#x3D; FruitMap.FindRef(8);	&#x2F;&#x2F; Str8 &#x3D; Empty</code></pre>
+
+<h4 id="4、FindOrAdd-：查找或添加某个键"><a href="#4、FindOrAdd-：查找或添加某个键" class="headerlink" title="4、FindOrAdd()：查找或添加某个键"></a>4、<code>FindOrAdd()</code>：查找或添加某个键</h4><p><code>FindOrAdd()</code>返回所查找键对应值的引用，如果不存在该键，返回新创建的元素。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">FString&amp; Ref7 &#x3D; FruitMap.FindOrAdd(7);	&#x2F;&#x2F; Ref7 &#x3D; Pineapple
+FString&amp; Ref8 &#x3D; FruitMap.FindOrAdd(8);	&#x2F;&#x2F; Ref8 &#x3D; Empty
+Ref8 &#x3D; TEXT(&quot;Peach&quot;);
+&#x2F;&#x2F;	FruitMap &#x3D; [
+&#x2F;&#x2F;        &#123; Key:5, Value:Mango &#125;,
+&#x2F;&#x2F;        &#123; Key:2, Value:Pear &#125;,
+&#x2F;&#x2F;        &#123; Key:7, Value:Pineapple1 &#125;,
+&#x2F;&#x2F;        &#123; Key:4, Value:Kiwi &#125;,
+&#x2F;&#x2F;        &#123; Key:9, Value:Melon &#125;,
+&#x2F;&#x2F;        &#123; Key:8, Value:Peach &#125;,
+&#x2F;&#x2F;	]</code></pre>
+
+<h4 id="5、FindKey-：查找某个值对应的键"><a href="#5、FindKey-：查找某个值对应的键" class="headerlink" title="5、FindKey()：查找某个值对应的键"></a>5、<code>FindKey()</code>：查找某个值对应的键</h4><p><code>FindKey()</code>：返回所查找到第一个值对应键的指针，如果不存在该值，返回空键</p>
+<ul>
+<li>按值查找比按键查找慢（线性时间）。因为映射按键排序，而非按值排序。</li>
+<li>如果映射有多个具有相同值的键，<code>FindKey</code> 可返回其中任一键。</li>
+</ul>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">const int32* KeyMangoPtr &#x3D; FruitMap.FindKey(TEXT(&quot;Mango&quot;));		&#x2F;&#x2F; KeyMangoPtr &#x3D; 指向键5的指针
+const int32* KeyKumquatPtr &#x3D; FruitMap.FindKey(TEXT(&quot;Kumquat&quot;));	&#x2F;&#x2F; KeyKumquatPtr &#x3D; nullptr</code></pre>
+
+<h4 id="6、GenerateKeyArray-和GenerateValueArray-：使用键和值的副本填充TArray"><a href="#6、GenerateKeyArray-和GenerateValueArray-：使用键和值的副本填充TArray" class="headerlink" title="6、GenerateKeyArray()和GenerateValueArray()：使用键和值的副本填充TArray"></a>6、<code>GenerateKeyArray()</code>和<code>GenerateValueArray()</code>：使用键和值的副本填充<code>TArray</code></h4><ul>
+<li>两个方法在填充前都会清空所传递的数组</li>
+</ul>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TArray&lt;int32&gt; FruitKeys;
+TArray&lt;FString&gt; FruitValues;
+FruitKeys.Add(999);
+FruitKeys.Add(123);
+FruitMap.GenerateKeyArray(FruitKeys);		&#x2F;&#x2F;	FruitKeys &#x3D; [5, 2, 7, 4, 9, 8]
+FruitMap.GenerateValueArray(FruitValues);	&#x2F;&#x2F;	FruitValues &#x3D; [Mango, Pear, Pineapple1, Kiwi, Melon, Peach]</code></pre>
+
+<h3 id="五、移除"><a href="#五、移除" class="headerlink" title="五、移除"></a>五、移除</h3><h4 id="1、Remove-：移除特定键对应的键值对"><a href="#1、Remove-：移除特定键对应的键值对" class="headerlink" title="1、Remove()：移除特定键对应的键值对"></a>1、<code>Remove()</code>：移除特定键对应的键值对</h4><p><code>Remove()</code>会移除指定键对应的键值对，并返回被移除元素的数量，如果不存在该键，则返回0</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Count &#x3D; FruitMap.Remove(8);			&#x2F;&#x2F; Count &#x3D; 1</code></pre>
+
+<h4 id="2、FindAndRemoveChecked-：移除特定键对应键值对，并返回值"><a href="#2、FindAndRemoveChecked-：移除特定键对应键值对，并返回值" class="headerlink" title="2、FindAndRemoveChecked()：移除特定键对应键值对，并返回值"></a>2、<code>FindAndRemoveChecked()</code>：移除特定键对应键值对，并返回值</h4><p>移除元素并返回其值，如果键不存在，则会报错</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">FString Removed7 &#x3D; FruitMap.FindAndRemoveChecked(7);	&#x2F;&#x2F; Removed7 &#x3D; Pineapple1
+FString Removed8 &#x3D; FruitMap.FindAndRemoveChecked(8);	&#x2F;&#x2F; 报错</code></pre>
+
+<h4 id="3、RemoveAndCopyValue-：移除特定键对应键值对，并返回值"><a href="#3、RemoveAndCopyValue-：移除特定键对应键值对，并返回值" class="headerlink" title="3、RemoveAndCopyValue()：移除特定键对应键值对，并返回值"></a>3、<code>RemoveAndCopyValue()</code>：移除特定键对应键值对，并返回值</h4><p>移除元素并将对应值复制到引用参数，如果键不存在，引用参数不变，函数返回<code>false</code></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">FString Removed;
+bool bFound2 &#x3D; FruitMap.RemoveAndCopyValue(2, Removed);	&#x2F;&#x2F; bFound2 &#x3D; true ; Removed &#x3D; Pear
+bool bFound8 &#x3D; FruitMap.RemoveAndCopyValue(8, Removed);	&#x2F;&#x2F; bFound8 &#x3D; false ; Removed &#x3D; Pear</code></pre>
+
+<h4 id="4、Empty-和Reset-：移除所有键值对"><a href="#4、Empty-和Reset-：移除所有键值对" class="headerlink" title="4、Empty()和Reset()：移除所有键值对"></a>4、<code>Empty()</code>和<code>Reset()</code>：移除所有键值对</h4><p>同<code>TArray</code>一样，<code>Reset()</code>方法不会释放先前的内存。</p>
+<h3 id="六、排序"><a href="#六、排序" class="headerlink" title="六、排序"></a>六、排序</h3><h4 id="1、KeySort-：按键排序"><a href="#1、KeySort-：按键排序" class="headerlink" title="1、KeySort()：按键排序"></a>1、<code>KeySort()</code>：按键排序</h4><h4 id="2、ValueSort-：按值排序"><a href="#2、ValueSort-：按值排序" class="headerlink" title="2、ValueSort()：按值排序"></a>2、<code>ValueSort()</code>：按值排序</h4><ul>
+<li>排序后，迭代映射会以排序的顺序显示元素</li>
+<li>再次修改映射时，排序可能会发生变化</li>
+<li>排序是不稳定的，等值元素在<code>MultiMap</code>中可能以任何顺序出现。</li>
+</ul>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">FruitMap.KeySort([](int32 A, int32 B) &#123;
+    return A &gt; B; 
+&#125;);
+&#x2F;&#x2F; FruitMap &#x3D;&#x3D; [
+&#x2F;&#x2F; 	&#123; Key:9, Value:&quot;Melon&quot; &#125;,
+&#x2F;&#x2F; 	&#123; Key:5, Value:&quot;Mango&quot; &#125;,
+&#x2F;&#x2F; 	&#123; Key:4, Value:&quot;Kiwi&quot; &#125;,
+&#x2F;&#x2F; ]
+FruitMap.ValueSort([](const FString&amp; A, const FString&amp; B) &#123;
+    return A.Len() &lt; B.Len(); 
+&#125;);
+&#x2F;&#x2F; FruitMap &#x3D;&#x3D; [
+&#x2F;&#x2F; 	&#123; Key:4, Value:&quot;Kiwi&quot; &#125;,
+&#x2F;&#x2F; 	&#123; Key:5, Value:&quot;Mango&quot; &#125;,
+&#x2F;&#x2F; 	&#123; Key:9, Value:&quot;Melon&quot; &#125;,
+&#x2F;&#x2F; ]</code></pre>
+
+<h3 id="七、运算符"><a href="#七、运算符" class="headerlink" title="七、运算符"></a>七、运算符</h3><h4 id="1、赋值运算符"><a href="#1、赋值运算符" class="headerlink" title="1、赋值运算符="></a>1、<code>赋值运算符=</code></h4><p>同<code>TArray</code>一样，是一次深拷贝</p>
+<h4 id="2、MoveTemp"><a href="#2、MoveTemp" class="headerlink" title="2、MoveTemp"></a>2、<code>MoveTemp</code></h4><p>同<code>TArray</code>一样，支持移动语义<code>MoveTemp</code>，移动后，源映射为空</p>
+<h3 id="八、Slack-空闲容量"><a href="#八、Slack-空闲容量" class="headerlink" title="八、Slack(空闲容量)"></a>八、Slack(空闲容量)</h3><h4 id="1、Reverse-：分配内存"><a href="#1、Reverse-：分配内存" class="headerlink" title="1、Reverse()：分配内存"></a>1、<code>Reverse()</code>：分配内存</h4><p>同<code>TArray</code>一样，分配内存，无需添加元素，如果分配的内存比当前小，则无效。</p>
+<h4 id="2、Shrink-和Compact-：移除所有Slack"><a href="#2、Shrink-和Compact-：移除所有Slack" class="headerlink" title="2、Shrink()和Compact()：移除所有Slack"></a>2、<code>Shrink()</code>和<code>Compact()</code>：移除所有Slack</h4><p><code>Shrink()</code> 将从容器的末端移除所有slack，如果映射中间存在slack则无法移除，首先应调用 <code>Compact()</code> 函数，将空白空间组合在一起，再调用<code>Shrink()</code> </p>
+<h3 id="九、KeyFuncs"><a href="#九、KeyFuncs" class="headerlink" title="九、KeyFuncs"></a>九、KeyFuncs</h3><p>只要类型具有 <code>运算符==</code> 和非成员 <code>GetTypeHash</code> 重载，就可用作 <code>TMap</code> 的键类型，不需要任何更改。但是，您可能需要将类型用作键，而不重载这些函数。在这些情况下，可对 <code>KeyFuncs</code> 进行自定义。为键类型创建 <code>KeyFuncs</code>，必须定义两个typedef和三个静态函数，如下所示：</p>
+<ul>
+<li><code>KeyInitType</code> —— 用于传递键的类型。</li>
+<li><code>ElementInitType</code> —— 用于传递元素的类型。</li>
+<li><code>KeyInitType GetSetKey(ElementInitType Element)</code>——返回元素的键。</li>
+<li><code>bool Matches(KeyInitType A, KeyInitType B)</code> —— 如果 <code>A</code> 和 <code>B</code> 等值将返回 <code>true</code>，否则返回 <code>false</code>。</li>
+<li><code>uint32 GetKeyHash(KeyInitType Key)</code> —— 返回 <code>Key</code> 的散列值。</li>
+</ul>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">struct FMyStruct		&#x2F;&#x2F; 作为TMap Key的结构体
 &#123;
-    return A.Len() &gt; B.Len();
+	&#x2F;&#x2F; String which identifies our key
+	FString UniqueID;
+	&#x2F;&#x2F; Some state which doesn&#39;t affect struct identity
+	float SomeFloat;
+	explicit FMyStruct(float InFloat)
+		:UniqueID (FGuid::NewGuid().ToString())
+		, SomeFloat(InFloat)
+	&#123;
+	&#125;
 &#125;;
-StrArr.Sort(SortFunc);	&#x2F;&#x2F; 按自定义排序规则排序
-&#x2F;&#x2F; StrArr &#x3D; [&quot;Engine&quot;, &quot;Unreal&quot;, &quot;Brave&quot;, &quot;Hello&quot;, &quot;World&quot;] 同长度元素内部顺序可能不同
-StrArr.StableSort(SortFunc)	&#x2F;&#x2F; 稳定排序
-&#x2F;&#x2F; StrArr &#x3D; [&quot;Engine&quot;, &quot;Unreal&quot;, &quot;Brave&quot;, &quot;Hello&quot;, &quot;World&quot;]</code></pre>
-
-<h3 id="五、查询"><a href="#五、查询" class="headerlink" title="五、查询"></a>五、查询</h3><h4 id="1、Num-：查询数组数量"><a href="#1、Num-：查询数组数量" class="headerlink" title="1、Num()：查询数组数量"></a>1、<code>Num()</code>：查询数组数量</h4><p><code>Num()</code>查询<code>TArray</code>元素个数</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">int32 ArrLength &#x3D; StrArr.Num();	&#x2F;&#x2F; ArrLength &#x3D; 5</code></pre>
-
-<h4 id="2、GetData-：获取数组指针"><a href="#2、GetData-：获取数组指针" class="headerlink" title="2、GetData()：获取数组指针"></a>2、<code>GetData()</code>：获取数组指针</h4><p><code>GetData()</code>获取<code>TArray</code>指针；如容器为常量，则返回的指针也为常量。</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">FString* StrPtr &#x3D; StrArr.GetData();	&#x2F;&#x2F; 返回数组指针 StrPtr[0] &#x3D; StrArr[0] &#x3D; Engine</code></pre>
-
-<p><code>运算符[]</code>获取指定索引位置元素，会返回引用，可修改容器中的元素；如容器为常量，返回常量引用。</p>
-<h4 id="3、Last-和Top-：获取最后元素"><a href="#3、Last-和Top-：获取最后元素" class="headerlink" title="3、Last()和Top()：获取最后元素"></a>3、<code>Last()</code>和<code>Top()</code>：获取最后元素</h4><p><code>Last()</code>从数组末端反向索引，索引默认为零。<code>Top()</code>方法同<code>Last()</code>，区别是不接受索引</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">FString Elem1 &#x3D; StrArr[1];		    &#x2F;&#x2F; Elem1 &#x3D; &quot;Unreal&quot;
-StrArr[3] &#x3D; StrArr[3].ToUpper();	&#x2F;&#x2F; StrArr &#x3D; [&quot;Engine&quot;, &quot;Unreal&quot;, &quot;Brave&quot;, &quot;HELLO&quot;, &quot;World&quot;]
-
-FString ElemEnd &#x3D; StrArr.Last();	&#x2F;&#x2F; ElemEnd &#x3D; &quot;World&quot;
-FString ElemEnd1 &#x3D; StrArr.Last(1);	&#x2F;&#x2F; ElemEnd1 &#x3D; &quot;HELLO&quot;
-FString ElemTop &#x3D; StrArr.Top();		&#x2F;&#x2F; ElemTop &#x3D; &quot;World&quot;</code></pre>
-
-<h4 id="4、Contains-和Find-：是否存在特定元素"><a href="#4、Contains-和Find-：是否存在特定元素" class="headerlink" title="4、Contains()和Find()：是否存在特定元素"></a>4、<code>Contains()</code>和<code>Find()</code>：是否存在特定元素</h4><p><code>Contains()</code>查询数组是否包含指定元素</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">bool bHello &#x3D; StrArr.Contains(TEXT(&quot;Hello&quot;));		&#x2F;&#x2F; bHello   &#x3D;&#x3D; true
-bool bGoodBye &#x3D; StrArr.Contains(TEXT(&quot;GoodBye&quot;));	&#x2F;&#x2F; bGoodbye &#x3D;&#x3D; false</code></pre>
-
-<p><code>Find()</code>查找元素是否存在，并返回其找到的首个元素的索引；<code>FindLast()</code>会返回其找到的最后一个元素的索引；</p>
-<p>如果不将索引作为显式参数传递，这两个函数会将元素索引作为返回值返回；如未找到元素，将返回特殊 <code>INDEX_NONE</code> 值：</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">int32 Index;
-StrArr.Add(TEXT(&quot;HELLO&quot;));
-bool bFind &#x3D; StrArr.Find(TEXT(&quot;HELLO&quot;), Index);		&#x2F;&#x2F; bFind &#x3D; true, Index &#x3D; 3
-bFind &#x3D; StrArr.FindLast(TEXT(&quot;HELLO&quot;), Index);		&#x2F;&#x2F; bFind &#x3D; true, Index &#x3D; 5
-Index &#x3D; StrArr.Find(TEXT(&quot;HELLO&quot;));				   &#x2F;&#x2F; Index &#x3D; 3;</code></pre>
-
-<h3 id="六、移除"><a href="#六、移除" class="headerlink" title="六、移除"></a>六、移除</h3><h4 id="1、Remove-：移除全部特定元素"><a href="#1、Remove-：移除全部特定元素" class="headerlink" title="1、Remove()：移除全部特定元素"></a>1、<code>Remove()</code>：移除全部特定元素</h4><p><code>Remove()</code>移除根据元素类型的<code>运算符==</code>移除所有与提供元素相等的元素</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TArray&lt;int32&gt; IntArr &#x3D; &#123;10, 20, 30, 5, 10, 15, 20, 25, 30&#125;;
-IntArr.Remove(20);			&#x2F;&#x2F; IntArr &#x3D; [10, 30, 5, 10, 15, 25, 30]</code></pre>
-
-<h4 id="2、RemoveSingle-：移除首个特定元素"><a href="#2、RemoveSingle-：移除首个特定元素" class="headerlink" title="2、RemoveSingle()：移除首个特定元素"></a>2、<code>RemoveSingle()</code>：移除首个特定元素</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">IntArr.RemoveSingle(30);	&#x2F;&#x2F; IntArr &#x3D; [10, 5, 10, 15, 25, 30]</code></pre>
-
-<h4 id="3、RemoveAt-：移除索引位置上元素"><a href="#3、RemoveAt-：移除索引位置上元素" class="headerlink" title="3、RemoveAt()：移除索引位置上元素"></a>3、<code>RemoveAt()</code>：移除索引位置上元素</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">IntArr.RemoveAt(2);			&#x2F;&#x2F; IntArr &#x3D; [10, 5, 15, 25, 30]</code></pre>
-
-<h4 id="4、RomoveAll-：移除满足条件的所有元素"><a href="#4、RomoveAll-：移除满足条件的所有元素" class="headerlink" title="4、RomoveAll()：移除满足条件的所有元素"></a>4、<code>RomoveAll()</code>：移除满足条件的所有元素</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">IntArr.RemoveAll([](int32 val)
+template &lt;typename ValueType&gt;
+struct TMyStructMapKeyFuncs : BaseKeyFuncs&lt;TPair&lt;FMyStruct, ValueType&gt;, FString&gt;	&#x2F;&#x2F; 自定义KeyFuncs
 &#123;
-    return val % 3 &#x3D;&#x3D; 0;
-&#125;);						   &#x2F;&#x2F; IntArr &#x3D; [10, 5, 25]</code></pre>
+private:
+	typedef BaseKeyFuncs&lt;TPair&lt;FMyStruct, ValueType&gt;, FString&gt; Super;
 
-<p>上述方法移动过程存在开销。如不需要剩余元素排序，可使用 <code>RemoveSwap</code>、<code>RemoveAtSwap</code> 和 <code>RemoveAllSwap</code> 函数减少此开销。此类方法其不保证剩余元素的排序，因此可更快地完成任务</p>
-<h4 id="5、Empty-：移除所有元素"><a href="#5、Empty-：移除所有元素" class="headerlink" title="5、Empty()：移除所有元素"></a>5、<code>Empty()</code>：移除所有元素</h4><h3 id="七、运算符"><a href="#七、运算符" class="headerlink" title="七、运算符"></a>七、运算符</h3><h4 id="1、赋值运算符"><a href="#1、赋值运算符" class="headerlink" title="1、赋值运算符="></a>1、<code>赋值运算符=</code></h4><p><code>赋值运算符=</code>可以为数组进行赋值，可以理解为一次深拷贝</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">IntArr &#x3D; &#123;1, 2, 3&#125;;
-TArray&lt;int32&gt; NewIntArr &#x3D; IntArr;
-NewIntArr[0] &#x3D; 5;
-&#x2F;&#x2F; IntArr &#x3D; [1, 2, 3]
-&#x2F;&#x2F; NewIntArr &#x3D; [5, 2, 3]</code></pre>
+public:
+	typedef typename Super::ElementInitType ElementInitType; &#x2F;&#x2F; 用于传递元素的类型
+	typedef typename Super::KeyInitType KeyInitType;		&#x2F;&#x2F; 用于传递键的类型
 
-<h4 id="2、运算符"><a href="#2、运算符" class="headerlink" title="2、运算符+="></a>2、<code>运算符+=</code></h4><p><code>运算符+=</code>等同于<code>Append()</code>方法</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">NewIntArr +&#x3D; IntArr;			&#x2F;&#x2F; NewIntArr &#x3D; [5, 2, 3, 1, 2, 3]</code></pre>
+	static KeyInitType GetSetKey(ElementInitType Element)	&#x2F;&#x2F; 返回元素的键
+	&#123;
+		return Element.Key.UniqueID;
+	&#125;
 
-<h4 id="3、MoveTemp"><a href="#3、MoveTemp" class="headerlink" title="3、MoveTemp"></a>3、<code>MoveTemp</code></h4><p><code>TArray</code>支持移动语义<code>MoveTemp</code>，移动后，源数组为空</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">IntArr &#x3D; MoveTemp(NewIntArr);	
-&#x2F;&#x2F; IntArr &#x3D; [5, 2, 3, 1, 2, 3]
-&#x2F;&#x2F; NewIntArr &#x3D; []</code></pre>
+	static bool Matches(KeyInitType A, KeyInitType B)		&#x2F;&#x2F; 如果 A 和 B 等值将返回 true，否则返回 false
+	&#123;
+		return A.Compare(B, ESearchCase::CaseSensitive) &#x3D;&#x3D; 0;
+	&#125;
 
-<h4 id="4、-和"><a href="#4、-和" class="headerlink" title="4、==和!="></a>4、<code>==</code>和<code>!=</code></h4><p><code>运算符==</code>和<code>!=</code>可用于比较<code>TArray</code>，只有元素的排序和数量相同时，两个数组中元素通过自身类型的<code>运算符==</code>相比</p>
-<h3 id="八、堆"><a href="#八、堆" class="headerlink" title="八、堆"></a>八、堆</h3><h4 id="1、数组转换为堆"><a href="#1、数组转换为堆" class="headerlink" title="1、数组转换为堆"></a>1、数组转换为堆</h4><p><code>TArray</code>有支持二叉堆数据结构的函数，<code>Heapify()</code>方法可将数组转换为堆，方法支持接受谓词，无谓词默认使用元素类型的<code>运算符&lt;</code>来确定排序</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TArray&lt;int32&gt; HeapArr &#x3D; &#123;10, 9, 8, 7, 6, 5, 4, 3, 2, 1&#125;;
-HeapArr.Heapify();			&#x2F;&#x2F; HeapArr &#x3D; [1, 2, 4, 3, 6, 5, 8, 10, 7, 9]</code></pre>
+	static uint32 GetKeyHash(KeyInitType Key)				&#x2F;&#x2F; 返回 Key 的散列值。
+	&#123;
+		return FCrc::StrCrc32(*Key);
+	&#125;
+&#125;;
 
-<h4 id="2、HeapPush-：添加新元素到堆"><a href="#2、HeapPush-：添加新元素到堆" class="headerlink" title="2、HeapPush()：添加新元素到堆"></a>2、<code>HeapPush()</code>：添加新元素到堆</h4><p><code>HeapPush()</code>可将新元素添加到堆，并对其他节点重新排序</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">HeapArr.HeapPush(4);		&#x2F;&#x2F; HeapArr &#x3D; [1, 2, 4, 3, 4, 5, 8, 10, 7, 9, 6]</code></pre>
+TMap&lt;FMyStruct, int32, FDefaultSetAllocator, TMyStructMapKeyFuncs&lt;int32&gt;&gt; MyMapToInt32;
 
-<h4 id="3、HeapPop-和HeapPopDiscard-：移除堆顶节点"><a href="#3、HeapPop-和HeapPopDiscard-：移除堆顶节点" class="headerlink" title="3、HeapPop()和HeapPopDiscard()：移除堆顶节点"></a>3、<code>HeapPop()</code>和<code>HeapPopDiscard()</code>：移除堆顶节点</h4><p><code>HeapPop()</code>和<code>HeapPopDiscard()</code>用于移除堆的顶部节点，前者引用元素类型返回顶部元素，后者只移除。移除后会对其他节点重新排序</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">int32 TopNode;			    &#x2F;&#x2F; TopNode &#x3D; 1
-HeapArr.HeapPop(TopNode);	 &#x2F;&#x2F; HeapArr &#x3D; [2, 3, 4, 6, 4, 5, 8, 10, 7, 9]</code></pre>
-
-<h4 id="4、移除给定索引元素"><a href="#4、移除给定索引元素" class="headerlink" title="4、移除给定索引元素"></a>4、移除给定索引元素</h4><p><code>HeapRemoveAt()</code>删除数组中给定索引处的元素，并对其他节点重新排序</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">HeapArr.HeapRemoveAt(1);	&#x2F;&#x2F; HeapArr &#x3D; [2, 4, 4, 6, 9, 5, 8, 10, 7]</code></pre>
-
-<h4 id="5、HeapTop-：获取顶部节点，无需变更数组"><a href="#5、HeapTop-：获取顶部节点，无需变更数组" class="headerlink" title="5、HeapTop()：获取顶部节点，无需变更数组"></a>5、<code>HeapTop()</code>：获取顶部节点，无需变更数组</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TopNode &#x3D; HeapArr.HeapTop(); &#x2F;&#x2F; TopNode &#x3D; 2	</code></pre>
-
-<h3 id="九、Slack-空闲容量"><a href="#九、Slack-空闲容量" class="headerlink" title="九、Slack(空闲容量)"></a>九、Slack(空闲容量)</h3><p><code>Slack</code>理解为容器中已分配内存但未被用到的那些元素存储槽，默认构建的数组不分配内存，Slack初始为零。</p>
-<h4 id="1、GetSlack-：获取当前Slack量"><a href="#1、GetSlack-：获取当前Slack量" class="headerlink" title="1、GetSlack()：获取当前Slack量"></a>1、<code>GetSlack()</code>：获取当前Slack量</h4><p><code>GetSlack()</code>可以获取当前数组的Slack量，<code>Max()</code>可以获取当前容器最大分配元素量，<code>Num()</code>即为两者之差。</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TArray&lt;int32&gt; SlackArray;
-&#x2F;&#x2F; SlackArray.GetSlack() &#x3D;&#x3D; 0
-&#x2F;&#x2F; SlackArray.Num()      &#x3D;&#x3D; 0
-&#x2F;&#x2F; SlackArray.Max()      &#x3D;&#x3D; 0
-SlackArray.Add(1);
-&#x2F;&#x2F; SlackArray.GetSlack() &#x3D;&#x3D; 3
-&#x2F;&#x2F; SlackArray.Num()      &#x3D;&#x3D; 1
-&#x2F;&#x2F; SlackArray.Max()      &#x3D;&#x3D; 4
-SlackArray.Add(2);
-SlackArray.Add(3);
-SlackArray.Add(4);
-SlackArray.Add(5);
-&#x2F;&#x2F; SlackArray.GetSlack() &#x3D;&#x3D; 17
-&#x2F;&#x2F; SlackArray.Num()      &#x3D;&#x3D; 5
-&#x2F;&#x2F; SlackArray.Max()      &#x3D;&#x3D; 22</code></pre>
-
-<h4 id="2、Reserve-：分配内存"><a href="#2、Reserve-：分配内存" class="headerlink" title="2、Reserve()：分配内存"></a>2、<code>Reserve()</code>：分配内存</h4><p><code>Reserve</code> 可分配内存，无需添加元素，如果分配的内存比当前小，则无效。</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">SlackArr.Reserve(25);	&#x2F;&#x2F; Num:5, Max:25, Slack:20
-SlackArr.Reserve(1);	&#x2F;&#x2F; Num:5, Max:25, Slack:20</code></pre>
-
-<h4 id="3、Empty-和Reset-：清空数组（重新分配内存）"><a href="#3、Empty-和Reset-：清空数组（重新分配内存）" class="headerlink" title="3、Empty()和Reset()：清空数组（重新分配内存）"></a>3、<code>Empty()</code>和<code>Reset()</code>：清空数组（重新分配内存）</h4><p><code>Empty()</code>和<code>Reset()</code>方法清空容器为容器重新分配内存，区别是<code>Reset()</code>方法分配时不会释放先前的内存。</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">SlackArr.Empty(10);	&#x2F;&#x2F; Num:0, Max:10, Slack:10
-SlackArr.Reset(10);	&#x2F;&#x2F; Num:0, Max:22, Slack:22</code></pre>
-
-<h4 id="4、Shrink-：移除所有Slack，不影响数组中元素"><a href="#4、Shrink-：移除所有Slack，不影响数组中元素" class="headerlink" title="4、Shrink()：移除所有Slack，不影响数组中元素"></a>4、<code>Shrink()</code>：移除所有Slack，不影响数组中元素</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">SlackArr &#x3D; &#123;1, 2, 3, 4&#125;;	&#x2F;&#x2F; Num:4, Max:22, Slack:18
-SlackArr.Shrink();		    &#x2F;&#x2F; Num:4, Max:4, Slack:0</code></pre>
-
-<h3 id="十、其他"><a href="#十、其他" class="headerlink" title="十、其他"></a>十、其他</h3><h4 id="1、Swap-交换元素值"><a href="#1、Swap-交换元素值" class="headerlink" title="1、Swap()交换元素值"></a>1、<code>Swap()</code>交换元素值</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">SlackArr.Swap(1, 3);		&#x2F;&#x2F; SlackArr &#x3D; [1, 4, 3, 2]</code></pre>
-
-<h4 id="2、GetAllocatedSize-：数组内存占用量"><a href="#2、GetAllocatedSize-：数组内存占用量" class="headerlink" title="2、GetAllocatedSize()：数组内存占用量"></a>2、<code>GetAllocatedSize()</code>：数组内存占用量</h4><p><code>GetAllocatedSize()</code>估算当前数组内存占用量，数组类型<code>Sizeof()</code>的值 × 数组的<code>Max()</code></p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">SIZE_T CountBytes &#x3D; MyArr.GetAllocatedSize();	&#x2F;&#x2F; 16</code></pre>
+&#x2F;&#x2F; Add some elements
+MyMapToInt32.Add(FMyStruct(3.14f), 5);
+MyMapToInt32.Add(FMyStruct(1.23f), 2);</code></pre>
 
 
                                     
@@ -647,7 +679,7 @@ SlackArr.Shrink();		    &#x2F;&#x2F; Num:4, Max:4, Slack:0</code></pre>
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://zdx199792.github.io/2024/12/29/%E3%80%90UEC++%E5%AD%A6%E4%B9%A0-UE%E5%AE%B9%E5%99%A8%E4%B9%8BTArray%E3%80%91/">https://zdx199792.github.io/2024/12/29/%E3%80%90UEC++%E5%AD%A6%E4%B9%A0-UE%E5%AE%B9%E5%99%A8%E4%B9%8BTArray%E3%80%91/</a>
+                    <a href="https://zdx199792.github.io/2024/12/29/%E3%80%90UEC++%E5%AD%A6%E4%B9%A0-UE%E5%AE%B9%E5%99%A8%E4%B9%8BTMap%E3%80%91/">https://zdx199792.github.io/2024/12/29/%E3%80%90UEC++%E5%AD%A6%E4%B9%A0-UE%E5%AE%B9%E5%99%A8%E4%B9%8BTMap%E3%80%91/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -697,9 +729,9 @@ SlackArr.Shrink();		    &#x2F;&#x2F; Num:4, Max:4, Slack:0</code></pre>
                                                         </span>
                                                     </a>
                                                     
-                                                    <a href="/tags/TArray/">
+                                                    <a href="/tags/TMap/">
                                                         <span class="chip bg-color">
-                                                            TArray
+                                                            TMap
                                                         </span>
                                                     </a>
                                                     
@@ -1047,9 +1079,10 @@ SlackArr.Shrink();		    &#x2F;&#x2F; Num:4, Max:4, Slack:0</code></pre>
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2024/12/29/%E3%80%90UEC++%E5%AD%A6%E4%B9%A0-UE%E5%AE%B9%E5%99%A8%E4%B9%8BTMap%E3%80%91/">
                     <div class="card-image">
@@ -1067,9 +1100,9 @@ SlackArr.Shrink();		    &#x2F;&#x2F; Num:4, Max:4, Slack:0</code></pre>
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2024-12-29
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-12-29
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -1082,6 +1115,7 @@ SlackArr.Shrink();		    &#x2F;&#x2F; Num:4, Max:4, Slack:0</code></pre>
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -1108,13 +1142,13 @@ SlackArr.Shrink();		    &#x2F;&#x2F; Num:4, Max:4, Slack:0</code></pre>
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2024/12/29/%E3%80%90UEC++%E5%AD%A6%E4%B9%A0-%E5%BC%80%E7%AF%87%E3%80%91/">
+                <a href="/2024/12/29/%E3%80%90UEC++%E5%AD%A6%E4%B9%A0-UE%E5%AE%B9%E5%99%A8%E4%B9%8BTArray%E3%80%91/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="【UEC++学习-开篇】">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="【UEC++学习-UE容器之TArray】">
                         
-                        <span class="card-title">【UEC++学习-开篇】</span>
+                        <span class="card-title">【UEC++学习-UE容器之TArray】</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1148,6 +1182,10 @@ SlackArr.Shrink();		    &#x2F;&#x2F; Num:4, Max:4, Slack:0</code></pre>
                     
                     <a href="/tags/UE/">
                         <span class="chip bg-color">UE</span>
+                    </a>
+                    
+                    <a href="/tags/TArray/">
+                        <span class="chip bg-color">TArray</span>
                     </a>
                     
                 </div>
