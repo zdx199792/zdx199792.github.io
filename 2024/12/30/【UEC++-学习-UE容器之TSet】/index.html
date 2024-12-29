@@ -4,9 +4,10 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="【UEC++学习-UE容器之TMap】, Woilin&#39;s Blog">
-    <meta name="description" content="TMapTMap：用于存储 键值对 数据。类似于字典或哈希表，每个元素由一个唯一的“键”（Key）和与之关联的“值”（Value）组成。
-UE中有两种Map：TMap 和 TMultiMap。TMap 中的键是唯一的，TMultiMap 可">
+    <meta name="keywords" content="【UEC++学习-UE容器之TSet】, Woilin&#39;s Blog">
+    <meta name="description" content="TSetTSet是一种快速容器类，用于在排序不重要的情况下存储唯一元素。
+一、创建二、填充元素1、Add()和Emplace()：添加元素2、Append()：添加其他TSet中的多个元素以上同TArray一样
+FruitSet.Add(T">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -18,7 +19,7 @@ UE中有两种Map：TMap 和 TMultiMap。TMap 中的键是唯一的，TMultiMap 
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>【UEC++学习-UE容器之TMap】 | Woilin&#39;s Blog</title>
+    <title>【UEC++学习-UE容器之TSet】 | Woilin&#39;s Blog</title>
     <link rel="icon" type="image/jpeg" href="/head.jpg">
     
 
@@ -335,12 +336,12 @@ UE中有两种Map：TMap 和 TMultiMap。TMap 中的键是唯一的，TMultiMap 
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">【UEC++学习-UE容器之TMap】</h1>
+                    <h1 class="description center-align post-title">【UEC++学习-UE容器之TSet】</h1>
                 </div>
             </div>
         </div>
@@ -376,9 +377,9 @@ UE中有两种Map：TMap 和 TMultiMap。TMap 中的键是唯一的，TMultiMap 
                                     </span>
                                 </a>
                                 
-                                <a href="/tags/TMap/">
+                                <a href="/tags/TSet/">
                                     <span class="chip bg-color">
-                                        TMap
+                                        TSet
                                     </span>
                                 </a>
                                 
@@ -404,7 +405,7 @@ UE中有两种Map：TMap 和 TMultiMap。TMap 中的键是唯一的，TMultiMap 
                     <div class="post-date info-break-policy">
                         <i class="far fa-calendar-minus fa-fw"></i>
                         发布日期:&nbsp;&nbsp;
-                            2024-12-29
+                            2024-12-30
                     </div>
                     
 
@@ -412,7 +413,7 @@ UE中有两种Map：TMap 和 TMultiMap。TMap 中的键是唯一的，TMultiMap 
                             <div class="post-date info-break-policy">
                                 <i class="far fa-calendar-check fa-fw"></i>
                                 更新日期:&nbsp;&nbsp;
-                                    2024-12-29
+                                    2024-12-30
                             </div>
                             
 
@@ -420,7 +421,7 @@ UE中有两种Map：TMap 和 TMultiMap。TMap 中的键是唯一的，TMultiMap 
                                     <div class="info-break-policy">
                                         <i class="far fa-file-word fa-fw"></i>
                                         文章字数:&nbsp;&nbsp;
-                                            2k
+                                            646
                                     </div>
                                     
 
@@ -428,7 +429,7 @@ UE中有两种Map：TMap 和 TMultiMap。TMap 中的键是唯一的，TMultiMap 
                                             <div class="info-break-policy">
                                                 <i class="far fa-clock fa-fw"></i>
                                                 阅读时长:&nbsp;&nbsp;
-                                                    9
+                                                    2
                                                         分
                                             </div>
                                             
@@ -453,206 +454,77 @@ UE中有两种Map：TMap 和 TMultiMap。TMap 中的键是唯一的，TMultiMap 
 
                         <div class="card-content article-card-content">
                             <div id="articleContent">
-                                <h2 id="TMap"><a href="#TMap" class="headerlink" title="TMap"></a>TMap</h2><p>TMap：用于存储 <strong>键值对</strong> 数据。类似于字典或哈希表，每个元素由一个唯一的“键”（Key）和与之关联的“值”（Value）组成。</p>
-<p>UE中有两种Map：<code>TMap</code> 和 <code>TMultiMap</code>。<code>TMap</code> 中的键是唯一的，<code>TMultiMap</code> 可存储多个相同的键。</p>
-<p><code>TMap</code> 添加新的键值时，如果键已存在，新对将替换原有的对。在 <code>TMultiMap</code> 中，容器可以同时存储新对和原有的对。</p>
-<h3 id="一、创建"><a href="#一、创建" class="headerlink" title="一、创建"></a>一、创建</h3><p><code>TMap</code> 是同质容器，所有元素的类型都相同</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TMap&lt;int32, FString&gt; FruitMap;</code></pre>
+                                <h2 id="TSet"><a href="#TSet" class="headerlink" title="TSet"></a>TSet</h2><p><code>TSet</code>是一种快速容器类，用于在排序不重要的情况下存储唯一元素。</p>
+<h3 id="一、创建"><a href="#一、创建" class="headerlink" title="一、创建"></a>一、创建</h3><h3 id="二、填充元素"><a href="#二、填充元素" class="headerlink" title="二、填充元素"></a>二、填充元素</h3><h4 id="1、Add-和Emplace-：添加元素"><a href="#1、Add-和Emplace-：添加元素" class="headerlink" title="1、Add()和Emplace()：添加元素"></a>1、<code>Add()</code>和<code>Emplace()</code>：添加元素</h4><h4 id="2、Append-：添加其他TSet中的多个元素"><a href="#2、Append-：添加其他TSet中的多个元素" class="headerlink" title="2、Append()：添加其他TSet中的多个元素"></a>2、<code>Append()</code>：添加其他<code>TSet</code>中的多个元素</h4><p>以上同<code>TArray</code>一样</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">FruitSet.Add(TEXT(&quot;Banana&quot;));
+FruitSet.Add(TEXT(&quot;Grapefruit&quot;));
+FruitSet.Add(TEXT(&quot;Pineapple&quot;));
 
-<h3 id="二、填充"><a href="#二、填充" class="headerlink" title="二、填充"></a>二、填充</h3><h4 id="1、Add-：填充键值对"><a href="#1、Add-：填充键值对" class="headerlink" title="1、Add()：填充键值对"></a>1、<code>Add()</code>：填充键值对</h4><ul>
-<li><code>Add()</code>为<code>TMap</code>添加重复键时，会替代原来的<code>value</code>。</li>
-<li><code>Add()</code>可以接受不带值的键，调用时值将会被默认构建</li>
-</ul>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">FruitMap.Add(5, TEXT(&quot;Banana&quot;));
-FruitMap.Add(2, TEXT(&quot;Grapefruit&quot;));
-FruitMap.Add(7, TEXT(&quot;Pineapple&quot;));
-&#x2F;&#x2F; FruitMap &#x3D; [
-&#x2F;&#x2F;		&#123; Key:5, Value:Banana &#125;,
-&#x2F;&#x2F;		&#123; Key:2, Value:Grapefruit &#125;,
-&#x2F;&#x2F;		&#123; Key:7, Value:Pineapple &#125;,
-&#x2F;&#x2F;  ]
-FruitMap.Add(2, TEXT(&quot;Pear&quot;));
-&#x2F;&#x2F; FruitMap &#x3D; [
-&#x2F;&#x2F;		&#123; Key:5, Value:Banana &#125;,
-&#x2F;&#x2F;		&#123; Key:2, Value:Pear &#125;,
-&#x2F;&#x2F;		&#123; Key:7, Value:Pineapple &#125;,
-&#x2F;&#x2F;  ]
-FruitMap.Add(4);
-&#x2F;&#x2F; FruitMap &#x3D; [
-&#x2F;&#x2F;		&#123; Key:5, Value:Banana &#125;,
-&#x2F;&#x2F;		&#123; Key:2, Value:Pear &#125;,
-&#x2F;&#x2F;		&#123; Key:7, Value:Pineapple &#125;,
-&#x2F;&#x2F;		&#123; Key:4, Value:&quot;&quot;&#125;,
-&#x2F;&#x2F;  ]</code></pre>
+FruitSet.Add(TEXT(&quot;Pear&quot;));
+FruitSet.Add(TEXT(&quot;Banana&quot;));
+&#x2F;&#x2F; FruitSet &#x3D; [Banana, Grapefruit, Pineapple, Pear]</code></pre>
 
-<h4 id="2、Emplace-：填充键值对（原地创建）"><a href="#2、Emplace-：填充键值对（原地创建）" class="headerlink" title="2、Emplace()：填充键值对（原地创建）"></a>2、<code>Emplace()</code>：填充键值对（原地创建）</h4><p>同<code>TArray</code>一样，<code>Emplace()</code>与<code>Add()</code>区别在于插入映射时不创建临时文件</p>
-<h4 id="3、Append-：填充其他TMap中的多个键值对"><a href="#3、Append-：填充其他TMap中的多个键值对" class="headerlink" title="3、Append()：填充其他TMap中的多个键值对"></a>3、<code>Append()</code>：填充其他<code>TMap</code>中的多个键值对</h4><p><code>Append()</code>的过程就是一个个的<code>Add()</code>，因此如果被填充的TMap如果与填充的TMap有相同的Key，则会被替代为新的键值对</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TMap&lt;int32, FString&gt; FruitMap2;
-FruitMap2.Emplace(4, TEXT(&quot;Kiwi&quot;));
-FruitMap2.Emplace(9, TEXT(&quot;Melon&quot;));
-FruitMap2.Emplace(5, TEXT(&quot;Mango&quot;));
-FruitMap.Append(FruitMap2);
-&#x2F;&#x2F; FruitMap &#x3D; [
-&#x2F;&#x2F;        &#123; Key:5, Value:Mango &#125;,
-&#x2F;&#x2F;        &#123; Key:2, Value:Pear &#125;,
-&#x2F;&#x2F;        &#123; Key:7, Value:Pineapple &#125;,
-&#x2F;&#x2F;        &#123; Key:4, Value:Kiwi &#125;,
-&#x2F;&#x2F;        &#123; Key:9, Value:Melon &#125;,
-&#x2F;&#x2F;  ]</code></pre>
-
-<h3 id="三、迭代"><a href="#三、迭代" class="headerlink" title="三、迭代"></a>三、迭代</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">&#x2F;&#x2F; auto 范围遍历
-for (auto&amp; Elem : FruitMap)
+<h3 id="三、迭代"><a href="#三、迭代" class="headerlink" title="三、迭代"></a>三、迭代</h3><p>同<code>TMap</code>一样</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">&#x2F;&#x2F; auto 范围遍历
+for (auto&amp; Elem : FruitSet)
 &#123;
-    Elem.Key..;
-    Elem.Value..;
+    Elem...;
 &#125;
 
 &#x2F;&#x2F; 迭代器迭代
-for (auto Iter &#x3D; FruitMap.CreateIterator(); Iter; ++Iter)	&#x2F;&#x2F; CreateConstIterator 只读迭代器
+for (auto Iter &#x3D; FruitSet.CreateIterator(); Iter; ++Iter)	&#x2F;&#x2F; CreateConstIterator 只读迭代器
 &#123;
-    Iter.Key...;
-    Iter.Value...;
+    *Iter...;
 &#125;</code></pre>
 
-<h3 id="四、查询"><a href="#四、查询" class="headerlink" title="四、查询"></a>四、查询</h3><h4 id="1、Num-：查询Map键值对个数"><a href="#1、Num-：查询Map键值对个数" class="headerlink" title="1、Num()：查询Map键值对个数"></a>1、<code>Num()</code>：查询Map键值对个数</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">int32 Count &#x3D; FruitMap.Num();		&#x2F;&#x2F; Count &#x3D; 5</code></pre>
+<h3 id="四、查询"><a href="#四、查询" class="headerlink" title="四、查询"></a>四、查询</h3><h4 id="1、Num-：查询TSet元素个数"><a href="#1、Num-：查询TSet元素个数" class="headerlink" title="1、Num()：查询TSet元素个数"></a>1、<code>Num()</code>：查询TSet元素个数</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">int32 Count &#x3D; FruitSet.Num();	&#x2F;&#x2F; Count &#x3D; 4 </code></pre>
 
-<h4 id="2、Contanis-：查询是否包含某个键"><a href="#2、Contanis-：查询是否包含某个键" class="headerlink" title="2、Contanis()：查询是否包含某个键"></a>2、<code>Contanis()</code>：查询是否包含某个键</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">bool bHas7 &#x3D; FruitMap.Contains(7);	&#x2F;&#x2F; bHas7 &#x3D; true
-bool bHas8 &#x3D; FruitMap.Contains(8);	&#x2F;&#x2F; bHas8 &#x3D; false</code></pre>
+<h4 id="2、Contanis-：查询是否包含某个元素"><a href="#2、Contanis-：查询是否包含某个元素" class="headerlink" title="2、Contanis()：查询是否包含某个元素"></a>2、<code>Contanis()</code>：查询是否包含某个元素</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">bool bHasBanana &#x3D; FruitSet.Contains(TEXT(&quot;Banana&quot;));	&#x2F;&#x2F; bHasBanana &#x3D; true
+bool bHasLemon &#x3D; FruitSet.Contains(TEXT(&quot;Lemon&quot;));		&#x2F;&#x2F; bHasLemon &#x3D; false</code></pre>
 
-<h4 id="3、-、Find-和FindRef-：查找某个键对应的值"><a href="#3、-、Find-和FindRef-：查找某个键对应的值" class="headerlink" title="3、[]、Find()和FindRef()：查找某个键对应的值"></a>3、<code>[]</code>、<code>Find()</code>和<code>FindRef()</code>：查找某个键对应的值</h4><p><code>[]</code>：返回所查找键对应值的引用，如果不存在该键，报错</p>
-<p><code>Find()</code>：返回所查找键对应值的指针，如果不存在该键，返回<code>nullptr</code></p>
-<p><code>FindRef</code> 会返回与给定键关联的值副本；若映射中未找到给定键，返回默认构建值。</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">FString Val7 &#x3D; FruitMap[7];			&#x2F;&#x2F; Val7 &#x3D; Pineapple
-FString Val7 &#x3D; FruitMap[8];			&#x2F;&#x2F; 报错
+<h4 id="3、-、Find-：查找某个元素"><a href="#3、-、Find-：查找某个元素" class="headerlink" title="3、[]、Find()：查找某个元素"></a>3、<code>[]</code>、<code>Find()</code>：查找某个元素</h4><p><code>FSetElementId</code> 结构体可查找集合中某个键的索引。然后，就可使用该索引与 <code>运算符[]</code> 查找元素</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">FSetElementId BananaIndex &#x3D; FruitSet.FindId(TEXT(&quot;Banana&quot;));
+FPlatformMisc::LocalPrint(		&#x2F;&#x2F; 打印 Banana
+    *FString::Printf(
+        TEXT(&quot; \&quot;%s\&quot;\n&quot;),
+        *FruitSet[BananaIndex]
+    )
+);
 
-FString* Ptr7 &#x3D; FruitMap.Find(7);	&#x2F;&#x2F; Ptr7 &#x3D; 指向&quot;Pineapple&quot;这个值的指针
-FString* Ptr8 &#x3D; FruitMap.Find(8);	&#x2F;&#x2F; Ptr8 &#x3D; nullptr
+FSetElementId LemonIndex &#x3D; FruitSet.FindId(TEXT(&quot;Lemon&quot;));
+FPlatformMisc::LocalPrint(		&#x2F;&#x2F; 报错
+    *FString::Printf(
+        TEXT(&quot; \&quot;%s\&quot;\n&quot;),
+        *FruitSet[LemonIndex]
+    )
+); </code></pre>
 
-FString Str7 &#x3D; FruitMap.FindRef(7);	&#x2F;&#x2F; Str7 &#x3D; Pineapple
-FString Str8 &#x3D; FruitMap.FindRef(8);	&#x2F;&#x2F; Str8 &#x3D; Empty</code></pre>
+<p><code>Find()</code>同<code>TMap</code>一样，返回所查找元素的指针，如果不存在，返回<code>nullptr</code></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">FString* PtrBanana &#x3D; FruitSet.Find(TEXT(&quot;Banana&quot;));
+FString* PtrLemon &#x3D; FruitSet.Find(TEXT(&quot;Lemon&quot;));	&#x2F;&#x2F; 空指针</code></pre>
 
-<h4 id="4、FindOrAdd-：查找或添加某个键"><a href="#4、FindOrAdd-：查找或添加某个键" class="headerlink" title="4、FindOrAdd()：查找或添加某个键"></a>4、<code>FindOrAdd()</code>：查找或添加某个键</h4><p><code>FindOrAdd()</code>返回所查找键对应值的引用，如果不存在该键，返回新创建的元素。</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">FString&amp; Ref7 &#x3D; FruitMap.FindOrAdd(7);	&#x2F;&#x2F; Ref7 &#x3D; Pineapple
-FString&amp; Ref8 &#x3D; FruitMap.FindOrAdd(8);	&#x2F;&#x2F; Ref8 &#x3D; Empty
-Ref8 &#x3D; TEXT(&quot;Peach&quot;);
-&#x2F;&#x2F;	FruitMap &#x3D; [
-&#x2F;&#x2F;        &#123; Key:5, Value:Mango &#125;,
-&#x2F;&#x2F;        &#123; Key:2, Value:Pear &#125;,
-&#x2F;&#x2F;        &#123; Key:7, Value:Pineapple1 &#125;,
-&#x2F;&#x2F;        &#123; Key:4, Value:Kiwi &#125;,
-&#x2F;&#x2F;        &#123; Key:9, Value:Melon &#125;,
-&#x2F;&#x2F;        &#123; Key:8, Value:Peach &#125;,
-&#x2F;&#x2F;	]</code></pre>
+<h4 id="4、Array-：根据TSet元素返回一个数组"><a href="#4、Array-：根据TSet元素返回一个数组" class="headerlink" title="4、Array()：根据TSet元素返回一个数组"></a>4、<code>Array()</code>：根据TSet元素返回一个数组</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TArray&lt;FString&gt; FruitArray &#x3D; FruitSet.Array();	&#x2F;&#x2F; FruitArray &#x3D; [Banana, Grapefruit, Pineapple, Pear]</code></pre>
 
-<h4 id="5、FindKey-：查找某个值对应的键"><a href="#5、FindKey-：查找某个值对应的键" class="headerlink" title="5、FindKey()：查找某个值对应的键"></a>5、<code>FindKey()</code>：查找某个值对应的键</h4><p><code>FindKey()</code>：返回所查找到第一个值对应键的指针，如果不存在该值，返回空键</p>
-<ul>
-<li>按值查找比按键查找慢（线性时间）。因为映射按键排序，而非按值排序。</li>
-<li>如果映射有多个具有相同值的键，<code>FindKey</code> 可返回其中任一键。</li>
+<h3 id="五、移除"><a href="#五、移除" class="headerlink" title="五、移除"></a>五、移除</h3><h4 id="1、Remove-：移除元素"><a href="#1、Remove-：移除元素" class="headerlink" title="1、Remove()：移除元素"></a>1、<code>Remove()</code>：移除元素</h4><ul>
+<li>可根据<code>FSetElementId</code>移除指定元素</li>
+<li>可根据元素值移除指定元素，返回移除元素个数</li>
 </ul>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">const int32* KeyMangoPtr &#x3D; FruitMap.FindKey(TEXT(&quot;Mango&quot;));		&#x2F;&#x2F; KeyMangoPtr &#x3D; 指向键5的指针
-const int32* KeyKumquatPtr &#x3D; FruitMap.FindKey(TEXT(&quot;Kumquat&quot;));	&#x2F;&#x2F; KeyKumquatPtr &#x3D; nullptr</code></pre>
-
-<h4 id="6、GenerateKeyArray-和GenerateValueArray-：使用键和值的副本填充TArray"><a href="#6、GenerateKeyArray-和GenerateValueArray-：使用键和值的副本填充TArray" class="headerlink" title="6、GenerateKeyArray()和GenerateValueArray()：使用键和值的副本填充TArray"></a>6、<code>GenerateKeyArray()</code>和<code>GenerateValueArray()</code>：使用键和值的副本填充<code>TArray</code></h4><ul>
-<li>两个方法在填充前都会清空所传递的数组</li>
-</ul>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TArray&lt;int32&gt; FruitKeys;
-TArray&lt;FString&gt; FruitValues;
-FruitKeys.Add(999);
-FruitKeys.Add(123);
-FruitMap.GenerateKeyArray(FruitKeys);		&#x2F;&#x2F;	FruitKeys &#x3D; [5, 2, 7, 4, 9, 8]
-FruitMap.GenerateValueArray(FruitValues);	&#x2F;&#x2F;	FruitValues &#x3D; [Mango, Pear, Pineapple1, Kiwi, Melon, Peach]</code></pre>
-
-<h3 id="五、移除"><a href="#五、移除" class="headerlink" title="五、移除"></a>五、移除</h3><h4 id="1、Remove-：移除特定键对应的键值对"><a href="#1、Remove-：移除特定键对应的键值对" class="headerlink" title="1、Remove()：移除特定键对应的键值对"></a>1、<code>Remove()</code>：移除特定键对应的键值对</h4><p><code>Remove()</code>会移除指定键对应的键值对，并返回被移除元素的数量，如果不存在该键，则返回0</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Count &#x3D; FruitMap.Remove(8);			&#x2F;&#x2F; Count &#x3D; 1</code></pre>
-
-<h4 id="2、FindAndRemoveChecked-：移除特定键对应键值对，并返回值"><a href="#2、FindAndRemoveChecked-：移除特定键对应键值对，并返回值" class="headerlink" title="2、FindAndRemoveChecked()：移除特定键对应键值对，并返回值"></a>2、<code>FindAndRemoveChecked()</code>：移除特定键对应键值对，并返回值</h4><p>移除元素并返回其值，如果键不存在，则会报错</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">FString Removed7 &#x3D; FruitMap.FindAndRemoveChecked(7);	&#x2F;&#x2F; Removed7 &#x3D; Pineapple1
-FString Removed8 &#x3D; FruitMap.FindAndRemoveChecked(8);	&#x2F;&#x2F; 报错</code></pre>
-
-<h4 id="3、RemoveAndCopyValue-：移除特定键对应键值对，并返回值"><a href="#3、RemoveAndCopyValue-：移除特定键对应键值对，并返回值" class="headerlink" title="3、RemoveAndCopyValue()：移除特定键对应键值对，并返回值"></a>3、<code>RemoveAndCopyValue()</code>：移除特定键对应键值对，并返回值</h4><p>移除元素并将对应值复制到引用参数，如果键不存在，引用参数不变，函数返回<code>false</code></p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">FString Removed;
-bool bFound2 &#x3D; FruitMap.RemoveAndCopyValue(2, Removed);	&#x2F;&#x2F; bFound2 &#x3D; true ; Removed &#x3D; Pear
-bool bFound8 &#x3D; FruitMap.RemoveAndCopyValue(8, Removed);	&#x2F;&#x2F; bFound8 &#x3D; false ; Removed &#x3D; Pear</code></pre>
-
-<h4 id="4、Empty-和Reset-：移除所有键值对"><a href="#4、Empty-和Reset-：移除所有键值对" class="headerlink" title="4、Empty()和Reset()：移除所有键值对"></a>4、<code>Empty()</code>和<code>Reset()</code>：移除所有键值对</h4><p>同<code>TArray</code>一样，<code>Reset()</code>方法不会释放先前的内存。</p>
-<h3 id="六、排序"><a href="#六、排序" class="headerlink" title="六、排序"></a>六、排序</h3><h4 id="1、KeySort-：按键排序"><a href="#1、KeySort-：按键排序" class="headerlink" title="1、KeySort()：按键排序"></a>1、<code>KeySort()</code>：按键排序</h4><h4 id="2、ValueSort-：按值排序"><a href="#2、ValueSort-：按值排序" class="headerlink" title="2、ValueSort()：按值排序"></a>2、<code>ValueSort()</code>：按值排序</h4><ul>
-<li>排序后，迭代映射会以排序的顺序显示元素</li>
-<li>再次修改映射时，排序可能会发生变化</li>
-<li>排序是不稳定的，等值元素在<code>MultiMap</code>中可能以任何顺序出现。</li>
-</ul>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">FruitMap.KeySort([](int32 A, int32 B) &#123;
+<h4 id="2、Empty-和Reset-：移除全部元素"><a href="#2、Empty-和Reset-：移除全部元素" class="headerlink" title="2、Empty()和Reset()：移除全部元素"></a>2、<code>Empty()</code>和<code>Reset()</code>：移除全部元素</h4><p>同<code>TMap</code>一样</p>
+<h3 id="六、排序"><a href="#六、排序" class="headerlink" title="六、排序"></a>六、排序</h3><p>基本同<code>TMap</code>一致</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">FruitSet.Sort([](const FString&amp; A, const FString&amp; B) &#123;
     return A &gt; B; 
 &#125;);
-&#x2F;&#x2F; FruitMap &#x3D;&#x3D; [
-&#x2F;&#x2F; 	&#123; Key:9, Value:&quot;Melon&quot; &#125;,
-&#x2F;&#x2F; 	&#123; Key:5, Value:&quot;Mango&quot; &#125;,
-&#x2F;&#x2F; 	&#123; Key:4, Value:&quot;Kiwi&quot; &#125;,
-&#x2F;&#x2F; ]
-FruitMap.ValueSort([](const FString&amp; A, const FString&amp; B) &#123;
-    return A.Len() &lt; B.Len(); 
+&#x2F;&#x2F; FruitSet &#x3D; [Pear, Grapefruit, Banana]
+FruitSet.Sort([](const FString&amp; A, const FString&amp; B) &#123;
+    return A.Len() &lt; B.Len();
 &#125;);
-&#x2F;&#x2F; FruitMap &#x3D;&#x3D; [
-&#x2F;&#x2F; 	&#123; Key:4, Value:&quot;Kiwi&quot; &#125;,
-&#x2F;&#x2F; 	&#123; Key:5, Value:&quot;Mango&quot; &#125;,
-&#x2F;&#x2F; 	&#123; Key:9, Value:&quot;Melon&quot; &#125;,
-&#x2F;&#x2F; ]</code></pre>
+&#x2F;&#x2F; FruitSet &#x3D; [Pear, Banana, Grapefruit]</code></pre>
 
 <h3 id="七、运算符"><a href="#七、运算符" class="headerlink" title="七、运算符"></a>七、运算符</h3><h4 id="1、赋值运算符"><a href="#1、赋值运算符" class="headerlink" title="1、赋值运算符="></a>1、<code>赋值运算符=</code></h4><p>同<code>TArray</code>一样，是一次深拷贝</p>
 <h4 id="2、MoveTemp"><a href="#2、MoveTemp" class="headerlink" title="2、MoveTemp"></a>2、<code>MoveTemp</code></h4><p>同<code>TArray</code>一样，支持移动语义<code>MoveTemp</code>，移动后，源映射为空</p>
 <h3 id="八、Slack-空闲容量"><a href="#八、Slack-空闲容量" class="headerlink" title="八、Slack(空闲容量)"></a>八、Slack(空闲容量)</h3><h4 id="1、Reverse-：分配内存"><a href="#1、Reverse-：分配内存" class="headerlink" title="1、Reverse()：分配内存"></a>1、<code>Reverse()</code>：分配内存</h4><p>同<code>TArray</code>一样，分配内存，无需添加元素，如果分配的内存比当前小，则无效。</p>
-<h4 id="2、Shrink-和Compact-：移除所有Slack"><a href="#2、Shrink-和Compact-：移除所有Slack" class="headerlink" title="2、Shrink()和Compact()：移除所有Slack"></a>2、<code>Shrink()</code>和<code>Compact()</code>：移除所有Slack</h4><p><code>Shrink()</code> 将从容器的末端移除所有slack，如果映射中间存在slack则无法移除，首先应调用 <code>Compact()</code> 函数，将空白空间组合在一起，再调用<code>Shrink()</code> </p>
-<h3 id="九、KeyFuncs"><a href="#九、KeyFuncs" class="headerlink" title="九、KeyFuncs"></a>九、KeyFuncs</h3><p>只要类型具有 <code>运算符==</code> 和非成员 <code>GetTypeHash</code> 重载，就可用作 <code>TMap</code> 的键类型，不需要任何更改。但是，您可能需要将类型用作键，而不重载这些函数。在这些情况下，可对 <code>KeyFuncs</code> 进行自定义。为键类型创建 <code>KeyFuncs</code>，必须定义两个typedef和三个静态函数，如下所示：</p>
-<ul>
-<li><code>KeyInitType</code> —— 用于传递键的类型。</li>
-<li><code>ElementInitType</code> —— 用于传递元素的类型。</li>
-<li><code>KeyInitType GetSetKey(ElementInitType Element)</code>——返回元素的键。</li>
-<li><code>bool Matches(KeyInitType A, KeyInitType B)</code> —— 如果 <code>A</code> 和 <code>B</code> 等值将返回 <code>true</code>，否则返回 <code>false</code>。</li>
-<li><code>uint32 GetKeyHash(KeyInitType Key)</code> —— 返回 <code>Key</code> 的散列值。</li>
-</ul>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">struct FMyStruct		&#x2F;&#x2F; 作为TMap Key的结构体
-&#123;
-	&#x2F;&#x2F; String which identifies our key
-	FString UniqueID;
-	&#x2F;&#x2F; Some state which doesn&#39;t affect struct identity
-	float SomeFloat;
-	explicit FMyStruct(float InFloat)
-		:UniqueID (FGuid::NewGuid().ToString())
-		, SomeFloat(InFloat)
-	&#123;
-	&#125;
-&#125;;
-template &lt;typename ValueType&gt;
-struct TMyStructMapKeyFuncs : BaseKeyFuncs&lt;TPair&lt;FMyStruct, ValueType&gt;, FString&gt;	&#x2F;&#x2F; 自定义KeyFuncs
-&#123;
-private:
-	typedef BaseKeyFuncs&lt;TPair&lt;FMyStruct, ValueType&gt;, FString&gt; Super;
-
-public:
-	typedef typename Super::ElementInitType ElementInitType; &#x2F;&#x2F; 用于传递元素的类型
-	typedef typename Super::KeyInitType KeyInitType;		&#x2F;&#x2F; 用于传递键的类型
-
-	static KeyInitType GetSetKey(ElementInitType Element)	&#x2F;&#x2F; 返回元素的键
-	&#123;
-		return Element.Key.UniqueID;
-	&#125;
-
-	static bool Matches(KeyInitType A, KeyInitType B)		&#x2F;&#x2F; 如果 A 和 B 等值将返回 true，否则返回 false
-	&#123;
-		return A.Compare(B, ESearchCase::CaseSensitive) &#x3D;&#x3D; 0;
-	&#125;
-
-	static uint32 GetKeyHash(KeyInitType Key)				&#x2F;&#x2F; 返回 Key 的散列值。
-	&#123;
-		return FCrc::StrCrc32(*Key);
-	&#125;
-&#125;;
-
-TMap&lt;FMyStruct, int32, FDefaultSetAllocator, TMyStructMapKeyFuncs&lt;int32&gt;&gt; MyMapToInt32;
-
-&#x2F;&#x2F; Add some elements
-MyMapToInt32.Add(FMyStruct(3.14f), 5);
-MyMapToInt32.Add(FMyStruct(1.23f), 2);</code></pre>
-
+<h4 id="2、Shrink-和Compact-：移除所有Slack"><a href="#2、Shrink-和Compact-：移除所有Slack" class="headerlink" title="2、Shrink()和Compact()：移除所有Slack"></a>2、<code>Shrink()</code>和<code>Compact()</code>：移除所有Slack</h4><p><code>Shrink()</code> 将从容器的末端移除所有slack，如果映射中间存在slack则无法移除，首先应调用 <code>Compact()</code>或<code>CompactStable()</code> 函数，将空白空间组合在一起，再调用<code>Shrink()</code> ，<code>CompactStable</code> 可在合并空元素时保持元素的排序。</p>
+<h3 id="九、KeyFuncs"><a href="#九、KeyFuncs" class="headerlink" title="九、KeyFuncs"></a>九、KeyFuncs</h3><p>同<code>TMap</code>一致</p>
 
                                     
                             </div>
@@ -679,7 +551,7 @@ MyMapToInt32.Add(FMyStruct(1.23f), 2);</code></pre>
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://zdx199792.github.io/2024/12/29/%E3%80%90UEC++%E5%AD%A6%E4%B9%A0-UE%E5%AE%B9%E5%99%A8%E4%B9%8BTMap%E3%80%91/">https://zdx199792.github.io/2024/12/29/%E3%80%90UEC++%E5%AD%A6%E4%B9%A0-UE%E5%AE%B9%E5%99%A8%E4%B9%8BTMap%E3%80%91/</a>
+                    <a href="https://zdx199792.github.io/2024/12/30/%E3%80%90UEC++-%E5%AD%A6%E4%B9%A0-UE%E5%AE%B9%E5%99%A8%E4%B9%8BTSet%E3%80%91/">https://zdx199792.github.io/2024/12/30/%E3%80%90UEC++-%E5%AD%A6%E4%B9%A0-UE%E5%AE%B9%E5%99%A8%E4%B9%8BTSet%E3%80%91/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -729,9 +601,9 @@ MyMapToInt32.Add(FMyStruct(1.23f), 2);</code></pre>
                                                         </span>
                                                     </a>
                                                     
-                                                    <a href="/tags/TMap/">
+                                                    <a href="/tags/TSet/">
                                                         <span class="chip bg-color">
-                                                            TMap
+                                                            TSet
                                                         </span>
                                                     </a>
                                                     
@@ -1079,9 +951,68 @@ MyMapToInt32.Add(FMyStruct(1.23f), 2);</code></pre>
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2024/12/30/%E3%80%90UEC++-%E5%AD%A6%E4%B9%A0-UE%E5%AE%B9%E5%99%A8%E4%B9%8BTSet%E3%80%91/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="【UEC++学习-UE容器之TSet】">
+                        
+                        <span class="card-title">【UEC++学习-UE容器之TSet】</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-12-30
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/UEC-%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                    UEC++学习
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/C/">
+                        <span class="chip bg-color">C++</span>
+                    </a>
+                    
+                    <a href="/tags/UE/">
+                        <span class="chip bg-color">UE</span>
+                    </a>
+                    
+                    <a href="/tags/TSet/">
+                        <span class="chip bg-color">TSet</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
             <div class="card">
                 <a href="/2024/12/30/%E3%80%90UEC++%E5%AD%A6%E4%B9%A0-UE%E5%AE%B9%E5%99%A8%E4%B9%8BTSet%E3%80%91/">
                     <div class="card-image">
@@ -1099,9 +1030,9 @@ MyMapToInt32.Add(FMyStruct(1.23f), 2);</code></pre>
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2024-12-30
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-12-30
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -1109,63 +1040,6 @@ MyMapToInt32.Add(FMyStruct(1.23f), 2);</code></pre>
                             
                         </span>
                     </div>
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2024/12/29/%E3%80%90UEC++%E5%AD%A6%E4%B9%A0-UE%E5%AE%B9%E5%99%A8%E4%B9%8BTArray%E3%80%91/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="【UEC++学习-UE容器之TArray】">
-                        
-                        <span class="card-title">【UEC++学习-UE容器之TArray】</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-12-29
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/UEC-%E5%AD%A6%E4%B9%A0/" class="post-category">
-                                    UEC++学习
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/C/">
-                        <span class="chip bg-color">C++</span>
-                    </a>
-                    
-                    <a href="/tags/UE/">
-                        <span class="chip bg-color">UE</span>
-                    </a>
-                    
-                    <a href="/tags/TArray/">
-                        <span class="chip bg-color">TArray</span>
-                    </a>
-                    
                 </div>
                 
             </div>
