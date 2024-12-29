@@ -4,10 +4,11 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="【UEC++学习-开篇】, Woilin&#39;s Blog">
-    <meta name="description" content="工作一年，做了很多UI和杂项，回头看自己的UE C++能力还是比较薄弱的，工作中很多涉及UE C++的开发，经常有些捉襟见肘！
-很多次想要开始认真跟着文档由浅入深的学习一次，因为自己的懒惰却一直没有开始。
-2024要走完了，跟随新的一年20">
+    <meta name="keywords" content="【UEC++学习-UE容器之TArray】, Woilin&#39;s Blog">
+    <meta name="description" content="TArrayTArray：负责同类型对象（元素）序列的所有权和组织权。
+一、创建数组&amp;#x2F;&amp;#x2F; 创建数组
+TArray&amp;lt;int32&amp;gt; IntArray;
+InArray.Init(10, 5);	&amp;#x2F;&amp;#x">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -19,7 +20,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>【UEC++学习-开篇】 | Woilin&#39;s Blog</title>
+    <title>【UEC++学习-UE容器之TArray】 | Woilin&#39;s Blog</title>
     <link rel="icon" type="image/jpeg" href="/head.jpg">
     
 
@@ -336,12 +337,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/10.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">【UEC++学习-开篇】</h1>
+                    <h1 class="description center-align post-title">【UEC++学习-UE容器之TArray】</h1>
                 </div>
             </div>
         </div>
@@ -374,6 +375,12 @@
                                 <a href="/tags/UE/">
                                     <span class="chip bg-color">
                                         UE
+                                    </span>
+                                </a>
+                                
+                                <a href="/tags/TArray/">
+                                    <span class="chip bg-color">
+                                        TArray
                                     </span>
                                 </a>
                                 
@@ -415,7 +422,7 @@
                                     <div class="info-break-policy">
                                         <i class="far fa-file-word fa-fw"></i>
                                         文章字数:&nbsp;&nbsp;
-                                            126
+                                            2.1k
                                     </div>
                                     
 
@@ -423,7 +430,7 @@
                                             <div class="info-break-policy">
                                                 <i class="far fa-clock fa-fw"></i>
                                                 阅读时长:&nbsp;&nbsp;
-                                                    1
+                                                    9
                                                         分
                                             </div>
                                             
@@ -448,10 +455,172 @@
 
                         <div class="card-content article-card-content">
                             <div id="articleContent">
-                                <p>工作一年，做了很多UI和杂项，回头看自己的UE C++能力还是比较薄弱的，工作中很多涉及UE C++的开发，经常有些捉襟见肘！</p>
-<p>很多次想要开始认真跟着文档由浅入深的学习一次，因为自己的懒惰却一直没有开始。</p>
-<p>2024要走完了，跟随新的一年2025，自己也努力一把，进步一下。</p>
-<p><strong>种一棵树最好的时间是十年前，其次是现在!</strong></p>
+                                <h2 id="TArray"><a href="#TArray" class="headerlink" title="TArray"></a>TArray</h2><p>TArray：负责同类型对象（元素）序列的所有权和组织权。</p>
+<h3 id="一、创建数组"><a href="#一、创建数组" class="headerlink" title="一、创建数组"></a>一、创建数组</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">&#x2F;&#x2F; 创建数组
+TArray&lt;int32&gt; IntArray;
+InArray.Init(10, 5);	&#x2F;&#x2F;InArray &#x3D; [10, 10, 10, 10, 10]</code></pre>
+
+<h3 id="二、填充数组"><a href="#二、填充数组" class="headerlink" title="二、填充数组"></a>二、填充数组</h3><h4 id="1、Add-和-Emplace：末尾添加元素"><a href="#1、Add-和-Emplace：末尾添加元素" class="headerlink" title="1、Add() 和 Emplace：末尾添加元素"></a>1、<code>Add()</code> 和 <code>Emplace</code>：末尾添加元素</h4><p><code>Add()</code>和<code>Emplace()</code>方法向数组末尾添加元素</p>
+<ul>
+<li><code>Add()</code>添加时创建临时变量，复制到数组中</li>
+<li><code>Emplace()</code>不创建临时变量，在容器内 “原地构造” 元素</li>
+</ul>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">&#x2F;&#x2F; Add 和 Emplace
+TArray&lt;FString&gt; StrArr;
+StrArr.Add    (TEXT(&quot;Hello&quot;));
+StrArr.Emplace(TEXT(&quot;World&quot;));	&#x2F;&#x2F; StrArr &#x3D;&#x3D; [&quot;Hello&quot;,&quot;World&quot;]</code></pre>
+
+<h4 id="2、Append-：添加其他TArray中的多个元素"><a href="#2、Append-：添加其他TArray中的多个元素" class="headerlink" title="2、Append()：添加其他TArray中的多个元素"></a>2、<code>Append()</code>：添加其他<code>TArray</code>中的多个元素</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TArray&lt;FString&gt; StrArr &#x3D; &#123;TEXT(&quot;Hello&quot;), TEXT(&quot;World&quot;)&#125;;
+TArray&lt;FString&gt; NewStrArr &#x3D; &#123;TEXT(&quot;Unreal&quot;), TEXT(&quot;Engine&quot;)&#125;;
+StrArr.Append(NewStrArr);	&#x2F;&#x2F; StrArr &#x3D; [&quot;Hello&quot;, &quot;World&quot;, &quot;Unreal&quot;, &quot;Engine&quot;]</code></pre>
+
+<h4 id="3、Insert-：插入元素"><a href="#3、Insert-：插入元素" class="headerlink" title="3、Insert()：插入元素"></a>3、<code>Insert()</code>：插入元素</h4><p><code>Insert()</code>给定索引处添加元素</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">StrArr.Insert(TEXT(&quot;Brave&quot;), 1); &#x2F;&#x2F; StrArr &#x3D; [&quot;Hello&quot;, &quot;Brave&quot;, &quot;World&quot;, &quot;Unreal&quot;, &quot;Engine&quot;]</code></pre>
+
+<h4 id="4、SetNum-：设置数组数量"><a href="#4、SetNum-：设置数组数量" class="headerlink" title="4、SetNum()：设置数组数量"></a>4、<code>SetNum()</code>：设置数组数量</h4><p><code>SetNum()</code>设置数组元素的数量</p>
+<ul>
+<li>如新数量大于当前数量，则使用元素类型的默认构造函数新建元素；</li>
+<li>如新数量小于当前数量，<code>SetNum</code> 将移除元素。</li>
+</ul>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">StrArr.SetNum(8);		&#x2F;&#x2F; StrArr &#x3D; [Hello, Brave, World, Unreal, Engine, , , ]
+StrArr.SetNum(3);		&#x2F;&#x2F; StrArr &#x3D; [Hello, Brave, World]</code></pre>
+
+<h3 id="三、迭代"><a href="#三、迭代" class="headerlink" title="三、迭代"></a>三、迭代</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TArray&lt;int32&gt; Arr &#x3D; &#123;1, 2, 3&#125;
+&#x2F;&#x2F; auto 范围遍历
+for (auto&amp; i : Arr)
+&#123;
+    i &#x3D; ...;
+&#125;
+&#x2F;&#x2F; 基于索引迭代
+for (int32 i &#x3D; 0; i &lt; Arr.Nums(); ++i)
+&#123;
+    Arr[i] &#x3D; ...;
+&#125;
+&#x2F;&#x2F; 迭代器迭代
+for (auto Iter &#x3D; Arr.CreateIterator(); Iter; ++Iter)	&#x2F;&#x2F; CreateConstIterator 只读迭代器
+&#123;
+    *Iter &#x3D; ...;
+&#125;</code></pre>
+
+<h3 id="四、排序"><a href="#四、排序" class="headerlink" title="四、排序"></a>四、排序</h3><p><code>Sort()</code>方法可对数组排序</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">StrArr.Sort();	&#x2F;&#x2F; 按元素的 运算符&lt; 进行排序
+&#x2F;&#x2F; StrArr &#x3D; [&quot;Brave&quot;, &quot;Engine&quot;, &quot;Hello&quot;, &quot;Unreal&quot;, &quot;World&quot;]
+auto SortFunc &#x3D; [](const FString&amp; A, const FString&amp; B)
+&#123;
+    return A.Len() &gt; B.Len();
+&#125;;
+StrArr.Sort(SortFunc);	&#x2F;&#x2F; 按自定义排序规则排序
+&#x2F;&#x2F; StrArr &#x3D; [&quot;Engine&quot;, &quot;Unreal&quot;, &quot;Brave&quot;, &quot;Hello&quot;, &quot;World&quot;] 同长度元素内部顺序可能不同
+StrArr.StableSort(SortFunc)	&#x2F;&#x2F; 稳定排序
+&#x2F;&#x2F; StrArr &#x3D; [&quot;Engine&quot;, &quot;Unreal&quot;, &quot;Brave&quot;, &quot;Hello&quot;, &quot;World&quot;]</code></pre>
+
+<h3 id="五、查询"><a href="#五、查询" class="headerlink" title="五、查询"></a>五、查询</h3><h4 id="1、Num-：查询数组数量"><a href="#1、Num-：查询数组数量" class="headerlink" title="1、Num()：查询数组数量"></a>1、<code>Num()</code>：查询数组数量</h4><p><code>Num()</code>查询<code>TArray</code>元素个数</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">int32 ArrLength &#x3D; StrArr.Num();	&#x2F;&#x2F; ArrLength &#x3D; 5</code></pre>
+
+<h4 id="2、GetData-：获取数组指针"><a href="#2、GetData-：获取数组指针" class="headerlink" title="2、GetData()：获取数组指针"></a>2、<code>GetData()</code>：获取数组指针</h4><p><code>GetData()</code>获取<code>TArray</code>指针；如容器为常量，则返回的指针也为常量。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">FString* StrPtr &#x3D; StrArr.GetData();	&#x2F;&#x2F; 返回数组指针 StrPtr[0] &#x3D; StrArr[0] &#x3D; Engine</code></pre>
+
+<p><code>运算符[]</code>获取指定索引位置元素，会返回引用，可修改容器中的元素；如容器为常量，返回常量引用。</p>
+<h4 id="3、Last-和Top-：获取最后元素"><a href="#3、Last-和Top-：获取最后元素" class="headerlink" title="3、Last()和Top()：获取最后元素"></a>3、<code>Last()</code>和<code>Top()</code>：获取最后元素</h4><p><code>Last()</code>从数组末端反向索引，索引默认为零。<code>Top()</code>方法同<code>Last()</code>，区别是不接受索引</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">FString Elem1 &#x3D; StrArr[1];		    &#x2F;&#x2F; Elem1 &#x3D; &quot;Unreal&quot;
+StrArr[3] &#x3D; StrArr[3].ToUpper();	&#x2F;&#x2F; StrArr &#x3D; [&quot;Engine&quot;, &quot;Unreal&quot;, &quot;Brave&quot;, &quot;HELLO&quot;, &quot;World&quot;]
+
+FString ElemEnd &#x3D; StrArr.Last();	&#x2F;&#x2F; ElemEnd &#x3D; &quot;World&quot;
+FString ElemEnd1 &#x3D; StrArr.Last(1);	&#x2F;&#x2F; ElemEnd1 &#x3D; &quot;HELLO&quot;
+FString ElemTop &#x3D; StrArr.Top();		&#x2F;&#x2F; ElemTop &#x3D; &quot;World&quot;</code></pre>
+
+<h4 id="4、Contains-和Find-：是否存在特定元素"><a href="#4、Contains-和Find-：是否存在特定元素" class="headerlink" title="4、Contains()和Find()：是否存在特定元素"></a>4、<code>Contains()</code>和<code>Find()</code>：是否存在特定元素</h4><p><code>Contains()</code>查询数组是否包含指定元素</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">bool bHello &#x3D; StrArr.Contains(TEXT(&quot;Hello&quot;));		&#x2F;&#x2F; bHello   &#x3D;&#x3D; true
+bool bGoodBye &#x3D; StrArr.Contains(TEXT(&quot;GoodBye&quot;));	&#x2F;&#x2F; bGoodbye &#x3D;&#x3D; false</code></pre>
+
+<p><code>Find()</code>查找元素是否存在，并返回其找到的首个元素的索引；<code>FindLast()</code>会返回其找到的最后一个元素的索引；</p>
+<p>如果不将索引作为显式参数传递，这两个函数会将元素索引作为返回值返回；如未找到元素，将返回特殊 <code>INDEX_NONE</code> 值：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">int32 Index;
+StrArr.Add(TEXT(&quot;HELLO&quot;));
+bool bFind &#x3D; StrArr.Find(TEXT(&quot;HELLO&quot;), Index);		&#x2F;&#x2F; bFind &#x3D; true, Index &#x3D; 3
+bFind &#x3D; StrArr.FindLast(TEXT(&quot;HELLO&quot;), Index);		&#x2F;&#x2F; bFind &#x3D; true, Index &#x3D; 5
+Index &#x3D; StrArr.Find(TEXT(&quot;HELLO&quot;));				   &#x2F;&#x2F; Index &#x3D; 3;</code></pre>
+
+<h3 id="六、移除"><a href="#六、移除" class="headerlink" title="六、移除"></a>六、移除</h3><h4 id="1、Remove-：移除全部特定元素"><a href="#1、Remove-：移除全部特定元素" class="headerlink" title="1、Remove()：移除全部特定元素"></a>1、<code>Remove()</code>：移除全部特定元素</h4><p><code>Remove()</code>移除根据元素类型的<code>运算符==</code>移除所有与提供元素相等的元素</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TArray&lt;int32&gt; IntArr &#x3D; &#123;10, 20, 30, 5, 10, 15, 20, 25, 30&#125;;
+IntArr.Remove(20);			&#x2F;&#x2F; IntArr &#x3D; [10, 30, 5, 10, 15, 25, 30]</code></pre>
+
+<h4 id="2、RemoveSingle-：移除首个特定元素"><a href="#2、RemoveSingle-：移除首个特定元素" class="headerlink" title="2、RemoveSingle()：移除首个特定元素"></a>2、<code>RemoveSingle()</code>：移除首个特定元素</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">IntArr.RemoveSingle(30);	&#x2F;&#x2F; IntArr &#x3D; [10, 5, 10, 15, 25, 30]</code></pre>
+
+<h4 id="3、RemoveAt-：移除索引位置上元素"><a href="#3、RemoveAt-：移除索引位置上元素" class="headerlink" title="3、RemoveAt()：移除索引位置上元素"></a>3、<code>RemoveAt()</code>：移除索引位置上元素</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">IntArr.RemoveAt(2);			&#x2F;&#x2F; IntArr &#x3D; [10, 5, 15, 25, 30]</code></pre>
+
+<h4 id="4、RomoveAll-：移除满足条件的所有元素"><a href="#4、RomoveAll-：移除满足条件的所有元素" class="headerlink" title="4、RomoveAll()：移除满足条件的所有元素"></a>4、<code>RomoveAll()</code>：移除满足条件的所有元素</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">IntArr.RemoveAll([](int32 val)
+&#123;
+    return val % 3 &#x3D;&#x3D; 0;
+&#125;);						   &#x2F;&#x2F; IntArr &#x3D; [10, 5, 25]</code></pre>
+
+<p>上述方法移动过程存在开销。如不需要剩余元素排序，可使用 <code>RemoveSwap</code>、<code>RemoveAtSwap</code> 和 <code>RemoveAllSwap</code> 函数减少此开销。此类方法其不保证剩余元素的排序，因此可更快地完成任务</p>
+<h4 id="5、Empty-：移除所有元素"><a href="#5、Empty-：移除所有元素" class="headerlink" title="5、Empty()：移除所有元素"></a>5、<code>Empty()</code>：移除所有元素</h4><h3 id="七、运算符"><a href="#七、运算符" class="headerlink" title="七、运算符"></a>七、运算符</h3><h4 id="1、赋值运算符"><a href="#1、赋值运算符" class="headerlink" title="1、赋值运算符="></a>1、<code>赋值运算符=</code></h4><p><code>赋值运算符=</code>可以为数组进行赋值，可以理解为一次深拷贝</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">IntArr &#x3D; &#123;1, 2, 3&#125;;
+TArray&lt;int32&gt; NewIntArr &#x3D; IntArr;
+NewIntArr[0] &#x3D; 5;
+&#x2F;&#x2F; IntArr &#x3D; [1, 2, 3]
+&#x2F;&#x2F; NewIntArr &#x3D; [5, 2, 3]</code></pre>
+
+<h4 id="2、运算符"><a href="#2、运算符" class="headerlink" title="2、运算符+="></a>2、<code>运算符+=</code></h4><p><code>运算符+=</code>等同于<code>Append()</code>方法</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">NewIntArr +&#x3D; IntArr;			&#x2F;&#x2F; NewIntArr &#x3D; [5, 2, 3, 1, 2, 3]</code></pre>
+
+<h4 id="3、MoveTemp"><a href="#3、MoveTemp" class="headerlink" title="3、MoveTemp"></a>3、<code>MoveTemp</code></h4><p><code>TArray</code>支持移动语义<code>MoveTemp</code>，移动后，源数组为空</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">IntArr &#x3D; MoveTemp(NewIntArr);	
+&#x2F;&#x2F; IntArr &#x3D; [5, 2, 3, 1, 2, 3]
+&#x2F;&#x2F; NewIntArr &#x3D; []</code></pre>
+
+<h4 id="4、-和"><a href="#4、-和" class="headerlink" title="4、==和!="></a>4、<code>==</code>和<code>!=</code></h4><p><code>运算符==</code>和<code>!=</code>可用于比较<code>TArray</code>，只有元素的排序和数量相同时，两个数组中元素通过自身类型的<code>运算符==</code>相比</p>
+<h3 id="八、堆"><a href="#八、堆" class="headerlink" title="八、堆"></a>八、堆</h3><h4 id="1、数组转换为堆"><a href="#1、数组转换为堆" class="headerlink" title="1、数组转换为堆"></a>1、数组转换为堆</h4><p><code>TArray</code>有支持二叉堆数据结构的函数，<code>Heapify()</code>方法可将数组转换为堆，方法支持接受谓词，无谓词默认使用元素类型的<code>运算符&lt;</code>来确定排序</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TArray&lt;int32&gt; HeapArr &#x3D; &#123;10, 9, 8, 7, 6, 5, 4, 3, 2, 1&#125;;
+HeapArr.Heapify();			&#x2F;&#x2F; HeapArr &#x3D; [1, 2, 4, 3, 6, 5, 8, 10, 7, 9]</code></pre>
+
+<h4 id="2、HeapPush-：添加新元素到堆"><a href="#2、HeapPush-：添加新元素到堆" class="headerlink" title="2、HeapPush()：添加新元素到堆"></a>2、<code>HeapPush()</code>：添加新元素到堆</h4><p><code>HeapPush()</code>可将新元素添加到堆，并对其他节点重新排序</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">HeapArr.HeapPush(4);		&#x2F;&#x2F; HeapArr &#x3D; [1, 2, 4, 3, 4, 5, 8, 10, 7, 9, 6]</code></pre>
+
+<h4 id="3、HeapPop-和HeapPopDiscard-：移除堆顶节点"><a href="#3、HeapPop-和HeapPopDiscard-：移除堆顶节点" class="headerlink" title="3、HeapPop()和HeapPopDiscard()：移除堆顶节点"></a>3、<code>HeapPop()</code>和<code>HeapPopDiscard()</code>：移除堆顶节点</h4><p><code>HeapPop()</code>和<code>HeapPopDiscard()</code>用于移除堆的顶部节点，前者引用元素类型返回顶部元素，后者只移除。移除后会对其他节点重新排序</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">int32 TopNode;			    &#x2F;&#x2F; TopNode &#x3D; 1
+HeapArr.HeapPop(TopNode);	 &#x2F;&#x2F; HeapArr &#x3D; [2, 3, 4, 6, 4, 5, 8, 10, 7, 9]</code></pre>
+
+<h4 id="4、移除给定索引元素"><a href="#4、移除给定索引元素" class="headerlink" title="4、移除给定索引元素"></a>4、移除给定索引元素</h4><p><code>HeapRemoveAt()</code>删除数组中给定索引处的元素，并对其他节点重新排序</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">HeapArr.HeapRemoveAt(1);	&#x2F;&#x2F; HeapArr &#x3D; [2, 4, 4, 6, 9, 5, 8, 10, 7]</code></pre>
+
+<h4 id="5、HeapTop-：获取顶部节点，无需变更数组"><a href="#5、HeapTop-：获取顶部节点，无需变更数组" class="headerlink" title="5、HeapTop()：获取顶部节点，无需变更数组"></a>5、<code>HeapTop()</code>：获取顶部节点，无需变更数组</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TopNode &#x3D; HeapArr.HeapTop(); &#x2F;&#x2F; TopNode &#x3D; 2	</code></pre>
+
+<h3 id="九、Slack-空闲容量"><a href="#九、Slack-空闲容量" class="headerlink" title="九、Slack(空闲容量)"></a>九、Slack(空闲容量)</h3><p><code>Slack</code>理解为容器中已分配内存但未被用到的那些元素存储槽，默认构建的数组不分配内存，Slack初始为零。</p>
+<h4 id="1、GetSlack-：获取当前Slack量"><a href="#1、GetSlack-：获取当前Slack量" class="headerlink" title="1、GetSlack()：获取当前Slack量"></a>1、<code>GetSlack()</code>：获取当前Slack量</h4><p><code>GetSlack()</code>可以获取当前数组的Slack量，<code>Max()</code>可以获取当前容器最大分配元素量，<code>Num()</code>即为两者之差。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TArray&lt;int32&gt; SlackArray;
+&#x2F;&#x2F; SlackArray.GetSlack() &#x3D;&#x3D; 0
+&#x2F;&#x2F; SlackArray.Num()      &#x3D;&#x3D; 0
+&#x2F;&#x2F; SlackArray.Max()      &#x3D;&#x3D; 0
+SlackArray.Add(1);
+&#x2F;&#x2F; SlackArray.GetSlack() &#x3D;&#x3D; 3
+&#x2F;&#x2F; SlackArray.Num()      &#x3D;&#x3D; 1
+&#x2F;&#x2F; SlackArray.Max()      &#x3D;&#x3D; 4
+SlackArray.Add(2);
+SlackArray.Add(3);
+SlackArray.Add(4);
+SlackArray.Add(5);
+&#x2F;&#x2F; SlackArray.GetSlack() &#x3D;&#x3D; 17
+&#x2F;&#x2F; SlackArray.Num()      &#x3D;&#x3D; 5
+&#x2F;&#x2F; SlackArray.Max()      &#x3D;&#x3D; 22</code></pre>
+
+<h4 id="2、Reserve-：分配内存"><a href="#2、Reserve-：分配内存" class="headerlink" title="2、Reserve()：分配内存"></a>2、<code>Reserve()</code>：分配内存</h4><p><code>Reserve</code> 可分配内存，无需添加元素，如果分配的内存比当前小，则无效。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">SlackArr.Reserve(25);	&#x2F;&#x2F; Num:5, Max:25, Slack:20
+SlackArr.Reserve(1);	&#x2F;&#x2F; Num:5, Max:25, Slack:20</code></pre>
+
+<h4 id="3、Empty-和Reset-：清空数组（重新分配内存）"><a href="#3、Empty-和Reset-：清空数组（重新分配内存）" class="headerlink" title="3、Empty()和Reset()：清空数组（重新分配内存）"></a>3、<code>Empty()</code>和<code>Reset()</code>：清空数组（重新分配内存）</h4><p><code>Empty()</code>和<code>Reset()</code>方法清空容器为容器重新分配内存，区别是<code>Reset()</code>方法分配时不会释放先前的内存。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">SlackArr.Empty(10);	&#x2F;&#x2F; Num:0, Max:10, Slack:10
+SlackArr.Reset(10);	&#x2F;&#x2F; Num:0, Max:22, Slack:22</code></pre>
+
+<h4 id="4、Shrink-：移除所有Slack，不影响数组中元素"><a href="#4、Shrink-：移除所有Slack，不影响数组中元素" class="headerlink" title="4、Shrink()：移除所有Slack，不影响数组中元素"></a>4、<code>Shrink()</code>：移除所有Slack，不影响数组中元素</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">SlackArr &#x3D; &#123;1, 2, 3, 4&#125;;	&#x2F;&#x2F; Num:4, Max:22, Slack:18
+SlackArr.Shrink();		    &#x2F;&#x2F; Num:4, Max:4, Slack:0</code></pre>
+
+<h3 id="十、其他"><a href="#十、其他" class="headerlink" title="十、其他"></a>十、其他</h3><h4 id="1、Swap-交换元素值"><a href="#1、Swap-交换元素值" class="headerlink" title="1、Swap()交换元素值"></a>1、<code>Swap()</code>交换元素值</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">SlackArr.Swap(1, 3);		&#x2F;&#x2F; SlackArr &#x3D; [1, 4, 3, 2]</code></pre>
+
+<h4 id="2、GetAllocatedSize-：数组内存占用量"><a href="#2、GetAllocatedSize-：数组内存占用量" class="headerlink" title="2、GetAllocatedSize()：数组内存占用量"></a>2、<code>GetAllocatedSize()</code>：数组内存占用量</h4><p><code>GetAllocatedSize()</code>估算当前数组内存占用量，数组类型<code>Sizeof()</code>的值 × 数组的<code>Max()</code></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">SIZE_T CountBytes &#x3D; MyArr.GetAllocatedSize();	&#x2F;&#x2F; 16</code></pre>
+
 
                                     
                             </div>
@@ -478,7 +647,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://zdx199792.github.io/2024/12/29/%E3%80%90UEC++%E5%AD%A6%E4%B9%A0-%E5%BC%80%E7%AF%87%E3%80%91/">https://zdx199792.github.io/2024/12/29/%E3%80%90UEC++%E5%AD%A6%E4%B9%A0-%E5%BC%80%E7%AF%87%E3%80%91/</a>
+                    <a href="https://zdx199792.github.io/2024/12/29/%E3%80%90UEC++%E5%AD%A6%E4%B9%A0-UE%E5%AE%B9%E5%99%A8%E4%B9%8BTArray%E3%80%91/">https://zdx199792.github.io/2024/12/29/%E3%80%90UEC++%E5%AD%A6%E4%B9%A0-UE%E5%AE%B9%E5%99%A8%E4%B9%8BTArray%E3%80%91/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -525,6 +694,12 @@
                                                     <a href="/tags/UE/">
                                                         <span class="chip bg-color">
                                                             UE
+                                                        </span>
+                                                    </a>
+                                                    
+                                                    <a href="/tags/TArray/">
+                                                        <span class="chip bg-color">
+                                                            TArray
                                                         </span>
                                                     </a>
                                                     
@@ -872,9 +1047,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2024/12/29/%E3%80%90UEC++%E5%AD%A6%E4%B9%A0-UE%E5%AE%B9%E5%99%A8%E4%B9%8BTArray%E3%80%91/">
                     <div class="card-image">
@@ -892,9 +1068,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2024-12-29
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-12-29
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -907,6 +1083,7 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -933,13 +1110,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2023/05/26/%E3%80%90UE4C-ActionRougelike-28%E3%80%91%E5%B0%81%E8%A3%85%E3%80%81%E6%80%A7%E8%83%BD%E3%80%81%E6%89%93%E7%A3%A8/">
+                <a href="/2024/12/29/%E3%80%90UEC++%E5%AD%A6%E4%B9%A0-%E5%BC%80%E7%AF%87%E3%80%91/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="【UE4C++-ActionRougelike-28】封装、性能、打磨">
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="【UEC++学习-开篇】">
                         
-                        <span class="card-title">【UE4C++-ActionRougelike-28】封装、性能、打磨</span>
+                        <span class="card-title">【UEC++学习-开篇】</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -950,14 +1127,14 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-05-26
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-12-29
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/ActionRougelike-Game/" class="post-category">
-                                    ActionRougelike Game
+                            <a href="/categories/UEC-%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                    UEC++学习
                                 </a>
                             
                             
@@ -967,16 +1144,12 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/UE4/">
-                        <span class="chip bg-color">UE4</span>
-                    </a>
-                    
                     <a href="/tags/C/">
                         <span class="chip bg-color">C++</span>
                     </a>
                     
-                    <a href="/tags/ActionRougelike-Game/">
-                        <span class="chip bg-color">ActionRougelike Game</span>
+                    <a href="/tags/UE/">
+                        <span class="chip bg-color">UE</span>
                     </a>
                     
                 </div>
