@@ -5,7 +5,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="【UEC++学习-UE容器之TSet】, Woilin&#39;s Blog">
-    <meta name="description" content="">
+    <meta name="description" content="TSetTSet是一种快速容器类，用于在排序不重要的情况下存储唯一元素。
+一、创建二、填充元素1、Add()和Emplace()：添加元素2、Append()：添加其他TSet中的多个元素以上同TArray一样
+FruitSet.Add(T">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -361,15 +363,40 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                            <div class="article-tag">
-                                <span class="chip bg-color">
-                                    无标签
-                                </span>
-                            </div>
+                        <div class="article-tag">
                             
+                                <a href="/tags/C/">
+                                    <span class="chip bg-color">
+                                        C++
+                                    </span>
+                                </a>
+                                
+                                <a href="/tags/UE/">
+                                    <span class="chip bg-color">
+                                        UE
+                                    </span>
+                                </a>
+                                
+                                <a href="/tags/TSet/">
+                                    <span class="chip bg-color">
+                                        TSet
+                                    </span>
+                                </a>
+                                
+                        </div>
+                        
                 </div>
                 <div class="col s5 right-align">
                     
+                        <div class="post-cate">
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                                <a href="/categories/UEC-%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                    UEC++学习
+                                </a>
+                                
+                        </div>
+                        
                 </div>
             </div>
 
@@ -394,7 +421,7 @@
                                     <div class="info-break-policy">
                                         <i class="far fa-file-word fa-fw"></i>
                                         文章字数:&nbsp;&nbsp;
-                                            0
+                                            646
                                     </div>
                                     
 
@@ -402,7 +429,7 @@
                                             <div class="info-break-policy">
                                                 <i class="far fa-clock fa-fw"></i>
                                                 阅读时长:&nbsp;&nbsp;
-                                                    1
+                                                    2
                                                         分
                                             </div>
                                             
@@ -427,7 +454,78 @@
 
                         <div class="card-content article-card-content">
                             <div id="articleContent">
-                                
+                                <h2 id="TSet"><a href="#TSet" class="headerlink" title="TSet"></a>TSet</h2><p><code>TSet</code>是一种快速容器类，用于在排序不重要的情况下存储唯一元素。</p>
+<h3 id="一、创建"><a href="#一、创建" class="headerlink" title="一、创建"></a>一、创建</h3><h3 id="二、填充元素"><a href="#二、填充元素" class="headerlink" title="二、填充元素"></a>二、填充元素</h3><h4 id="1、Add-和Emplace-：添加元素"><a href="#1、Add-和Emplace-：添加元素" class="headerlink" title="1、Add()和Emplace()：添加元素"></a>1、<code>Add()</code>和<code>Emplace()</code>：添加元素</h4><h4 id="2、Append-：添加其他TSet中的多个元素"><a href="#2、Append-：添加其他TSet中的多个元素" class="headerlink" title="2、Append()：添加其他TSet中的多个元素"></a>2、<code>Append()</code>：添加其他<code>TSet</code>中的多个元素</h4><p>以上同<code>TArray</code>一样</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">FruitSet.Add(TEXT(&quot;Banana&quot;));
+FruitSet.Add(TEXT(&quot;Grapefruit&quot;));
+FruitSet.Add(TEXT(&quot;Pineapple&quot;));
+
+FruitSet.Add(TEXT(&quot;Pear&quot;));
+FruitSet.Add(TEXT(&quot;Banana&quot;));
+&#x2F;&#x2F; FruitSet &#x3D; [Banana, Grapefruit, Pineapple, Pear]</code></pre>
+
+<h3 id="三、迭代"><a href="#三、迭代" class="headerlink" title="三、迭代"></a>三、迭代</h3><p>同<code>TMap</code>一样</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">&#x2F;&#x2F; auto 范围遍历
+for (auto&amp; Elem : FruitSet)
+&#123;
+    Elem...;
+&#125;
+
+&#x2F;&#x2F; 迭代器迭代
+for (auto Iter &#x3D; FruitSet.CreateIterator(); Iter; ++Iter)	&#x2F;&#x2F; CreateConstIterator 只读迭代器
+&#123;
+    *Iter...;
+&#125;</code></pre>
+
+<h3 id="四、查询"><a href="#四、查询" class="headerlink" title="四、查询"></a>四、查询</h3><h4 id="1、Num-：查询TSet元素个数"><a href="#1、Num-：查询TSet元素个数" class="headerlink" title="1、Num()：查询TSet元素个数"></a>1、<code>Num()</code>：查询TSet元素个数</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">int32 Count &#x3D; FruitSet.Num();	&#x2F;&#x2F; Count &#x3D; 4 </code></pre>
+
+<h4 id="2、Contanis-：查询是否包含某个元素"><a href="#2、Contanis-：查询是否包含某个元素" class="headerlink" title="2、Contanis()：查询是否包含某个元素"></a>2、<code>Contanis()</code>：查询是否包含某个元素</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">bool bHasBanana &#x3D; FruitSet.Contains(TEXT(&quot;Banana&quot;));	&#x2F;&#x2F; bHasBanana &#x3D; true
+bool bHasLemon &#x3D; FruitSet.Contains(TEXT(&quot;Lemon&quot;));		&#x2F;&#x2F; bHasLemon &#x3D; false</code></pre>
+
+<h4 id="3、-、Find-：查找某个元素"><a href="#3、-、Find-：查找某个元素" class="headerlink" title="3、[]、Find()：查找某个元素"></a>3、<code>[]</code>、<code>Find()</code>：查找某个元素</h4><p><code>FSetElementId</code> 结构体可查找集合中某个键的索引。然后，就可使用该索引与 <code>运算符[]</code> 查找元素</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">FSetElementId BananaIndex &#x3D; FruitSet.FindId(TEXT(&quot;Banana&quot;));
+FPlatformMisc::LocalPrint(		&#x2F;&#x2F; 打印 Banana
+    *FString::Printf(
+        TEXT(&quot; \&quot;%s\&quot;\n&quot;),
+        *FruitSet[BananaIndex]
+    )
+);
+
+FSetElementId LemonIndex &#x3D; FruitSet.FindId(TEXT(&quot;Lemon&quot;));
+FPlatformMisc::LocalPrint(		&#x2F;&#x2F; 报错
+    *FString::Printf(
+        TEXT(&quot; \&quot;%s\&quot;\n&quot;),
+        *FruitSet[LemonIndex]
+    )
+); </code></pre>
+
+<p><code>Find()</code>同<code>TMap</code>一样，返回所查找元素的指针，如果不存在，返回<code>nullptr</code></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">FString* PtrBanana &#x3D; FruitSet.Find(TEXT(&quot;Banana&quot;));
+FString* PtrLemon &#x3D; FruitSet.Find(TEXT(&quot;Lemon&quot;));	&#x2F;&#x2F; 空指针</code></pre>
+
+<h4 id="4、Array-：根据TSet元素返回一个数组"><a href="#4、Array-：根据TSet元素返回一个数组" class="headerlink" title="4、Array()：根据TSet元素返回一个数组"></a>4、<code>Array()</code>：根据TSet元素返回一个数组</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TArray&lt;FString&gt; FruitArray &#x3D; FruitSet.Array();	&#x2F;&#x2F; FruitArray &#x3D; [Banana, Grapefruit, Pineapple, Pear]</code></pre>
+
+<h3 id="五、移除"><a href="#五、移除" class="headerlink" title="五、移除"></a>五、移除</h3><h4 id="1、Remove-：移除元素"><a href="#1、Remove-：移除元素" class="headerlink" title="1、Remove()：移除元素"></a>1、<code>Remove()</code>：移除元素</h4><ul>
+<li>可根据<code>FSetElementId</code>移除指定元素</li>
+<li>可根据元素值移除指定元素，返回移除元素个数</li>
+</ul>
+<h4 id="2、Empty-和Reset-：移除全部元素"><a href="#2、Empty-和Reset-：移除全部元素" class="headerlink" title="2、Empty()和Reset()：移除全部元素"></a>2、<code>Empty()</code>和<code>Reset()</code>：移除全部元素</h4><p>同<code>TMap</code>一样</p>
+<h3 id="六、排序"><a href="#六、排序" class="headerlink" title="六、排序"></a>六、排序</h3><p>基本同<code>TMap</code>一致</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">FruitSet.Sort([](const FString&amp; A, const FString&amp; B) &#123;
+    return A &gt; B; 
+&#125;);
+&#x2F;&#x2F; FruitSet &#x3D; [Pear, Grapefruit, Banana]
+FruitSet.Sort([](const FString&amp; A, const FString&amp; B) &#123;
+    return A.Len() &lt; B.Len();
+&#125;);
+&#x2F;&#x2F; FruitSet &#x3D; [Pear, Banana, Grapefruit]</code></pre>
+
+<h3 id="七、运算符"><a href="#七、运算符" class="headerlink" title="七、运算符"></a>七、运算符</h3><h4 id="1、赋值运算符"><a href="#1、赋值运算符" class="headerlink" title="1、赋值运算符="></a>1、<code>赋值运算符=</code></h4><p>同<code>TArray</code>一样，是一次深拷贝</p>
+<h4 id="2、MoveTemp"><a href="#2、MoveTemp" class="headerlink" title="2、MoveTemp"></a>2、<code>MoveTemp</code></h4><p>同<code>TArray</code>一样，支持移动语义<code>MoveTemp</code>，移动后，源映射为空</p>
+<h3 id="八、Slack-空闲容量"><a href="#八、Slack-空闲容量" class="headerlink" title="八、Slack(空闲容量)"></a>八、Slack(空闲容量)</h3><h4 id="1、Reverse-：分配内存"><a href="#1、Reverse-：分配内存" class="headerlink" title="1、Reverse()：分配内存"></a>1、<code>Reverse()</code>：分配内存</h4><p>同<code>TArray</code>一样，分配内存，无需添加元素，如果分配的内存比当前小，则无效。</p>
+<h4 id="2、Shrink-和Compact-：移除所有Slack"><a href="#2、Shrink-和Compact-：移除所有Slack" class="headerlink" title="2、Shrink()和Compact()：移除所有Slack"></a>2、<code>Shrink()</code>和<code>Compact()</code>：移除所有Slack</h4><p><code>Shrink()</code> 将从容器的末端移除所有slack，如果映射中间存在slack则无法移除，首先应调用 <code>Compact()</code>或<code>CompactStable()</code> 函数，将空白空间组合在一起，再调用<code>Shrink()</code> ，<code>CompactStable</code> 可在合并空元素时保持元素的排序。</p>
+<h3 id="九、KeyFuncs"><a href="#九、KeyFuncs" class="headerlink" title="九、KeyFuncs"></a>九、KeyFuncs</h3><p>同<code>TMap</code>一致</p>
+
                                     
                             </div>
                             <hr />
@@ -489,12 +587,28 @@
                                 <div class="tag_share" style="display: block;">
                                     <div class="post-meta__tag-list" style="display: inline-block;">
                                         
-                                                <div class="article-tag">
-                                                    <span class="chip bg-color">
-                                                        无标签
-                                                    </span>
-                                                </div>
+                                            <div class="article-tag">
                                                 
+                                                    <a href="/tags/C/">
+                                                        <span class="chip bg-color">
+                                                            C++
+                                                        </span>
+                                                    </a>
+                                                    
+                                                    <a href="/tags/UE/">
+                                                        <span class="chip bg-color">
+                                                            UE
+                                                        </span>
+                                                    </a>
+                                                    
+                                                    <a href="/tags/TSet/">
+                                                        <span class="chip bg-color">
+                                                            TSet
+                                                        </span>
+                                                    </a>
+                                                    
+                                            </div>
+                                            
                                     </div>
                                     <div class="post_share"
                                         style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
@@ -837,11 +951,12 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2024/12/30/%E3%80%90UEC++-%E5%AD%A6%E4%B9%A0-UE%E5%AE%B9%E5%99%A8%E4%B9%8BTSet%E3%80%91/">
+                <a href="/2024/12/30/%E3%80%90UEC++%E5%AD%A6%E4%B9%A0-UE%E5%AE%B9%E5%99%A8%E4%B9%8BTSet%E3%80%91/">
                     <div class="card-image">
                         
                         
@@ -857,9 +972,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2024-12-30
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-12-30
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -872,6 +987,7 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
